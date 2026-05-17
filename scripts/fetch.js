@@ -1,24 +1,46 @@
-import fetch from 'node-fetch';
-import { load } from 'cheerio';
-import { writeFileSync, mkdirSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+'use strict';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const OUTPUT_PATH = join(__dirname, '..', 'data', 'stories.json');
+// Node 20 provides global fetch — no node-fetch import needed
+const { load }                    = require('cheerio');
+const { writeFileSync, mkdirSync } = require('fs');
+const { join }                    = require('path');
 
-const HN_API = 'https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=30';
-const BATCH_SIZE = 5;
+const OUTPUT_PATH    = join(__dirname, '..', 'data', 'stories.json');
+const HN_API         = 'https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=30';
+const BATCH_SIZE     = 5;
 const FETCH_TIMEOUT_MS = 8000;
 
+// ── Exported pure helpers ────────────────────────────────────────────────────
+
 function extractDomain(url) {
+  if (!url) return '';
   try {
     return new URL(url).hostname.replace(/^www\./, '');
   } catch {
-    return null;
+    return '';
   }
 }
+
+function assignGradient(index) {
+  return (index % 5) + 1;
+}
+
+function buildStoryObject(hit, image, index) {
+  const url = hit.url || null;
+  return {
+    id:       hit.objectID,
+    title:    hit.title        || '',
+    url,
+    domain:   extractDomain(url),
+    score:    hit.points       != null ? hit.points       : 0,
+    comments: hit.num_comments != null ? hit.num_comments : 0,
+    time:     hit.created_at_i || 0,
+    image:    image || null,
+    gradient: assignGradient(index),
+  };
+}
+
+// ── Private helpers ──────────────────────────────────────────────────────────
 
 function resolveUrl(src, base) {
   if (!src) return null;
@@ -78,20 +100,8 @@ async function getOgImage(storyUrl) {
 }
 
 async function processHit(hit, index) {
-  const url = hit.url || null;
-  const image = await getOgImage(url);
-
-  return {
-    id: Number(hit.objectID) || index,
-    title: hit.title || '',
-    url,
-    domain: url ? extractDomain(url) : 'news.ycombinator.com',
-    score: hit.points || 0,
-    comments: hit.num_comments || 0,
-    time: hit.created_at_i || 0,
-    image,
-    gradient: (index % 5) + 1,
-  };
+  const image = await getOgImage(hit.url || null);
+  return buildStoryObject(hit, image, index);
 }
 
 async function main() {
@@ -119,7 +129,12 @@ async function main() {
   console.log(`Done. ${stories.length} stories written to data/stories.json`);
 }
 
-main().catch(err => {
-  console.error('Fatal error:', err);
-  process.exit(1);
-});
+// Only execute when run directly — not when required by tests
+if (require.main === module) {
+  main().catch(err => {
+    console.error('Fatal error:', err);
+    process.exit(1);
+  });
+}
+
+module.exports = { extractDomain, assignGradient, buildStoryObject };
