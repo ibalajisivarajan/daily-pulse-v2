@@ -112,6 +112,13 @@
     }
     .card.visible .photo { transform: scale(1.0); }
 
+    /* Gradient fallbacks (background-color for image-fail; gradient for no-image) */
+    .grad-1 { background: linear-gradient(160deg, #0d1b3e 0%, #071028 100%); }
+    .grad-2 { background: linear-gradient(160deg, #1a0808 0%, #0d0404 100%); }
+    .grad-3 { background: linear-gradient(160deg, #071a0e 0%, #040d07 100%); }
+    .grad-4 { background: linear-gradient(160deg, #1a1005 0%, #0d0803 100%); }
+    .grad-5 { background: linear-gradient(160deg, #0e0520 0%, #070312 100%); }
+
     /* Scrim — heavy bottom, light top */
     .scrim {
       position: absolute;
@@ -403,7 +410,7 @@
 
   <div id="empty">
     <h2>No Stories Yet</h2>
-    <p>Run <code>node scripts/fetch.js</code> to populate stories.</p>
+    <p>Pull to refresh or check back in a few minutes.</p>
   </div>
 
   <div id="feed"></div>
@@ -411,15 +418,6 @@
 
   <script>
     'use strict';
-
-    /* ── Gradient fallbacks keyed by story.gradient 1–5 ── */
-    const GRADIENTS = {
-      1: 'linear-gradient(160deg, #0d1b3e 0%, #071028 100%)',
-      2: 'linear-gradient(160deg, #1a0808 0%, #0d0404 100%)',
-      3: 'linear-gradient(160deg, #071a0e 0%, #040d07 100%)',
-      4: 'linear-gradient(160deg, #1a1005 0%, #0d0803 100%)',
-      5: 'linear-gradient(160deg, #0e0520 0%, #070312 100%)',
-    };
 
     /* ── Category badge colours ─────────────────────────── */
     const CAT_COLORS = {
@@ -524,16 +522,6 @@
       const catKey   = cat.split(' ')[1];
       const catColor = CAT_COLORS[catKey] || 'rgba(255,255,255,0.15)';
 
-      // Background: image on top, gradient underneath as live fallback
-      const gradient = GRADIENTS[story.gradient] || GRADIENTS[1];
-      let photoBg;
-      if (story.image) {
-        const imgSafe = story.image.replace(/\\/g, '').replace(/"/g, '%22');
-        photoBg = `background-image: url("${imgSafe}"), ${gradient};`;
-      } else {
-        photoBg = `background: ${gradient};`;
-      }
-
       const activeDotsIdx = Math.round((idx / Math.max(total - 1, 1)) * 5);
       const ago           = timeAgo(story.time);
       const domain        = esc(story.domain || 'news.ycombinator.com');
@@ -544,7 +532,7 @@
 
       return `
 <div class="card" data-index="${idx}">
-  <div class="photo" style="${photoBg} background-size: cover; background-position: center;"></div>
+  <div class="photo grad-${story.gradient}"${story.image ? ` style="background-image: url('${story.image}')"` : ''}></div>
   <div class="scrim"></div>
 
   <div class="topbar">
@@ -738,7 +726,9 @@
 
     /* ── Init ───────────────────────────────────────────── */
     document.addEventListener('DOMContentLoaded', async () => {
-      const stories = await loadStories();
+      const stories = await loadStories(true);
+      console.log('Loaded stories:', stories.length);
+      console.log('First story image:', stories[0]?.image);
 
       const loading = document.getElementById('loading');
       loading.classList.add('gone');
