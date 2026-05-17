@@ -4,11 +4,10 @@
 const { load }                    = require('cheerio');
 const { writeFileSync, mkdirSync } = require('fs');
 const { join }                    = require('path');
-
 const OUTPUT_PATH    = join(__dirname, '..', 'data', 'stories.json');
 const HN_API         = 'https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=30';
 const BATCH_SIZE     = 5;
-const FETCH_TIMEOUT_MS = 8000;
+const FETCH_TIMEOUT_MS = 3000;
 
 // ── Exported pure helpers ────────────────────────────────────────────────────
 
@@ -64,6 +63,7 @@ function isHttpUrl(url) {
 async function getOgImage(storyUrl) {
   if (!storyUrl || !isHttpUrl(storyUrl)) return null;
 
+  const domain = extractDomain(storyUrl);
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 
@@ -93,15 +93,20 @@ async function getOgImage(storyUrl) {
 
     const resolved = resolveUrl(raw, storyUrl);
     return resolved && isHttpUrl(resolved) ? resolved : null;
-  } catch {
+  } catch (err) {
     clearTimeout(timer);
+    console.error('og:image failed for:', domain, err.message);
     return null;
   }
 }
 
 async function processHit(hit, index) {
   const image = await getOgImage(hit.url || null);
-  return buildStoryObject(hit, image, index);
+  const story = buildStoryObject(hit, image, index);
+  if (!story.image) {
+    story.image = `https://picsum.photos/seed/${story.id}/900/1600`;
+  }
+  return story;
 }
 
 async function main() {
