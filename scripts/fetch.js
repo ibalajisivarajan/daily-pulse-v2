@@ -4,20 +4,10 @@
 const { load }                    = require('cheerio');
 const { writeFileSync, mkdirSync } = require('fs');
 const { join }                    = require('path');
-const { detectCategory }          = require('./app-logic');
-
 const OUTPUT_PATH    = join(__dirname, '..', 'data', 'stories.json');
 const HN_API         = 'https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=30';
 const BATCH_SIZE     = 5;
 const FETCH_TIMEOUT_MS = 3000;
-
-const UNSPLASH_URLS = {
-  'AI':      'https://source.unsplash.com/900x1600/?artificial-intelligence,technology',
-  'Finance': 'https://source.unsplash.com/900x1600/?finance,stock-market',
-  'Geo':     'https://source.unsplash.com/900x1600/?world,politics,government',
-  'Sports':  'https://source.unsplash.com/900x1600/?sports,stadium',
-  'Tech':    'https://source.unsplash.com/900x1600/?technology,computer',
-};
 
 // ── Exported pure helpers ────────────────────────────────────────────────────
 
@@ -114,9 +104,7 @@ async function processHit(hit, index) {
   const image = await getOgImage(hit.url || null);
   const story = buildStoryObject(hit, image, index);
   if (!story.image) {
-    const cat = detectCategory(story.domain, story.title);
-    const key = cat.split(' ')[1]; // 'AI', 'Finance', 'Geo', 'Sports', 'Tech'
-    story.image = UNSPLASH_URLS[key] || UNSPLASH_URLS['Tech'];
+    story.image = `https://picsum.photos/seed/${story.id}/900/1600`;
   }
   return story;
 }
