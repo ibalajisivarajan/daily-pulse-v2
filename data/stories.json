@@ -4,8 +4,8 @@
     "title": "Moving away from Tailwind, and learning to structure my CSS",
     "url": "https://jvns.ca/blog/2026/05/15/moving-away-from-tailwind--and-learning-to-structure-my-css-/",
     "domain": "jvns.ca",
-    "score": 602,
-    "comments": 333,
+    "score": 605,
+    "comments": 334,
     "time": 1778922866,
     "image": null,
     "gradient": 1
@@ -15,8 +15,8 @@
     "title": "Zerostack – A Unix-inspired coding agent written in pure Rust",
     "url": "https://crates.io/crates/zerostack/1.0.0",
     "domain": "crates.io",
-    "score": 470,
-    "comments": 249,
+    "score": 476,
+    "comments": 252,
     "time": 1778970230,
     "image": "https://static.crates.io/og-images/zerostack.png",
     "gradient": 2
@@ -26,76 +26,76 @@
     "title": "Mozilla to UK regulators: VPNs are essential privacy and security tools",
     "url": "https://blog.mozilla.org/netpolicy/2026/05/15/mozilla-to-uk-regulators-vpns-are-essential-privacy-and-security-tools-and-should-not-be-undermined/",
     "domain": "blog.mozilla.org",
-    "score": 406,
-    "comments": 159,
+    "score": 419,
+    "comments": 171,
     "time": 1778998646,
     "image": "https://blog.mozilla.org/netpolicy/files/2017/02/cropped-blog-header-policy.jpg",
     "gradient": 3
-  },
-  {
-    "id": "48157559",
-    "title": "Frontier AI has broken the open CTF format",
-    "url": "https://kabir.au/blog/the-ctf-scene-is-dead",
-    "domain": "kabir.au",
-    "score": 397,
-    "comments": 418,
-    "time": 1778914915,
-    "image": null,
-    "gradient": 4
   },
   {
     "id": "48159445",
     "title": "SANA-WM, a 2.6B open-source world model for 1-minute 720p video",
     "url": "https://nvlabs.github.io/Sana/WM/",
     "domain": "nvlabs.github.io",
-    "score": 369,
+    "score": 371,
     "comments": 143,
     "time": 1778933181,
     "image": null,
-    "gradient": 5
+    "gradient": 4
   },
   {
     "id": "48158065",
     "title": "We've made the world too complicated",
     "url": "https://user8.bearblog.dev/the-world-is-too-complicated/",
     "domain": "user8.bearblog.dev",
-    "score": 351,
-    "comments": 338,
+    "score": 359,
+    "comments": 346,
     "time": 1778919917,
     "image": "https://user8.bearblog.dev/static/og-image.png",
-    "gradient": 1
+    "gradient": 5
   },
   {
     "id": "48159241",
     "title": "Accelerando (2005)",
     "url": "https://www.antipope.org/charlie/blog-static/fiction/accelerando/accelerando.html",
     "domain": "antipope.org",
-    "score": 310,
-    "comments": 176,
+    "score": 311,
+    "comments": 177,
     "time": 1778931392,
     "image": null,
-    "gradient": 2
+    "gradient": 1
   },
   {
     "id": "48164432",
     "title": "A nicer voltmeter clock",
     "url": "https://lcamtuf.substack.com/p/a-nicer-voltmeter-clock",
     "domain": "lcamtuf.substack.com",
-    "score": 252,
+    "score": 254,
     "comments": 30,
     "time": 1778971516,
     "image": null,
-    "gradient": 3
+    "gradient": 2
   },
   {
     "id": "48163392",
     "title": "OpenAI and Government of Malta partner to roll out ChatGPT Plus to all citizens",
     "url": "https://openai.com/index/malta-chatgpt-plus-partnership/",
     "domain": "openai.com",
-    "score": 246,
-    "comments": 292,
+    "score": 251,
+    "comments": 296,
     "time": 1778962446,
     "image": null,
+    "gradient": 3
+  },
+  {
+    "id": "48168058",
+    "title": "Native all the way, until you need text",
+    "url": "https://justsitandgrin.im/posts/native-all-the-way-until-you-need-text/",
+    "domain": "justsitandgrin.im",
+    "score": 182,
+    "comments": 117,
+    "time": 1779018586,
+    "image": "https://justsitandgrin.im/posts/native-all-the-way-until-you-need-text/index.png",
     "gradient": 4
   },
   {
@@ -103,165 +103,154 @@
     "title": "Hosting a website on an 8-bit microcontroller",
     "url": "https://maurycyz.com/projects/mcusite/",
     "domain": "maurycyz.com",
-    "score": 171,
+    "score": 177,
     "comments": 15,
     "time": 1778981126,
     "image": null,
     "gradient": 5
   },
   {
-    "id": "48162468",
-    "title": "Halt and Catch Fire",
-    "url": "https://unstack.io/halt-and-catch-fire",
-    "domain": "unstack.io",
-    "score": 170,
-    "comments": 84,
-    "time": 1778955389,
-    "image": null,
-    "gradient": 1
-  },
-  {
-    "id": "48168058",
-    "title": "Native all the way, until you need text",
-    "url": "https://justsitandgrin.im/posts/native-all-the-way-until-you-need-text/",
-    "domain": "justsitandgrin.im",
-    "score": 165,
-    "comments": 105,
-    "time": 1779018586,
-    "image": "https://justsitandgrin.im/posts/native-all-the-way-until-you-need-text/index.png",
-    "gradient": 2
-  },
-  {
     "id": "48142115",
     "title": "Colossus: The Forbin Project",
     "url": "https://en.wikipedia.org/wiki/Colossus:_The_Forbin_Project",
     "domain": "en.wikipedia.org",
-    "score": 151,
-    "comments": 49,
+    "score": 155,
+    "comments": 50,
     "time": 1778797816,
     "image": "https://upload.wikimedia.org/wikipedia/en/c/c4/Colossus_the_forbin_project_movie_poster.jpg",
-    "gradient": 3
-  },
-  {
-    "id": "48134784",
-    "title": "The Third Hard Problem",
-    "url": "https://mmapped.blog/posts/48-the-third-hard-problem",
-    "domain": "mmapped.blog",
-    "score": 114,
-    "comments": 53,
-    "time": 1778763631,
-    "image": null,
-    "gradient": 4
+    "gradient": 1
   },
   {
     "id": "48168221",
     "title": "I don't think AI will make your processes go faster",
     "url": "https://frederickvanbrabant.com/blog/2026-05-15-i-dont-think-ai-will-make-your-processes-go-faster/",
     "domain": "frederickvanbrabant.com",
-    "score": 113,
-    "comments": 56,
+    "score": 139,
+    "comments": 83,
     "time": 1779020025,
     "image": "https://frederickvanbrabant.com/images/posts/2026-05-15%20I%20don%27t%20think%20AI%20will%20make%20your%20processes%20go%20faster/header.jpg",
-    "gradient": 5
+    "gradient": 2
   },
   {
     "id": "48168198",
     "title": "Apple Silicon costs more than OpenRouter",
     "url": "https://www.williamangel.net/blog/2026/05/17/offline-llm-energy-use.html",
     "domain": "williamangel.net",
-    "score": 98,
-    "comments": 60,
+    "score": 126,
+    "comments": 86,
     "time": 1779019763,
     "image": "https://www.williamangel.net/blog/2026/05/17/2026-05-17-offline-llm-energy-use.png.",
-    "gradient": 1
+    "gradient": 3
   },
   {
     "id": "48168056",
     "title": "Every AI Subscription Is a Ticking Time Bomb for Enterprise",
     "url": "https://www.thestateofbrand.com/news/ai-subscription-time-bomb",
     "domain": "thestateofbrand.com",
-    "score": 90,
-    "comments": 55,
+    "score": 110,
+    "comments": 78,
     "time": 1779018571,
     "image": "https://cdn.prod.website-files.com/69d68fe7dde9e79d19ddf151/6a02492bc7c745f849372fe4_364ffc2a-1a23-423f-b62a-3764e12ce6ab.webp",
-    "gradient": 2
+    "gradient": 4
   },
   {
     "id": "48166920",
     "title": "Playing Atari ST Music on the Amiga with Zero CPU",
     "url": "https://arnaud-carre.github.io/2026-05-15-ym-fast-emu/",
     "domain": "arnaud-carre.github.io",
-    "score": 78,
-    "comments": 28,
+    "score": 79,
+    "comments": 29,
     "time": 1779004804,
     "image": "https://arnaud-carre.github.io/assets/img/ymemu/fastym_title.jpg",
-    "gradient": 3
+    "gradient": 5
   },
   {
     "id": "48147091",
     "title": "Prolog Basics Explained with Pokémon",
     "url": "https://unplannedobsolescence.com/blog/prolog-basics-pokemon/",
     "domain": "unplannedobsolescence.com",
-    "score": 73,
-    "comments": 11,
+    "score": 79,
+    "comments": 12,
     "time": 1778842934,
     "image": null,
-    "gradient": 4
-  },
-  {
-    "id": "48140297",
-    "title": "Illusions of understanding in the sciences",
-    "url": "https://link.springer.com/article/10.1007/s42113-026-00271-1",
-    "domain": "link.springer.com",
-    "score": 70,
-    "comments": 34,
-    "time": 1778788196,
-    "image": "https://media.springernature.com/m685/springer-static/image/art%3A10.1007%2Fs42113-026-00271-1/MediaObjects/42113_2026_271_Fig1_HTML.png",
-    "gradient": 5
-  },
-  {
-    "id": "48123801",
-    "title": "Unknowable Math Can Help Hide Secrets",
-    "url": "https://www.quantamagazine.org/how-unknowable-math-can-help-hide-secrets-20260511/",
-    "domain": "quantamagazine.org",
-    "score": 66,
-    "comments": 17,
-    "time": 1778688540,
-    "image": "https://www.quantamagazine.org/wp-content/uploads/2026/05/GodelCryptography-crKristinaArmitage-Social.jpg",
     "gradient": 1
-  },
-  {
-    "id": "48142154",
-    "title": "Roman Letters",
-    "url": "https://romanletters.org/",
-    "domain": "romanletters.org",
-    "score": 62,
-    "comments": 10,
-    "time": 1778798072,
-    "image": null,
-    "gradient": 2
   },
   {
     "id": "48168708",
     "title": "WHO Declares Ebola Outbreak a Global Health Emergency",
     "url": "https://www.nytimes.com/2026/05/17/world/africa/ebola-congo-uganda-who-public-health-emergency.html",
     "domain": "nytimes.com",
-    "score": 49,
-    "comments": 8,
+    "score": 74,
+    "comments": 18,
     "time": 1779024134,
     "image": null,
+    "gradient": 2
+  },
+  {
+    "id": "48140297",
+    "title": "Illusions of understanding in the sciences",
+    "url": "https://link.springer.com/article/10.1007/s42113-026-00271-1",
+    "domain": "link.springer.com",
+    "score": 71,
+    "comments": 34,
+    "time": 1778788196,
+    "image": "https://media.springernature.com/m685/springer-static/image/art%3A10.1007%2Fs42113-026-00271-1/MediaObjects/42113_2026_271_Fig1_HTML.png",
     "gradient": 3
+  },
+  {
+    "id": "48123801",
+    "title": "Unknowable Math Can Help Hide Secrets",
+    "url": "https://www.quantamagazine.org/how-unknowable-math-can-help-hide-secrets-20260511/",
+    "domain": "quantamagazine.org",
+    "score": 70,
+    "comments": 17,
+    "time": 1778688540,
+    "image": "https://www.quantamagazine.org/wp-content/uploads/2026/05/GodelCryptography-crKristinaArmitage-Social.jpg",
+    "gradient": 4
+  },
+  {
+    "id": "48168856",
+    "title": "Security researcher says Microsoft built a Bitlocker backdoor, releases exploit",
+    "url": "https://www.techspot.com/news/112410-security-researcher-microsoft-secretly-built-backdoor-bitlocker-releases.html",
+    "domain": "techspot.com",
+    "score": 67,
+    "comments": 29,
+    "time": 1779025350,
+    "image": null,
+    "gradient": 5
+  },
+  {
+    "id": "48142154",
+    "title": "Roman Letters",
+    "url": "https://romanletters.org/",
+    "domain": "romanletters.org",
+    "score": 63,
+    "comments": 10,
+    "time": 1778798072,
+    "image": null,
+    "gradient": 1
+  },
+  {
+    "id": "48168626",
+    "title": "AI is a technology not a product",
+    "url": "https://daringfireball.net/2026/05/ai_is_technology_not_a_product",
+    "domain": "daringfireball.net",
+    "score": 41,
+    "comments": 3,
+    "time": 1779023480,
+    "image": "https://daringfireball.net/graphics/df-wide-card.png",
+    "gradient": 2
   },
   {
     "id": "48155185",
     "title": "How Diamonds Are Made",
     "url": "https://diamond.jaydip.me/",
     "domain": "diamond.jaydip.me",
-    "score": 33,
-    "comments": 4,
+    "score": 40,
+    "comments": 8,
     "time": 1778887119,
     "image": "https://diamond.jaydip.me/og.webp",
-    "gradient": 4
+    "gradient": 3
   },
   {
     "id": "48163956",
@@ -272,40 +261,29 @@
     "comments": 1,
     "time": 1778966707,
     "image": "https://pdr-assets.b-cdn.net/essays/twilight-of-the-velocipede/typsetting-thumb.jpg",
-    "gradient": 5
-  },
-  {
-    "id": "48168856",
-    "title": "Security researcher says Microsoft built a Bitlocker backdoor, releases exploit",
-    "url": "https://www.techspot.com/news/112410-security-researcher-microsoft-secretly-built-backdoor-bitlocker-releases.html",
-    "domain": "techspot.com",
-    "score": 21,
-    "comments": 2,
-    "time": 1779025350,
-    "image": null,
-    "gradient": 1
-  },
-  {
-    "id": "48168626",
-    "title": "AI is a technology not a product",
-    "url": "https://daringfireball.net/2026/05/ai_is_technology_not_a_product",
-    "domain": "daringfireball.net",
-    "score": 21,
-    "comments": 0,
-    "time": 1779023480,
-    "image": "https://daringfireball.net/graphics/df-wide-card.png",
-    "gradient": 2
+    "gradient": 4
   },
   {
     "id": "48141354",
     "title": "Mado: Fast Markdown linter written in Rust",
     "url": "https://github.com/akiomik/mado",
     "domain": "github.com",
-    "score": 16,
+    "score": 20,
     "comments": 2,
     "time": 1778793335,
-    "image": "https://opengraph.githubassets.com/43ee0005696bd950b028338aac31568c01e74e849191a477bc36c8e137b986fa/akiomik/mado",
-    "gradient": 3
+    "image": "https://opengraph.githubassets.com/b5dd2488c3a684cfcf5eb03c45e5f172f637ff735b67f0589ee0eb4e10e7eb40/akiomik/mado",
+    "gradient": 5
+  },
+  {
+    "id": "48133293",
+    "title": "High-Entropy Alloy",
+    "url": "https://en.wikipedia.org/wiki/High-entropy_alloy",
+    "domain": "en.wikipedia.org",
+    "score": 15,
+    "comments": 2,
+    "time": 1778753284,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Atomic_structure_model_of_fcc_CoCrFeMnNi.png",
+    "gradient": 1
   },
   {
     "id": "47999020",
@@ -316,7 +294,18 @@
     "comments": 0,
     "time": 1777828021,
     "image": "https://littlelanguagemodels.com/wp-content/uploads/2026/04/user-goals-e1777040469887.jpg",
-    "gradient": 4
+    "gradient": 2
+  },
+  {
+    "id": "48168159",
+    "title": "Scientists believe ibogaine can help veterans overcome PTSD",
+    "url": "https://www.bbc.com/future/article/20260514-how-hallucinogenic-ibogaine-helps-veterans-overcome-ptsd",
+    "domain": "bbc.com",
+    "score": 12,
+    "comments": 6,
+    "time": 1779019384,
+    "image": "https://ychef.files.bbci.co.uk/624x351/p0nl9sxf.jpg",
+    "gradient": 3
   },
   {
     "id": "47439821",
@@ -327,6 +316,17 @@
     "comments": 1,
     "time": 1773929516,
     "image": "https://substackcdn.com/image/fetch/$s_!MQhC!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fbaa2636e-abb8-4c28-bfd4-2c470c6e6e8d_3000x2001.jpeg",
+    "gradient": 4
+  },
+  {
+    "id": "47613622",
+    "title": "Show HN: I rewrote my 2012 self-signed cert generator in Go – cert-depot.com",
+    "url": null,
+    "domain": "",
+    "score": 9,
+    "comments": 1,
+    "time": 1775133370,
+    "image": null,
     "gradient": 5
   }
 ]
