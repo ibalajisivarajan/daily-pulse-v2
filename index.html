@@ -112,12 +112,12 @@
     }
     .card.visible .photo { transform: scale(1.0); }
 
-    /* Gradient fallbacks (background-color for image-fail; gradient for no-image) */
-    .grad-1 { background: linear-gradient(160deg, #0d1b3e 0%, #071028 100%); }
-    .grad-2 { background: linear-gradient(160deg, #1a0808 0%, #0d0404 100%); }
-    .grad-3 { background: linear-gradient(160deg, #071a0e 0%, #040d07 100%); }
-    .grad-4 { background: linear-gradient(160deg, #1a1005 0%, #0d0803 100%); }
-    .grad-5 { background: linear-gradient(160deg, #0e0520 0%, #070312 100%); }
+    /* Gradient fallbacks — background-image only so background-size/position from .photo are not reset */
+    .grad-1 { background-image: linear-gradient(160deg, #0d1b3e 0%, #071028 100%); }
+    .grad-2 { background-image: linear-gradient(160deg, #1a0808 0%, #0d0404 100%); }
+    .grad-3 { background-image: linear-gradient(160deg, #071a0e 0%, #040d07 100%); }
+    .grad-4 { background-image: linear-gradient(160deg, #1a1005 0%, #0d0803 100%); }
+    .grad-5 { background-image: linear-gradient(160deg, #0e0520 0%, #070312 100%); }
 
     /* Scrim — heavy bottom, light top */
     .scrim {
@@ -532,7 +532,7 @@
 
       return `
 <div class="card" data-index="${idx}">
-  <div class="photo grad-${story.gradient}"${story.image ? ` style="background-image: url('${story.image}')"` : ''}></div>
+  <div class="photo grad-${story.gradient}" data-img="${story.image || ''}"></div>
   <div class="scrim"></div>
 
   <div class="topbar">
@@ -599,6 +599,17 @@
       }
       document.getElementById('empty').classList.remove('show');
       feed.innerHTML = stories.map((s, i) => buildCard(s, i, stories.length)).join('');
+      document.querySelectorAll('.photo').forEach(el => {
+        const img = el.dataset.img;
+        if (img) {
+          el.style.backgroundImage = `url("${img}")`;
+          el.style.backgroundSize = 'cover';
+          el.style.backgroundPosition = 'center';
+        }
+      });
+      document.querySelectorAll('.photo').forEach((el, i) => {
+        console.log(`Card ${i} background:`, el.style.backgroundImage);
+      });
       setupObserver();
       setupRailHandlers();
     }
