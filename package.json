@@ -1,0 +1,23 @@
+{
+  "name": "daily-pulse",
+  "version": "1.0.0",
+  "scripts": {
+    "fetch": "node scripts/fetch.js",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "smoke": "node scripts/smoke_test.js",
+    "prerelease": "npm test && npm run smoke"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": ["**/tests/**/*.test.js"]
+  },
+  "engines": { "node": ">=20" }
+}
