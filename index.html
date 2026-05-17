@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Daily Pulse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #000;
+      overflow: hidden;
+      height: 100dvh;
+      font-family: 'Nunito Sans', sans-serif;
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Loading screen ─────────────────────────────── */
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      z-index: 900;
+      transition: opacity 0.4s;
+    }
+    #loading.gone { opacity: 0; pointer-events: none; }
+    .ld-logo { display: flex; flex-direction: column; align-items: center; line-height: 1; }
+    .ld-daily {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      opacity: 0.55;
+    }
+    .ld-pulse {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 58px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+    .ld-sub {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.35;
+    }
+
+    /* ── Empty state ────────────────────────────────── */
+    #empty {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      z-index: 50;
+    }
+    #empty.show { display: flex; }
+    #empty h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 34px;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+    #empty p { font-size: 13px; opacity: 0.35; }
+
+    /* ── Feed ───────────────────────────────────────── */
+    #feed {
+      width: 100%;
+      height: 100dvh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    #feed::-webkit-scrollbar { display: none; }
+
+    /* ── Card ───────────────────────────────────────── */
+    .card {
+      width: 100%;
+      height: 100dvh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Photo */
+    .photo {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.05);
+      transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .card.visible .photo { transform: scale(1.0); }
+
+    /* Scrim — heavy bottom, light top */
+    .scrim {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.06) 0%,
+        rgba(0,0,0,0.18) 28%,
+        rgba(0,0,0,0.45) 55%,
+        rgba(0,0,0,0.84) 78%,
+        rgba(0,0,0,0.96) 100%
+      );
+    }
+
+    /* ── Topbar ─────────────────────────────────────── */
+    .topbar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 10;
+      padding: 50px 18px 18px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .brand { display: flex; flex-direction: column; line-height: 1; }
+    .brand-daily {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+    .brand-pulse {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 30px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      line-height: 1;
+    }
+    .topbar-pills { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+    .pill {
+      background: rgba(255,255,255,0.13);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 20px;
+      padding: 5px 13px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      letter-spacing: 0.2px;
+    }
+
+    /* ── Progress dots ──────────────────────────────── */
+    .dots {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      align-items: center;
+    }
+    .dot {
+      width: 3px;
+      height: 6px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 3px;
+      transition: height 0.3s ease, background 0.3s ease;
+    }
+    .dot.active {
+      height: 22px;
+      background: rgba(255,255,255,0.9);
+    }
+
+    /* ── Rail ───────────────────────────────────────── */
+    .rail {
+      position: absolute;
+      right: 16px;
+      bottom: 150px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
+    .rail-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      user-select: none;
+      text-decoration: none;
+      color: #fff;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .rail-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.13);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .rail-label {
+      font-size: 10px;
+      font-weight: 700;
+      opacity: 0.72;
+      letter-spacing: 0.2px;
+    }
+
+    /* ── Bottom ─────────────────────────────────────── */
+    .bottom {
+      position: absolute;
+      bottom: 0; left: 0;
+      right: 80px; /* clear the rail */
+      z-index: 10;
+      padding: 0 18px 38px;
+    }
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 9px;
+      overflow: hidden;
+    }
+    .cat-badge {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.14);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .meta-sep { opacity: 0.4; flex-shrink: 0; font-size: 12px; }
+    .meta-domain {
+      font-size: 11px;
+      font-weight: 600;
+      opacity: 0.6;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-shrink: 1;
+      min-width: 0;
+    }
+    .meta-time {
+      font-size: 11px;
+      font-weight: 600;
+      opacity: 0.45;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+    .headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 40px;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.55);
+      line-height: 1.02;
+      letter-spacing: 0.4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .action-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .stats {
+      display: flex;
+      gap: 14px;
+      font-size: 13px;
+      font-weight: 700;
+      opacity: 0.82;
+    }
+    .read-btn {
+      display: inline-block;
+      background: rgba(255,255,255,0.95);
+      color: #000;
+      border: none;
+      border-radius: 20px;
+      padding: 9px 20px;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .read-btn:hover { background: #fff; }
+
+    /* ── Counter ────────────────────────────────────── */
+    .counter {
+      position: absolute;
+      bottom: 42px;
+      left: 18px;
+      z-index: 20;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      opacity: 0.32;
+    }
+
+    /* ── Swipe hint (first card only) ───────────────── */
+    .swipe-hint {
+      position: absolute;
+      bottom: 130px;
+      left: 50%;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      pointer-events: none;
+      animation: swipeHintAnim 2.5s ease-in-out 3s both;
+    }
+    @keyframes swipeHintAnim {
+      0%   { opacity: 0;   transform: translateX(-50%) translateY(6px);  }
+      18%  { opacity: 0.9; transform: translateX(-50%) translateY(0);    }
+      75%  { opacity: 0.8; transform: translateX(-50%) translateY(-22px);}
+      100% { opacity: 0;   transform: translateX(-50%) translateY(-30px);}
+    }
+    .swipe-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+    .swipe-text {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      opacity: 0.75;
+    }
+
+    /* ── Toast ──────────────────────────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.14);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      z-index: 999;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    #toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <div id="loading">
+    <div class="ld-logo">
+      <span class="ld-daily">daily</span>
+      <span class="ld-pulse">PULSE</span>
+    </div>
+    <div class="ld-sub">Loading stories…</div>
+  </div>
+
+  <div id="empty">
+    <h2>No Stories Yet</h2>
+    <p>Run <code>node scripts/fetch.js</code> to populate stories.</p>
+  </div>
+
+  <div id="feed"></div>
+  <div id="toast"></div>
+
+  <script>
+    'use strict';
+
+    /* ── Gradient fallbacks keyed by story.gradient 1–5 ── */
+    const GRADIENTS = {
+      1: 'linear-gradient(160deg, #0d1b3e 0%, #071028 100%)',
+      2: 'linear-gradient(160deg, #1a0808 0%, #0d0404 100%)',
+      3: 'linear-gradient(160deg, #071a0e 0%, #040d07 100%)',
+      4: 'linear-gradient(160deg, #1a1005 0%, #0d0803 100%)',
+      5: 'linear-gradient(160deg, #0e0520 0%, #070312 100%)',
+    };
+
+    /* ── Category badge colours ─────────────────────────── */
+    const CAT_COLORS = {
+      'AI':      'rgba(99,102,241,0.6)',
+      'Tech':    'rgba(14,165,233,0.6)',
+      'Finance': 'rgba(16,185,129,0.6)',
+      'Geo':     'rgba(245,158,11,0.6)',
+      'Sports':  'rgba(239,68,68,0.6)',
+    };
+
+    /* ── Category detection ─────────────────────────────── */
+    function detectCategory(domain, title) {
+      const d = (domain || '').toLowerCase();
+      const t = ' ' + (title || '').toLowerCase() + ' ';
+
+      const aiDomains    = ['openai', 'anthropic', 'deepmind', 'huggingface', 'mistral'];
+      const aiKeywords   = [' ai ', ' llm', 'model', 'gpt', 'claude', 'gemini', 'neural', 'machine learning'];
+      if (aiDomains.some(k => d.includes(k)) || aiKeywords.some(k => t.includes(k))) return '🤖 AI';
+
+      const finDomains   = ['wsj', 'bloomberg', 'ft.com', 'coindesk', 'reuters'];
+      const finKeywords  = ['market', 'stock', 'rate', 'inflation', 'fed ', 'bank', 'crypto', 'bitcoin'];
+      if (finDomains.some(k => d.includes(k)) || finKeywords.some(k => t.includes(k))) return '💰 Finance';
+
+      const geoKeywords  = ['war', 'election', 'government', 'president', 'minister', 'nato', 'sanctions', 'treaty', 'summit'];
+      if (geoKeywords.some(k => t.includes(k))) return '🌍 Geo';
+
+      const sprDomains   = ['espn', 'bbc sport', 'skysports', 'nba.com', 'nfl.com', 'fifa.com'];
+      const sprKeywords  = ['nba', 'nfl', 'fifa', 'championship', 'playoffs', 'match', 'tournament', 'cup'];
+      if (sprDomains.some(k => d.includes(k)) || sprKeywords.some(k => t.includes(k))) return '⚽ Sports';
+
+      return '💻 Tech';
+    }
+
+    /* ── Time-ago ───────────────────────────────────────── */
+    function timeAgo(ts) {
+      const s = Math.floor(Date.now() / 1000) - ts;
+      if (s < 60) return 'just now';
+      const m = Math.floor(s / 60);
+      if (m < 60) return `${m}m ago`;
+      const h = Math.floor(m / 60), rm = m % 60;
+      if (h < 24) return rm > 0 ? `${h}h ${rm}m ago` : `${h}h ago`;
+      return `${Math.floor(h / 24)}d ago`;
+    }
+
+    /* ── Weather code → emoji ───────────────────────────── */
+    function weatherEmoji(code) {
+      if (code === 0)                       return '☀️';
+      if (code >= 1  && code <= 3)          return '⛅';
+      if (code >= 45 && code <= 48)         return '🌫️';
+      if (code >= 51 && code <= 67)         return '🌧️';
+      if (code >= 71 && code <= 77)         return '❄️';
+      if (code >= 80 && code <= 82)         return '🌦️';
+      if (code >= 95 && code <= 99)         return '⛈️';
+      return '🌡️';
+    }
+
+    /* ── Inline SVG icons ───────────────────────────────── */
+    const ICO_BOOKMARK = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>`;
+    const ICO_SHARE    = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>`;
+    const ICO_COMMENT  = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`;
+
+    /* ── Helpers ────────────────────────────────────────── */
+    function esc(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function safeUrl(url, fallback = '#') {
+      if (!url) return fallback;
+      try {
+        const { protocol } = new URL(url);
+        return (protocol === 'http:' || protocol === 'https:') ? url : fallback;
+      } catch { return fallback; }
+    }
+
+    function fmtCount(n) {
+      return n > 999 ? `${(n / 1000).toFixed(1)}k` : String(n);
+    }
+
+    function datePillText() {
+      const now = new Date();
+      const day  = now.toLocaleDateString('en-US', { weekday: 'long' });
+      const date = now.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+      return `${day}, ${date}`;
+    }
+
+    function dotsHTML(activeIdx) {
+      let h = '';
+      for (let i = 0; i < 6; i++) {
+        h += `<div class="dot${i === activeIdx ? ' active' : ''}"></div>`;
+      }
+      return h;
+    }
+
+    /* ── Build one card's HTML ──────────────────────────── */
+    function buildCard(story, idx, total) {
+      const cat      = detectCategory(story.domain, story.title);
+      const catKey   = cat.split(' ')[1];
+      const catColor = CAT_COLORS[catKey] || 'rgba(255,255,255,0.15)';
+
+      // Background: image on top, gradient underneath as live fallback
+      const gradient = GRADIENTS[story.gradient] || GRADIENTS[1];
+      let photoBg;
+      if (story.image) {
+        const imgSafe = story.image.replace(/\\/g, '').replace(/"/g, '%22');
+        photoBg = `background-image: url("${imgSafe}"), ${gradient};`;
+      } else {
+        photoBg = `background: ${gradient};`;
+      }
+
+      const activeDotsIdx = Math.round((idx / Math.max(total - 1, 1)) * 5);
+      const ago           = timeAgo(story.time);
+      const domain        = esc(story.domain || 'news.ycombinator.com');
+      const scoreStr      = fmtCount(story.score);
+      const commentsStr   = fmtCount(story.comments);
+      const storyHref     = esc(safeUrl(story.url, `https://news.ycombinator.com/item?id=${story.id}`));
+      const hnHref        = `https://news.ycombinator.com/item?id=${story.id}`;
+
+      return `
+<div class="card" data-index="${idx}">
+  <div class="photo" style="${photoBg} background-size: cover; background-position: center;"></div>
+  <div class="scrim"></div>
+
+  <div class="topbar">
+    <div class="brand">
+      <span class="brand-daily">daily</span>
+      <span class="brand-pulse">PULSE</span>
+    </div>
+    <div class="topbar-pills">
+      <div class="pill weather-pill">📍 Enable location</div>
+      <div class="pill date-pill">${esc(datePillText())}</div>
+    </div>
+  </div>
+
+  <div class="dots">${dotsHTML(activeDotsIdx)}</div>
+
+  <div class="rail">
+    <div class="rail-btn" data-action="save" data-url="${storyHref}">
+      <div class="rail-icon">${ICO_BOOKMARK}</div>
+      <span class="rail-label">Save</span>
+    </div>
+    <div class="rail-btn" data-action="share" data-url="${storyHref}" data-title="${esc(story.title)}">
+      <div class="rail-icon">${ICO_SHARE}</div>
+      <span class="rail-label">Share</span>
+    </div>
+    <a class="rail-btn" href="${esc(hnHref)}" target="_blank" rel="noopener noreferrer">
+      <div class="rail-icon">${ICO_COMMENT}</div>
+      <span class="rail-label">${commentsStr}</span>
+    </a>
+  </div>
+
+  <div class="bottom">
+    <div class="meta-row">
+      <span class="cat-badge" style="background:${catColor}">${cat}</span>
+      <span class="meta-sep">·</span>
+      <span class="meta-domain">${domain}</span>
+      <span class="meta-time">${esc(ago)}</span>
+    </div>
+    <div class="headline">${esc(story.title)}</div>
+    <div class="action-row">
+      <div class="stats">
+        <span>🔥 ${scoreStr}</span>
+        <span>💬 ${commentsStr}</span>
+      </div>
+      <a class="read-btn" href="${storyHref}" target="_blank" rel="noopener noreferrer">Read →</a>
+    </div>
+  </div>
+
+  <div class="counter">${idx + 1} / ${total}</div>
+
+  ${idx === 0 ? `
+  <div class="swipe-hint">
+    <div class="swipe-icon">↑</div>
+    <div class="swipe-text">Swipe Up</div>
+  </div>` : ''}
+</div>`;
+    }
+
+    /* ── Render feed ────────────────────────────────────── */
+    function renderFeed(stories) {
+      const feed = document.getElementById('feed');
+      if (!stories.length) {
+        document.getElementById('empty').classList.add('show');
+        return;
+      }
+      document.getElementById('empty').classList.remove('show');
+      feed.innerHTML = stories.map((s, i) => buildCard(s, i, stories.length)).join('');
+      setupObserver();
+      setupRailHandlers();
+    }
+
+    /* ── IntersectionObserver ───────────────────────────── */
+    let observer;
+    function setupObserver() {
+      if (observer) observer.disconnect();
+      observer = new IntersectionObserver(entries => {
+        entries.forEach(e => e.target.classList.toggle('visible', e.isIntersecting));
+      }, { threshold: 0.6 });
+      document.querySelectorAll('.card').forEach(c => observer.observe(c));
+    }
+
+    /* ── Rail button handlers ───────────────────────────── */
+    function setupRailHandlers() {
+      document.querySelectorAll('.rail-btn[data-action]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const { action, url, title } = btn.dataset;
+          if (action === 'save') {
+            copyToClipboard(url, 'Link saved!');
+          } else if (action === 'share') {
+            if (navigator.share) {
+              navigator.share({ title, url }).catch(() => {});
+            } else {
+              copyToClipboard(url, 'Link copied!');
+            }
+          }
+        });
+      });
+    }
+
+    function copyToClipboard(text, msg) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => showToast(msg));
+      } else {
+        showToast('Copy not available');
+      }
+    }
+
+    /* ── Toast ──────────────────────────────────────────── */
+    let toastTimer;
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+    }
+
+    /* ── Weather ────────────────────────────────────────── */
+    async function loadWeather() {
+      try {
+        const pos = await new Promise((resolve, reject) =>
+          navigator.geolocation.getCurrentPosition(resolve, reject, { timeout: 10000 })
+        );
+        const { latitude: lat, longitude: lon } = pos.coords;
+
+        const [wRes, gRes] = await Promise.all([
+          fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`),
+          fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`, {
+            headers: { 'Accept-Language': 'en' }
+          }),
+        ]);
+
+        const [wData, gData] = await Promise.all([wRes.json(), gRes.json()]);
+        const cw   = wData.current_weather;
+        const temp = Math.round(cw.temperature);
+        const emoji = weatherEmoji(cw.weathercode);
+        const addr = gData.address || {};
+        const city = addr.city || addr.town || addr.suburb || addr.county || 'Unknown';
+
+        const txt = `${emoji} ${temp}°C · ${city}`;
+        document.querySelectorAll('.weather-pill').forEach(el => { el.textContent = txt; });
+      } catch {
+        document.querySelectorAll('.weather-pill').forEach(el => { el.textContent = '📍 Enable location'; });
+      }
+    }
+
+    /* ── Date pill ──────────────────────────────────────── */
+    function updateDatePills() {
+      const txt = datePillText();
+      document.querySelectorAll('.date-pill').forEach(el => { el.textContent = txt; });
+    }
+
+    /* ── Load stories.json ──────────────────────────────── */
+    async function loadStories(bust = false) {
+      const url = bust ? `data/stories.json?t=${Date.now()}` : 'data/stories.json';
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return await res.json();
+      } catch (err) {
+        console.error('Failed to load stories:', err);
+        return [];
+      }
+    }
+
+    /* ── Pull-to-refresh ────────────────────────────────── */
+    function setupPullToRefresh() {
+      const feed = document.getElementById('feed');
+      let startY = 0;
+      let tracking = false;
+
+      feed.addEventListener('touchstart', e => {
+        if (feed.scrollTop === 0) {
+          startY = e.touches[0].clientY;
+          tracking = true;
+        }
+      }, { passive: true });
+
+      feed.addEventListener('touchend', async e => {
+        if (!tracking) return;
+        tracking = false;
+        const delta = e.changedTouches[0].clientY - startY;
+        if (delta > 80) {
+          showToast('Refreshing…');
+          const stories = await loadStories(true);
+          renderFeed(stories);
+          feed.scrollTop = 0;
+          loadWeather();
+        }
+      }, { passive: true });
+    }
+
+    /* ── Init ───────────────────────────────────────────── */
+    document.addEventListener('DOMContentLoaded', async () => {
+      const stories = await loadStories();
+
+      const loading = document.getElementById('loading');
+      loading.classList.add('gone');
+      setTimeout(() => { loading.style.display = 'none'; }, 450);
+
+      renderFeed(stories);
+      loadWeather();
+      updateDatePills();
+      setInterval(updateDatePills, 60_000);
+      setupPullToRefresh();
+    });
+  </script>
+</body>
+</html>
