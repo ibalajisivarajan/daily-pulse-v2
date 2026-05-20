@@ -24,8 +24,17 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Pull preferences from Gist
+        run: node scripts/pull-prefs.js
+        env:
+          GIST_ID: ${{ secrets.GIST_ID }}
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+
       - name: Fetch stories
-        run: node scripts/fetch.js
+        run: node scripts/agent.js
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Commit and push if changed
         run: |
