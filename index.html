@@ -641,11 +641,9 @@
     </div>
 
     <div class="settings-body">
-      <div id="gist-setup" class="gist-section">
-        <p class="gist-desc">Connect GitHub Gist to sync preferences across devices</p>
-        <input type="password" id="gist-token" class="gist-input" placeholder="Gist Token (needs gist + workflow scopes)">
-        <input type="text"     id="gist-id"    class="gist-input" placeholder="Gist ID">
-        <button class="connect-btn" onclick="connectGist()">Connect Gist</button>
+      <div class="gist-section">
+        <p class="gist-desc">Enter your public GitHub Gist ID to sync preferences across devices</p>
+        <input type="text" id="gist-id" class="gist-input" placeholder="Gist ID">
         <div id="gist-status" class="gist-status"></div>
       </div>
 
@@ -829,7 +827,7 @@
         <span class="brand-daily">daily</span>
         <span class="brand-pulse">PULSE</span>
       </div>
-      ${idx === 0 ? `<button class="refresh-btn" id="refresh-btn" onclick="refreshFeed()">⟳ Refresh</button>` : ''}
+      ${idx === 0 ? `<button class="refresh-btn" id="refreshBtn" onclick="refreshFeed()">⟳ Refresh</button>` : ''}
     </div>
     <div class="topbar-pills">
       <div class="pill weather-pill">📍 Enable location</div>
@@ -1028,9 +1026,9 @@
     }
 
     /* ── Preferences ────────────────────────────────────── */
-    const PREFS_KEY      = 'dp_prefs';
-    const GIST_TOKEN_KEY = 'dp_gist_token';
-    const GIST_ID_KEY    = 'dp_gist_id';
+    const PREFS_KEY   = 'dp_prefs';
+    const GIST_ID_KEY = 'dp_gist_id';
+    const WORKER_URL  = 'https://daily-pulse-refresh.ibalajisivarajan.workers.dev';
 
     const TOPICS = [
       { key: 'ai',      label: '🤖 AI'         },
@@ -1069,9 +1067,9 @@
       return prefs;
     }
 
-    async function fetchGistPrefs(token, gistId) {
+    async function fetchGistPrefs(gistId) {
       const res = await fetch(`https://api.github.com/gists/${gistId}`, {
-        headers: { 'Authorization': `token ${token}`, 'User-Agent': 'DailyPulse/2.0' },
+        headers: { 'User-Agent': 'DailyPulse/2.0' },
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const gist    = await res.json();
@@ -1080,114 +1078,88 @@
       return JSON.parse(content);
     }
 
-    async function patchGistPrefs(token, gistId, prefs) {
-      await fetch(`https://api.github.com/gists/${gistId}`, {
+    async function patchGistPrefs(gistId, prefs) {
+      const res = await fetch(`https://api.github.com/gists/${gistId}`, {
         method:  'PATCH',
         headers: {
-          'Authorization': `token ${token}`,
-          'Content-Type':  'application/json',
-          'User-Agent':    'DailyPulse/2.0',
+          'Content-Type': 'application/json',
+          'User-Agent':   'DailyPulse/2.0',
         },
         body: JSON.stringify({
           files: { 'preferences.json': { content: JSON.stringify(prefs, null, 2) } },
         }),
       });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
     }
 
     async function refreshFeed() {
-      const token = localStorage.getItem(GIST_TOKEN_KEY);
-      if (!token) {
-        showToast('Connect GitHub in Settings to enable refresh');
-        return;
-      }
-      const btn = document.getElementById('refresh-btn');
-      if (btn) btn.disabled = true;
-      try {
-        await dispatchWorkflow(token);
-        showToast('Feed refreshing — check back in 90 seconds');
-        setTimeout(async () => {
-          const stories = await loadStories(true);
-          if (stories.length) {
-            renderFeed(stories);
-            document.getElementById('feed').scrollTop = 0;
-            showToast('Feed updated!');
-          }
-          const b = document.getElementById('refresh-btn');
-          if (b) b.disabled = false;
-        }, 90000);
-      } catch (e) {
-        showToast('Refresh failed — check your GitHub token in Settings');
-        if (btn) btn.disabled = false;
-      }
-    }
+      const btn = document.getElementById('refreshBtn');
 
-    async function dispatchWorkflow(token) {
-      const res = await fetch(
-        'https://api.github.com/repos/ibalajisivarajan/daily-pulse-v2/actions/workflows/fetch-stories.yml/dispatches',
-        {
-          method:  'POST',
-          headers: {
-            'Authorization': `token ${token}`,
-            'Content-Type':  'application/json',
-            'User-Agent':    'DailyPulse/2.0',
-          },
-          body: JSON.stringify({ ref: 'main' }),
+      if (btn) {
+        btn.textContent = 'Refreshing…';
+        btn.disabled    = true;
+      }
+
+      try {
+        const res  = await fetch(WORKER_URL, { method: 'POST' });
+        const data = await res.json();
+
+        if (data.ok) {
+          showToast('Feed refreshing — new stories in ~90 seconds');
+          setTimeout(async () => {
+            await loadStories(true);
+            showToast('Feed updated');
+          }, 90000);
+        } else {
+          showToast('Refresh failed — try again');
         }
-      );
-      if (!res.ok && res.status !== 204) throw new Error(`HTTP ${res.status}`);
+      } catch (err) {
+        console.error('Refresh error:', err);
+        showToast('Refresh failed — check connection');
+      } finally {
+        setTimeout(() => {
+          if (btn) {
+            btn.textContent = '⟳ Refresh';
+            btn.disabled    = false;
+          }
+        }, 90000);
+      }
     }
 
     function openSettings()  { document.getElementById('settings').classList.add('open');    }
     function closeSettings() { document.getElementById('settings').classList.remove('open'); }
 
-    async function connectGist() {
-      const token   = document.getElementById('gist-token').value.trim();
-      const gistId  = document.getElementById('gist-id').value.trim();
-      const statusEl = document.getElementById('gist-status');
-      if (!token || !gistId) {
-        statusEl.textContent = 'Please enter both token and Gist ID.';
-        statusEl.className   = 'gist-status error';
-        return;
-      }
-      statusEl.textContent = 'Connecting…';
-      statusEl.className   = 'gist-status';
-      try {
-        const prefs = await fetchGistPrefs(token, gistId);
-        localStorage.setItem(GIST_TOKEN_KEY, token);
-        localStorage.setItem(GIST_ID_KEY,    gistId);
-        populateSliders(prefs);
-        statusEl.textContent = '✓ Connected';
-        statusEl.className   = 'gist-status success';
-        document.getElementById('gist-setup').style.display = 'none';
-      } catch (err) {
-        statusEl.textContent = `Error: could not reach Gist (${err.message})`;
-        statusEl.className   = 'gist-status error';
-      }
-    }
-
     async function savePrefs() {
       const prefs  = readPrefsFromSliders();
-      const token  = localStorage.getItem(GIST_TOKEN_KEY);
-      const gistId = localStorage.getItem(GIST_ID_KEY);
+      const gistId = (document.getElementById('gist-id').value.trim()
+                      || localStorage.getItem(GIST_ID_KEY)
+                      || '');
 
       localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
+      if (gistId) localStorage.setItem(GIST_ID_KEY, gistId);
 
-      if (token && gistId) {
-        try { await patchGistPrefs(token, gistId, prefs); }
-        catch (e) { console.warn('Gist patch failed:', e.message); }
+      let gistSynced = false;
+      if (gistId) {
+        try {
+          await patchGistPrefs(gistId, prefs);
+          gistSynced = true;
+        } catch (e) { console.warn('Gist patch failed:', e.message); }
       }
 
       let dispatched = false;
-      if (token) {
-        try   { await dispatchWorkflow(token); dispatched = true; }
-        catch (e) { console.warn('Workflow dispatch failed:', e.message); }
-      }
+      try {
+        const res  = await fetch(WORKER_URL, { method: 'POST' });
+        const data = await res.json();
+        dispatched = data.ok;
+      } catch (e) { console.warn('Worker dispatch failed:', e.message); }
 
       closeSettings();
-      showToast(dispatched
-        ? 'Preferences saved. Refreshing feed…'
-        : 'Preferences saved. Feed will update in next scheduled run.'
-      );
+
+      if (gistId && !gistSynced) {
+        showToast('Preferences saved locally. Make your Gist public to sync across devices.');
+      } else {
+        showToast(dispatched ? 'Preferences saved. Refreshing feed…' : 'Preferences saved.');
+      }
 
       if (dispatched) {
         setTimeout(async () => {
@@ -1202,13 +1174,13 @@
     }
 
     async function initPreferences() {
-      const token  = localStorage.getItem(GIST_TOKEN_KEY);
       const gistId = localStorage.getItem(GIST_ID_KEY);
-      if (token && gistId) {
+      if (gistId) {
+        const el = document.getElementById('gist-id');
+        if (el) el.value = gistId;
         try {
-          const prefs = await fetchGistPrefs(token, gistId);
+          const prefs = await fetchGistPrefs(gistId);
           populateSliders(prefs);
-          document.getElementById('gist-setup').style.display = 'none';
           return;
         } catch {}
       }

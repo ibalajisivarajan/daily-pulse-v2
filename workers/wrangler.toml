@@ -1,0 +1,4 @@
+name = "daily-pulse-refresh"
+main = "daily-pulse-refresh.js"
+compatibility_date = "2024-01-01"
+account_id = "018a1c2fc00f83763b0280ba8be61646"
