@@ -1,8 +1,6 @@
 name: Fetch Stories
 
 on:
-  schedule:
-    - cron: '0 */2 * * *'
   workflow_dispatch:
 
 permissions:
@@ -39,10 +37,4 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add data/stories.json
-          if ! git diff --staged --quiet; then
-            git commit -m "chore: update stories [skip ci]"
-            git push
-          else
-            echo "No changes to data/stories.json — skipping commit."
-          fi
+          git diff --quiet data/stories.json || (git add data/stories.json && git commit -m "chore: update stories [skip ci]" && git push)

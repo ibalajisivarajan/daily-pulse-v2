@@ -49,3 +49,7 @@ test('handles json wrapped in markdown code block', () => {
   const raw = '```json\n' + JSON.stringify([makeStory(1, 7)]) + '\n```';
   expect(parseGroqResponse(raw)).toHaveLength(1);
 });
+
+test('empty string returns empty array', () => {
+  expect(parseGroqResponse('')).toEqual([]);
+});

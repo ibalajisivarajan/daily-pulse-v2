@@ -134,8 +134,8 @@ async function main() {
       { role: 'user',   content: 'Fetch and curate the news now.' },
     ];
 
-    let finalContent = '';
-    const MAX_ITER   = 10;
+    let finalText  = '';
+    const MAX_ITER = 10;
 
     for (let iter = 0; iter < MAX_ITER; iter++) {
       const completion = await groq.chat.completions.create({
@@ -148,8 +148,8 @@ async function main() {
 
       const choice = completion.choices[0];
 
-      if (!choice.message.tool_calls?.length) {
-        finalContent = choice.message.content || '';
+      if (choice.finish_reason !== 'tool_calls') {
+        finalText = choice.message.content || '';
         console.log(`Groq finished after ${iter + 1} iteration(s).`);
         break;
       }
@@ -175,7 +175,7 @@ async function main() {
     await client.close();
 
     // ── Parse + normalise final output ─────────────────────────────────────
-    let finalStories = normalise(parseGroqResponse(finalContent));
+    let finalStories = normalise(parseGroqResponse(finalText));
 
     if (!finalStories.length) {
       throw new Error('Groq loop produced no stories');
