@@ -9,7 +9,6 @@
     "prerelease": "npm test && npm run smoke"
   },
   "dependencies": {
-    "@newsmcp/server": "latest",
     "cheerio": "^1.0.0",
     "groq-sdk": "latest",
     "node-fetch": "^3.3.2"
