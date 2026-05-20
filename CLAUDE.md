@@ -27,13 +27,37 @@ TikTok-style vertical scroll news app. Phase 2: newsmcp MCP → Groq LLM → enr
 - GIST_ID — ID of a GitHub Gist containing preferences.json
 - GIST_TOKEN — GitHub PAT with gist + workflow scopes
 
+## Phase 2 — MCP + Groq Architecture
+
+### MCP Server: scripts/news-mcp-server.js
+Exposes 7 tools — one per news category. Groq decides at runtime which to call based on user preferences.
+
+| Tool | Source | URL |
+|---|---|---|
+| get_ai_tech_news | Hacker News | hn.algolia.com/api/v1/search?tags=front_page |
+| get_finance_news | Reuters Business | feeds.reuters.com/reuters/businessNews |
+| get_geopolitics_news | Al Jazeera | aljazeera.com/xml/rss/all.xml |
+| get_sports_news | BBC Sport | feeds.bbci.co.uk/news/sport/rss.xml |
+| get_science_news | Guardian Science | theguardian.com/science/rss |
+| get_health_news | CBC Health | rss.cbc.ca/lineup/health.xml |
+| get_climate_news | Guardian Environment | theguardian.com/environment/rss |
+
+### Agent: scripts/agent.js
+MCP client that spawns news-mcp-server.js, passes all 7 tools to Groq, runs the tool-call loop until Groq returns final JSON array. Falls back to direct get_ai_tech_news call if Groq loop fails.
+
+### Secrets Required
+- GROQ_API_KEY — from console.groq.com
+- GIST_ID — GitHub Gist ID containing preferences.json
+- GIST_TOKEN — GitHub PAT with gist + workflow scopes
+
 ## Repo Structure
 daily-pulse-v2/
 ├── .github/workflows/fetch-stories.yml
 ├── scripts/
-│   ├── agent.js          ← Phase 2 main (newsmcp + Groq)
-│   ├── pull-prefs.js     ← pulls preferences.json from Gist before agent runs
-│   ├── fetch.js          ← Phase 1 (kept for reference)
+│   ├── news-mcp-server.js ← Phase 2 MCP server (7 tools)
+│   ├── agent.js           ← Phase 2 agent (MCP client + Groq loop)
+│   ├── pull-prefs.js      ← pulls preferences.json from Gist
+│   ├── fetch.js           ← Phase 1 (kept for reference)
 │   ├── app-logic.js
 │   └── smoke_test.js
 ├── tests/

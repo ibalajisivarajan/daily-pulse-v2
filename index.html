@@ -406,6 +406,30 @@
       gap: 10px;
     }
 
+    /* ── Refresh Feed button ────────────────────────── */
+    .refresh-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.13);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      white-space: nowrap;
+    }
+    .refresh-btn:disabled {
+      opacity: 0.45;
+      cursor: default;
+    }
+
     /* ── Gear button ────────────────────────────────── */
     .gear-btn {
       width: 36px;
@@ -425,16 +449,15 @@
 
     /* ── Story summary ──────────────────────────────── */
     .summary {
-      font-size: 13px;
-      font-weight: 600;
-      opacity: 0.72;
-      line-height: 1.4;
-      margin-bottom: 10px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.45;
+      margin-top: 8px;
+      margin-bottom: 14px;
     }
+    .summary:empty { display: none; }
 
     /* ── Settings panel ─────────────────────────────── */
     #settings {
@@ -806,6 +829,7 @@
         <span class="brand-daily">daily</span>
         <span class="brand-pulse">PULSE</span>
       </div>
+      ${idx === 0 ? `<button class="refresh-btn" id="refresh-btn" onclick="refreshFeed()">⟳ Refresh</button>` : ''}
     </div>
     <div class="topbar-pills">
       <div class="pill weather-pill">📍 Enable location</div>
@@ -838,7 +862,7 @@
       <span class="meta-time">${esc(ago)}</span>
     </div>
     <div class="headline">${esc(story.title)}</div>
-    ${story.summary ? `<div class="summary">${esc(story.summary)}</div>` : ''}
+    <div class="summary">${esc(story.summary || '')}</div>
     <div class="action-row">
       <div class="stats">
         <span>🔥 ${scoreStr}</span>
@@ -1068,6 +1092,33 @@
           files: { 'preferences.json': { content: JSON.stringify(prefs, null, 2) } },
         }),
       });
+    }
+
+    async function refreshFeed() {
+      const token = localStorage.getItem(GIST_TOKEN_KEY);
+      if (!token) {
+        showToast('Connect GitHub in Settings to enable refresh');
+        return;
+      }
+      const btn = document.getElementById('refresh-btn');
+      if (btn) btn.disabled = true;
+      try {
+        await dispatchWorkflow(token);
+        showToast('Feed refreshing — check back in 90 seconds');
+        setTimeout(async () => {
+          const stories = await loadStories(true);
+          if (stories.length) {
+            renderFeed(stories);
+            document.getElementById('feed').scrollTop = 0;
+            showToast('Feed updated!');
+          }
+          const b = document.getElementById('refresh-btn');
+          if (b) b.disabled = false;
+        }, 90000);
+      } catch (e) {
+        showToast('Refresh failed — check your GitHub token in Settings');
+        if (btn) btn.disabled = false;
+      }
     }
 
     async function dispatchWorkflow(token) {

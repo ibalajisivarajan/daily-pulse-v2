@@ -1,8 +1,6 @@
 name: Fetch Stories
 
 on:
-  schedule:
-    - cron: '0 */2 * * *'
   workflow_dispatch:
 
 permissions:
@@ -30,20 +28,13 @@ jobs:
           GIST_ID: ${{ secrets.GIST_ID }}
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
 
-      - name: Fetch stories
+      - name: Run agent
         run: node scripts/agent.js
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Commit and push if changed
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add data/stories.json
-          if ! git diff --staged --quiet; then
-            git commit -m "chore: update stories [skip ci]"
-            git push
-          else
-            echo "No changes to data/stories.json — skipping commit."
-          fi
+          git diff --quiet data/stories.json || (git add data/stories.json && git commit -m "chore: update stories [skip ci]" && git push)

@@ -84,14 +84,13 @@ const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 console.log('\n⚙️   fetch-stories.yml content');
 const yml = fs.readFileSync(path.join(ROOT, '.github/workflows/fetch-stories.yml'), 'utf8');
 [
-  'cron',
-  '0 */2 * * *',
   'workflow_dispatch',
   'stories.json',
   'skip ci',
   'git config',
   'git diff',
 ].forEach(s => check(`Contains "${s}"`, () => yml.includes(s)));
+check('No cron schedule (manual dispatch only)', () => !yml.includes('cron'));
 
 // ── 5. package.json deps ─────────────────────────────────────────────────────
 console.log('\n📦  package.json');
