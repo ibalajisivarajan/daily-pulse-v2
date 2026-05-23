@@ -827,7 +827,7 @@
         <span class="brand-daily">daily</span>
         <span class="brand-pulse">PULSE</span>
       </div>
-      ${idx === 0 ? `<button class="refresh-btn" id="refreshBtn" onclick="refreshFeed()">⟳ Refresh</button>` : ''}
+      <button class="refresh-btn" onclick="refreshFeed()">⟳ Refresh</button>
     </div>
     <div class="topbar-pills">
       <div class="pill weather-pill">📍 Enable location</div>
@@ -862,10 +862,6 @@
     <div class="headline">${esc(story.title)}</div>
     <div class="summary">${esc(story.summary || '')}</div>
     <div class="action-row">
-      <div class="stats">
-        <span>🔥 ${scoreStr}</span>
-        <span>💬 ${commentsStr}</span>
-      </div>
       <a class="read-btn" href="${storyHref}" target="_blank" rel="noopener noreferrer">Read →</a>
     </div>
   </div>
@@ -1093,12 +1089,8 @@
     }
 
     async function refreshFeed() {
-      const btn = document.getElementById('refreshBtn');
-
-      if (btn) {
-        btn.textContent = 'Refreshing…';
-        btn.disabled    = true;
-      }
+      const btns = document.querySelectorAll('.refresh-btn');
+      btns.forEach(b => { b.textContent = 'Refreshing…'; b.disabled = true; });
 
       try {
         const res  = await fetch(WORKER_URL, { method: 'POST' });
@@ -1118,10 +1110,10 @@
         showToast('Refresh failed — check connection');
       } finally {
         setTimeout(() => {
-          if (btn) {
-            btn.textContent = '⟳ Refresh';
-            btn.disabled    = false;
-          }
+          document.querySelectorAll('.refresh-btn').forEach(b => {
+            b.textContent = '⟳ Refresh';
+            b.disabled    = false;
+          });
         }, 90000);
       }
     }

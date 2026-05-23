@@ -56,7 +56,11 @@ For each story include:
 - image: https://picsum.photos/seed/{id}/900/1600
 - gradient: cycling 1-5 by index
 - category: one of AI, Tech, Finance, Geo, Sports, Science, Health, Climate
-- summary: one sentence max 20 words why this matters
+- summary: one punchy sentence that makes a curious person decide in 2 seconds whether to read or scroll.
+  Rules: never repeat words from the headline; create a sense of relevance, intrigue, or consequence;
+  answer "why should I care right now" not "what is this about"; if it affects money, health, jobs, or
+  daily life say so directly; if it is surprising or counterintuitive lead with that; max 20 words;
+  no generic phrases like "important update" or "new development".
 - relevance: integer 1-10 weighted by interest levels above
 - filtered: true for job posts, polls, press releases, relevance < 3
 
