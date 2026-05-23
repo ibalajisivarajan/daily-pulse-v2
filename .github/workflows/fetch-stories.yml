@@ -30,12 +30,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Pull preferences from Gist
-        run: node scripts/pull-prefs.js
-        env:
-          GIST_ID: ${{ secrets.GIST_ID }}
-          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
-
       - name: Run agent
         run: node scripts/agent.js
         env:

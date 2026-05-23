@@ -507,51 +507,6 @@
       letter-spacing: 0.1px;
     }
     .settings-body { padding: 0 18px; }
-    .gist-section {
-      padding: 20px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 14px;
-      margin-bottom: 28px;
-    }
-    .gist-desc {
-      font-size: 13px;
-      font-weight: 600;
-      opacity: 0.65;
-      margin-bottom: 14px;
-      line-height: 1.4;
-    }
-    .gist-input {
-      width: 100%;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 10px;
-      color: #fff;
-      font-family: 'Nunito Sans', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 11px 14px;
-      margin-bottom: 10px;
-      outline: none;
-      -webkit-appearance: none;
-    }
-    .gist-input::placeholder { opacity: 0.35; }
-    .connect-btn {
-      width: 100%;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 10px;
-      color: #fff;
-      font-family: 'Nunito Sans', sans-serif;
-      font-size: 13px;
-      font-weight: 800;
-      padding: 11px 14px;
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .gist-status { font-size: 12px; font-weight: 700; margin-top: 10px; min-height: 18px; }
-    .gist-status.success { color: #4ade80; }
-    .gist-status.error   { color: #f87171; }
     .sliders-section { padding-bottom: 10px; }
     .slider-row {
       display: flex;
@@ -636,17 +591,11 @@
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
         Back
       </button>
-      <div class="settings-title">Your Feed Preferences</div>
-      <div class="settings-sub">Drag to set how much you care about each topic</div>
+      <div class="settings-title">YOUR FEED PREFERENCES</div>
+      <div class="settings-sub">Changes apply to everyone with this URL</div>
     </div>
 
     <div class="settings-body">
-      <div class="gist-section">
-        <p class="gist-desc">Enter your public GitHub Gist ID to sync preferences across devices</p>
-        <input type="text" id="gist-id" class="gist-input" placeholder="Gist ID">
-        <div id="gist-status" class="gist-status"></div>
-      </div>
-
       <div class="sliders-section">
         <div class="slider-row">
           <span class="slider-label">🤖 AI</span>
@@ -1022,8 +971,6 @@
     }
 
     /* ── Preferences ────────────────────────────────────── */
-    const PREFS_KEY   = 'dp_prefs';
-    const GIST_ID_KEY = 'dp_gist_id';
     const WORKER_URL  = 'https://daily-pulse-refresh.alabinnexus.workers.dev';
 
     const TOPICS = [
@@ -1063,45 +1010,28 @@
       return prefs;
     }
 
-    async function fetchGistPrefs(gistId) {
-      const res = await fetch(`https://api.github.com/gists/${gistId}`, {
-        headers: { 'User-Agent': 'DailyPulse/2.0' },
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const gist    = await res.json();
-      const content = gist.files?.['preferences.json']?.content;
-      if (!content) throw new Error('preferences.json not found in Gist');
-      return JSON.parse(content);
-    }
-
-    async function patchGistPrefs(gistId, prefs) {
-      const res = await fetch(`https://api.github.com/gists/${gistId}`, {
-        method:  'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'User-Agent':   'DailyPulse/2.0',
-        },
-        body: JSON.stringify({
-          files: { 'preferences.json': { content: JSON.stringify(prefs, null, 2) } },
-        }),
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    }
-
     async function refreshFeed() {
       const btns = document.querySelectorAll('.refresh-btn');
       btns.forEach(b => { b.textContent = 'Refreshing…'; b.disabled = true; });
 
       try {
-        const res  = await fetch(WORKER_URL, { method: 'POST' });
+        const res  = await fetch(WORKER_URL, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({}),
+        });
         const data = await res.json();
 
         if (data.ok) {
-          showToast('Feed refreshing — new stories in ~90 seconds');
+          showToast('Feed refreshing in ~2 minutes…');
           setTimeout(async () => {
-            await loadStories(true);
-            showToast('Feed updated');
-          }, 90000);
+            const stories = await loadStories(true);
+            if (stories.length) {
+              renderFeed(stories);
+              document.getElementById('feed').scrollTop = 0;
+              showToast('Feed updated!');
+            }
+          }, 150000);
         } else {
           showToast('Refresh failed — try again');
         }
@@ -1114,7 +1044,7 @@
             b.textContent = '⟳ Refresh';
             b.disabled    = false;
           });
-        }, 90000);
+        }, 150000);
       }
     }
 
@@ -1122,65 +1052,44 @@
     function closeSettings() { document.getElementById('settings').classList.remove('open'); }
 
     async function savePrefs() {
-      const prefs  = readPrefsFromSliders();
-      const gistId = (document.getElementById('gist-id').value.trim()
-                      || localStorage.getItem(GIST_ID_KEY)
-                      || '');
-
-      localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
-      if (gistId) localStorage.setItem(GIST_ID_KEY, gistId);
-
-      let gistSynced = false;
-      if (gistId) {
-        try {
-          await patchGistPrefs(gistId, prefs);
-          gistSynced = true;
-        } catch (e) { console.warn('Gist patch failed:', e.message); }
-      }
-
-      let dispatched = false;
-      try {
-        const res  = await fetch(WORKER_URL, { method: 'POST' });
-        const data = await res.json();
-        dispatched = data.ok;
-      } catch (e) { console.warn('Worker dispatch failed:', e.message); }
-
+      const prefs = readPrefsFromSliders();
       closeSettings();
-
-      if (gistId && !gistSynced) {
-        showToast('Preferences saved locally. Make your Gist public to sync across devices.');
-      } else {
-        showToast(dispatched ? 'Preferences saved. Refreshing feed…' : 'Preferences saved.');
-      }
-
-      if (dispatched) {
-        setTimeout(async () => {
-          const stories = await loadStories(true);
-          if (stories.length) {
-            renderFeed(stories);
-            document.getElementById('feed').scrollTop = 0;
-            showToast('Feed updated!');
-          }
-        }, 90000);
+      showToast('Saving preferences…');
+      try {
+        const res  = await fetch(WORKER_URL, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ preferences: prefs }),
+        });
+        const data = await res.json();
+        if (data.ok) {
+          showToast('Preferences saved. Feed refreshing in ~2 minutes…');
+          setTimeout(async () => {
+            const stories = await loadStories(true);
+            if (stories.length) {
+              renderFeed(stories);
+              document.getElementById('feed').scrollTop = 0;
+              showToast('Feed updated!');
+            }
+          }, 150000);
+        } else {
+          showToast('Save failed — check connection');
+        }
+      } catch (e) {
+        console.error('Save error:', e);
+        showToast('Save failed — check connection');
       }
     }
 
     async function initPreferences() {
-      const gistId = localStorage.getItem(GIST_ID_KEY);
-      if (gistId) {
-        const el = document.getElementById('gist-id');
-        if (el) el.value = gistId;
-        try {
-          const prefs = await fetchGistPrefs(gistId);
-          populateSliders(prefs);
-          return;
-        } catch {}
+      const defaultPrefs = { ai:3, tech:3, finance:3, geo:3, sports:3, science:3, health:3, climate:3 };
+      try {
+        const res   = await fetch('data/preferences.json?t=' + Date.now());
+        const prefs = await res.json();
+        populateSliders(prefs);
+      } catch {
+        populateSliders(defaultPrefs);
       }
-      const stored = localStorage.getItem(PREFS_KEY);
-      if (stored) {
-        try { populateSliders(JSON.parse(stored)); return; } catch {}
-      }
-      populateSliders({ ai:3, tech:3, finance:3, geo:3, sports:3, science:3, health:3, climate:3 });
     }
 
     /* ── Init ───────────────────────────────────────────── */
