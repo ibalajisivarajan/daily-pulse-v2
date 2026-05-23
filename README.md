@@ -1,6 +1,6 @@
 # Daily Pulse
 
-TikTok-style news feed pulling top stories from Hacker News.
+Full-screen vertical scroll news feed pulling top stories from Hacker News.
 
 ## Stack
 - HN Algolia API (free, no auth)

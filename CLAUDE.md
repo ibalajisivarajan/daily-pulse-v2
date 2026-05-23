@@ -4,7 +4,7 @@
 Balaji Sivarajan — Senior TPM, Surrey BC Canada. iPhone is primary device. Surface Pro Windows 11 is dev machine. GitHub: ibalajisivarajan
 
 ## What Daily Pulse Is
-TikTok-style vertical scroll news app. Phase 2: newsmcp MCP → Groq LLM → enriched stories.json, served via GitHub Pages. Full-screen snap-scroll cards, photo background, headline + AI summary overlay. Preferences UI with 8-topic sliders, localStorage + GitHub Gist sync. Zero monthly cost.
+Full-screen vertical scroll news app. Phase 2: newsmcp MCP → Groq LLM → enriched stories.json, served via GitHub Pages. Full-screen snap-scroll cards, photo background, headline + AI summary overlay. Preferences UI with 8-topic sliders, localStorage + GitHub Gist sync. Zero monthly cost.
 
 ## Architecture Decisions (All Locked)
 | Decision | Choice |
