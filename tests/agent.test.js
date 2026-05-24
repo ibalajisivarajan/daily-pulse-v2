@@ -26,23 +26,32 @@ test('invalid JSON returns empty array', () => {
   expect(parseGroqResponse('not json')).toEqual([]);
 });
 
-test('filtered stories removed', () => {
+test('filtered stories returned as-is (filtering happens in Phase 6)', () => {
   const input  = [makeStory(1, 8, false), makeStory(2, 2, true)];
+  const result = parseGroqResponse(JSON.stringify(input));
+  expect(result).toHaveLength(2);
+});
+
+test('all stories returned unsorted (sorting happens in Phase 6)', () => {
+  const input  = [makeStory(1, 3), makeStory(2, 9), makeStory(3, 6)];
+  const result = parseGroqResponse(JSON.stringify(input));
+  expect(result).toHaveLength(3);
+});
+
+test('no cap applied (capping happens in Phase 6)', () => {
+  const input = Array.from({ length: 40 }, (_, i) => makeStory(i, 5));
+  expect(parseGroqResponse(JSON.stringify(input))).toHaveLength(40);
+});
+
+test('stories with undefined title are filtered', () => {
+  const input = [
+    makeStory(1, 8, false),
+    { ...makeStory(2, 5, false), title: 'undefined' },
+    { ...makeStory(3, 6, false), title: '' },
+  ];
   const result = parseGroqResponse(JSON.stringify(input));
   expect(result).toHaveLength(1);
   expect(result[0].id).toBe('1');
-});
-
-test('sorted by relevance descending', () => {
-  const input  = [makeStory(1, 3), makeStory(2, 9), makeStory(3, 6)];
-  const result = parseGroqResponse(JSON.stringify(input));
-  expect(result[0].relevance).toBe(9);
-  expect(result[1].relevance).toBe(6);
-});
-
-test('capped at 30 stories', () => {
-  const input = Array.from({ length: 40 }, (_, i) => makeStory(i, 5));
-  expect(parseGroqResponse(JSON.stringify(input))).toHaveLength(30);
 });
 
 test('handles json wrapped in markdown code block', () => {

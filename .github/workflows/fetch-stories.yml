@@ -34,6 +34,7 @@ jobs:
         run: node scripts/agent.js
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
 
       - name: Commit and push if changed
         run: |
