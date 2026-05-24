@@ -27,6 +27,8 @@ function loadEnv() {
   } catch {}
 }
 
+// ── Phase 1 — Load preferences ────────────────────────────────────────────────
+
 function loadPreferences() {
   try {
     return { ...DEFAULT_PREFS, ...JSON.parse(readFileSync(PREFS_PATH, 'utf8')) };
@@ -35,32 +37,14 @@ function loadPreferences() {
   }
 }
 
-// ── Groq system prompt ────────────────────────────────────────────────────────
+// ── Phase 2 — Stories per slider ──────────────────────────────────────────────
 
-function buildSystemPrompt(prefs) {
-  return `You are a news curator with access to 7 news tools.
-Call tools based on user interest levels. High interest = call that tool with more stories. Interest below 3 = skip that tool entirely.
-
-User interest levels (1-10):
-AI/Tech: ${prefs.ai}
-Finance: ${prefs.finance}
-Geopolitics: ${prefs.geo}
-Sports: ${prefs.sports}
-Science: ${prefs.science}
-Health: ${prefs.health}
-Climate: ${prefs.climate}
-
-After collecting stories via tools, return a JSON array.
-For each story include:
-- id, title, url, domain, score, comments, time (from tool results)
-- image: https://picsum.photos/seed/{id}/900/1600
-- gradient: cycling 1-5 by index
-- category: one of AI, Tech, Finance, Geo, Sports, Science, Health, Climate
-- summary: one sentence max 20 words why this matters
-- relevance: integer 1-10 weighted by interest levels above
-- filtered: true for job posts, polls, press releases, relevance < 3
-
-Return ONLY a valid JSON array. No markdown. No code blocks. No explanation.`;
+function storiesForSlider(value) {
+  if (value <= 2) return 0;
+  if (value <= 4) return 5;
+  if (value <= 6) return 7;
+  if (value <= 8) return 10;
+  return 14;
 }
 
 // ── parseGroqResponse (exported for tests) ────────────────────────────────────
@@ -68,26 +52,92 @@ Return ONLY a valid JSON array. No markdown. No code blocks. No explanation.`;
 function parseGroqResponse(raw) {
   try {
     const cleaned = raw.replace(/```json|```/g, '').trim();
-    const parsed  = JSON.parse(cleaned);
-    if (!Array.isArray(parsed)) return [];
-    return parsed
-      .filter(s => !s.filtered)
-      .sort((a, b) => (b.relevance || 0) - (a.relevance || 0))
-      .slice(0, 30);
+    const arr = JSON.parse(cleaned);
+    if (!Array.isArray(arr)) return [];
+    return arr.filter(s =>
+      s.title &&
+      s.title !== 'undefined' &&
+      !isNaN(Number(s.time)) &&
+      Number(s.time) > 0
+    );
   } catch {
     return [];
   }
 }
 
-// ── Normalise stories (ensure image + gradient always set) ────────────────────
+// ── Phase 4 — Groq enrichment prompt ─────────────────────────────────────────
 
-function normalise(stories) {
-  return stories.map((s, i) => ({
-    ...s,
-    image:    s.image    || `https://picsum.photos/seed/${s.id}/900/1600`,
-    gradient: s.gradient || (i % 5) + 1,
-  }));
+function buildEnrichPrompt(prefs) {
+  return `You are a news curator. For each story in the array enrich it with four fields: category, imageQuery, summary, relevance.
+
+CATEGORY RULES — apply in this exact order, stop at first match:
+1. Title contains any of: AI, LLM, GPT, Claude, Gemini, neural, machine learning, artificial intelligence, chatbot, OpenAI, Anthropic, DeepMind → category = "AI"
+2. Title contains any of: startup, software, app, developer, cloud, Apple, Google, Microsoft, Meta, Amazon, chip, semiconductor, programming, algorithm → category = "Tech"
+3. Title contains any of: market, stock, inflation, Fed, rate, bank, economy, GDP, recession, crypto, bitcoin, investment, earnings, trade, tariff, dollar → category = "Finance"
+4. Title contains any of: war, military, election, president, minister, government, NATO, sanctions, treaty, diplomacy, Trump, Putin, Xi, nuclear, missile, ceasefire → category = "Geo"
+5. Title contains any of: match, game, championship, league, FIFA, NBA, NFL, Olympics, player, team, score, tournament, cricket, football, soccer → category = "Sports"
+6. Title contains any of: climate, carbon, emissions, wildfire, flood, drought, sea level, fossil fuel, renewable, hurricane, glacier, deforestation → category = "Climate"
+7. Title contains any of: health, hospital, disease, cancer, vaccine, FDA, drug, treatment, virus, pandemic, surgery, mental health, nutrition → category = "Health"
+8. Title contains any of: space, NASA, planet, research, study, discovery, experiment, species, fossil, physics, biology, genetics, quantum → category = "Science"
+9. Anything else → use the _sourceCategory field provided.
+
+IMAGEQUERY RULES:
+Write a 2-4 word search query for a relevant Unsplash photo. Think: what visual best represents this story?
+Examples: "Fed signals rate cuts" → "federal reserve building" / "SpaceX rocket explodes" → "rocket launch fire" / "Iran nuclear deal" → "diplomatic negotiation table" / "NBA playoffs overtime" → "basketball court crowd" / "Ebola outbreak DRC" → "medical workers africa" / "Wildfire threatens island" → "wildfire smoke forest"
+Never use people's names as queries. Use scenes and concepts.
+
+SUMMARY RULES:
+Write one punchy sentence. Minimum 12 words. Maximum 20 words.
+Formula: [what happened] + [why it matters right now]
+Rules:
+- NEVER repeat words from the headline
+- Must answer "so what" — state the consequence or impact
+- Create urgency, surprise, relevance, or concern
+- If it affects money, jobs, health, or safety — say so directly
+- If it is surprising or counterintuitive — lead with that
+BANNED phrases: important, breaking, developing, update, latest, new, officials say, sources say, report says, situation, event
+
+Bad: "Diplomatic breakthrough"
+Good: "Nuclear standoff closer to resolution than any point in a decade — oil markets already reacting"
+Bad: "Health crisis worsens"
+Good: "Ebola spreading faster than responders can contain — WHO warning is the most urgent in three years"
+
+RELEVANCE RULES:
+Score 1-10 based on these user interest levels:
+AI:${prefs.ai} Finance:${prefs.finance} Geo:${prefs.geo}
+Sports:${prefs.sports} Science:${prefs.science}
+Health:${prefs.health} Climate:${prefs.climate}
+10 = perfectly matches highest interest
+1 = completely outside all interests
+Do NOT mark any real news story as filtered=true.
+Only mark filtered=true for: job postings, polls, sponsored content, press releases disguised as news.
+
+Return ONLY a valid JSON array. No markdown. No explanation.
+Each object must have ALL original fields plus: category, imageQuery, summary, relevance, filtered`;
 }
+
+// ── Gradient by category ──────────────────────────────────────────────────────
+
+const CATEGORY_GRADIENT = {
+  'AI':      1,
+  'Tech':    1,
+  'Finance': 2,
+  'Geo':     3,
+  'Sports':  4,
+  'Science': 5,
+  'Health':  2,
+  'Climate': 3,
+};
+
+const CATEGORY_MAP = {
+  get_ai_tech_news:     'AI',
+  get_finance_news:     'Finance',
+  get_geopolitics_news: 'Geo',
+  get_sports_news:      'Sports',
+  get_science_news:     'Science',
+  get_health_news:      'Health',
+  get_climate_news:     'Climate',
+};
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 
@@ -102,92 +152,182 @@ async function main() {
     return;
   }
 
-  // Spawn MCP server as child process
-  const transport = new StdioClientTransport({
-    command: 'node',
-    args:    [join(__dirname, 'news-mcp-server.js')],
-  });
-  const client = new Client({ name: 'daily-pulse-agent', version: '2.0' });
-
   try {
+    // ── Phase 2 — Calculate fetch plan ───────────────────────────────────
+    const toolCounts = {
+      get_ai_tech_news:     storiesForSlider(prefs.ai),
+      get_finance_news:     storiesForSlider(prefs.finance),
+      get_geopolitics_news: storiesForSlider(prefs.geo),
+      get_sports_news:      storiesForSlider(prefs.sports),
+      get_science_news:     storiesForSlider(prefs.science),
+      get_health_news:      storiesForSlider(prefs.health),
+      get_climate_news:     storiesForSlider(prefs.climate),
+    };
+    console.log('Fetch plan:', JSON.stringify(toolCounts));
+
+    // ── Phase 3 — Spawn MCP server and call tools directly ───────────────
+    const transport = new StdioClientTransport({
+      command: 'node',
+      args:    [join(__dirname, 'news-mcp-server.js')],
+    });
+    const client = new Client({ name: 'daily-pulse-agent', version: '2.0' });
     await client.connect(transport);
     console.log('MCP server connected.');
 
-    // Discover available tools
-    const { tools } = await client.listTools();
-    console.log(`Available tools: ${tools.map(t => t.name).join(', ')}`);
+    const allRawStories = [];
 
-    // Map to Groq tool format
-    const groqTools = tools.map(t => ({
-      type:     'function',
-      function: { name: t.name, description: t.description, parameters: t.inputSchema },
-    }));
-
-    // Initialise Groq
-    const _Groq = require('groq-sdk');
-    const Groq  = _Groq.default || _Groq;
-    const groq  = new Groq({ apiKey: process.env.GROQ_API_KEY });
-
-    // ── Agentic tool-call loop ──────────────────────────────────────────────
-    let messages = [
-      { role: 'system', content: buildSystemPrompt(prefs) },
-      { role: 'user',   content: 'Fetch and curate the news now.' },
-    ];
-
-    let finalText  = '';
-    const MAX_ITER = 10;
-
-    for (let iter = 0; iter < MAX_ITER; iter++) {
-      const completion = await groq.chat.completions.create({
-        model:       'llama-3.3-70b-versatile',
-        messages,
-        tools:       groqTools,
-        tool_choice: 'auto',
-        max_tokens:  8000,
-      });
-
-      const choice = completion.choices[0];
-
-      if (choice.finish_reason !== 'tool_calls') {
-        finalText = choice.message.content || '';
-        console.log(`Groq finished after ${iter + 1} iteration(s).`);
-        break;
+    for (const [toolName, count] of Object.entries(toolCounts)) {
+      if (count === 0) {
+        console.log(`Skipping ${toolName} (interest <= 2)`);
+        continue;
       }
+      try {
+        const result = await client.callTool({ name: toolName, arguments: { count } });
+        const text   = result.content?.[0]?.text || '[]';
+        let stories  = [];
+        try { stories = JSON.parse(text); } catch { stories = []; }
 
-      // Add assistant message (with tool_calls) to history
-      messages.push(choice.message);
+        stories = stories.filter(s =>
+          s.title &&
+          s.title !== 'undefined' &&
+          s.url &&
+          s.time &&
+          !isNaN(Number(s.time)) &&
+          Number(s.time) > 0
+        );
 
-      // Execute each tool call
-      for (const tc of choice.message.tool_calls) {
-        console.log(`  → calling ${tc.function.name}`);
-        let resultText = '[]';
-        try {
-          const args   = JSON.parse(tc.function.arguments || '{}');
-          const result = await client.callTool({ name: tc.function.name, arguments: args });
-          resultText   = result.content?.[0]?.text || '[]';
-        } catch (err) {
-          console.error(`  Tool ${tc.function.name} failed:`, err.message);
-        }
-        messages.push({ role: 'tool', tool_call_id: tc.id, content: resultText });
+        stories = stories.map(s => ({ ...s, _sourceCategory: CATEGORY_MAP[toolName] }));
+        allRawStories.push(...stories);
+        console.log(`Fetched ${stories.length} stories from ${toolName}`);
+      } catch (err) {
+        console.error(`Tool ${toolName} failed:`, err.message);
       }
     }
 
     await client.close();
+    console.log(`Total raw stories: ${allRawStories.length}`);
 
-    // ── Parse + normalise final output ─────────────────────────────────────
-    let finalStories = normalise(parseGroqResponse(finalText));
-
-    if (!finalStories.length) {
-      throw new Error('Groq loop produced no stories');
+    if (!allRawStories.length) {
+      throw new Error('No raw stories fetched from any tool');
     }
 
+    // ── Phase 4 — Enrich in batches of 8 via Groq ────────────────────────
+    const _Groq = require('groq-sdk');
+    const Groq  = _Groq.default || _Groq;
+    const groq  = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+    const systemPrompt       = buildEnrichPrompt(prefs);
+    const allEnrichedStories = [];
+    const BATCH_SIZE         = 8;
+    const totalBatches       = Math.ceil(allRawStories.length / BATCH_SIZE);
+
+    for (let i = 0; i < allRawStories.length; i += BATCH_SIZE) {
+      const batch    = allRawStories.slice(i, i + BATCH_SIZE);
+      const batchNum = Math.floor(i / BATCH_SIZE) + 1;
+      console.log(`Enriching batch ${batchNum}/${totalBatches}...`);
+
+      try {
+        const completion = await groq.chat.completions.create({
+          model:      'llama-3.3-70b-versatile',
+          messages:   [
+            { role: 'system', content: systemPrompt },
+            { role: 'user',   content: JSON.stringify(batch) },
+          ],
+          max_tokens: 4000,
+        });
+
+        const raw      = completion.choices[0]?.message?.content || '[]';
+        const enriched = parseGroqResponse(raw);
+
+        if (enriched.length) {
+          allEnrichedStories.push(...enriched);
+          console.log(`Batch ${batchNum}: enriched ${enriched.length} stories`);
+        } else {
+          throw new Error('Empty or invalid response from Groq');
+        }
+      } catch (err) {
+        console.warn(`Batch ${batchNum} failed: ${err.message} — using raw fallback`);
+        const fallback = batch.map(s => ({
+          ...s,
+          category:   s._sourceCategory,
+          imageQuery: s._sourceCategory.toLowerCase() + ' news',
+          summary:    '',
+          relevance:  5,
+          filtered:   false,
+        }));
+        allEnrichedStories.push(...fallback);
+      }
+    }
+
+    // ── Phase 5 — Fetch Unsplash images ──────────────────────────────────
+    const UNSPLASH_KEY = process.env.UNSPLASH_ACCESS_KEY;
+
+    for (let i = 0; i < allEnrichedStories.length; i++) {
+      const story = allEnrichedStories[i];
+      if (UNSPLASH_KEY && story.imageQuery) {
+        try {
+          const res = await fetch(
+            `https://api.unsplash.com/search/photos?query=${encodeURIComponent(story.imageQuery)}&per_page=1&orientation=portrait&client_id=${UNSPLASH_KEY}`
+          );
+          const data  = await res.json();
+          const photo = data.results?.[0];
+          if (photo) {
+            story.image          = photo.urls.regular;
+            story.imageCredit    = photo.user.name;
+            story.imageCreditUrl = photo.user.links.html;
+          }
+        } catch { /* gradient fallback — do not crash */ }
+        await new Promise(r => setTimeout(r, 200));
+        if ((i + 1) % 5 === 0 || i === allEnrichedStories.length - 1) {
+          console.log(`Fetched image for story ${i + 1} of ${allEnrichedStories.length}`);
+        }
+      } else {
+        story.image = story.image || null;
+      }
+    }
+
+    // ── Phase 6 — Final output ────────────────────────────────────────────
+    const unfiltered = allEnrichedStories
+      .filter(s => !s.filtered)
+      .map(({ _sourceCategory, ...s }) => s);
+
+    const filteredOut = allEnrichedStories
+      .filter(s => s.filtered)
+      .map(({ _sourceCategory, ...s }) => s);
+
+    unfiltered.sort((a, b) => (b.relevance || 0) - (a.relevance || 0));
+
+    // Guarantee minimum 25
+    let finalStories = [...unfiltered];
+    if (finalStories.length < 25) {
+      const needed = 25 - finalStories.length;
+      const extras = [...filteredOut]
+        .sort((a, b) => (b.relevance || 0) - (a.relevance || 0))
+        .slice(0, needed);
+      finalStories.push(...extras);
+      if (extras.length) console.log(`Added ${extras.length} filtered stories to reach minimum 25`);
+    }
+
+    finalStories = finalStories.slice(0, 30).map(s => ({
+      ...s,
+      image:    s.image    || `https://picsum.photos/seed/${s.id}/900/1600`,
+      gradient: CATEGORY_GRADIENT[s.category] || 1,
+    }));
+
     writeFileSync(OUTPUT_PATH, JSON.stringify(finalStories, null, 2));
+
+    const cats = {};
+    finalStories.forEach(s => { cats[s.category] = (cats[s.category] || 0) + 1; });
+    const catStr = Object.entries(cats).map(([k, v]) => `${k}:${v}`).join(' ');
     console.log(`Done. ${finalStories.length} stories written.`);
+    console.log(`Category breakdown: ${catStr}`);
 
   } catch (err) {
-    console.error('Agent failed:', err.message, '— attempting direct fallback…');
+    // ── Phase 7 — Fallback ────────────────────────────────────────────────
+    console.error('Agent failed:', err.message);
+    console.error(err.stack);
+    console.error('Attempting direct fallback…');
 
-    // Fallback: reconnect and call get_ai_tech_news directly
     try {
       const t2 = new StdioClientTransport({
         command: 'node',
@@ -198,7 +338,11 @@ async function main() {
       const result  = await c2.callTool({ name: 'get_ai_tech_news', arguments: { count: 30 } });
       await c2.close();
       const raw     = JSON.parse(result.content?.[0]?.text || '[]');
-      const stories = normalise(raw.slice(0, 30));
+      const stories = raw.slice(0, 30).map((s, i) => ({
+        ...s,
+        image:    s.image || `https://picsum.photos/seed/${s.id}/900/1600`,
+        gradient: (i % 5) + 1,
+      }));
       writeFileSync(OUTPUT_PATH, JSON.stringify(stories, null, 2));
       console.log(`Done (fallback). ${stories.length} stories written.`);
     } catch (e2) {
