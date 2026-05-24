@@ -1,10 +1,10 @@
 {
-  "ai": 3,
-  "tech": 3,
-  "finance": 3,
-  "geo": 3,
-  "sports": 3,
-  "science": 3,
-  "health": 3,
-  "climate": 3
+  "ai": 4,
+  "tech": 6,
+  "finance": 4,
+  "geo": 8,
+  "sports": 5,
+  "science": 4,
+  "health": 5,
+  "climate": 6
 }

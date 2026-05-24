@@ -4,7 +4,7 @@
 Balaji Sivarajan — Senior TPM, Surrey BC Canada. iPhone is primary device. Surface Pro Windows 11 is dev machine. GitHub: ibalajisivarajan
 
 ## What Daily Pulse Is
-Full-screen vertical scroll news app. Phase 2: newsmcp MCP → Groq LLM → enriched stories.json, served via GitHub Pages. Full-screen snap-scroll cards, photo background, headline + AI summary overlay. Preferences UI with 8-topic sliders, localStorage + GitHub Gist sync. Zero monthly cost.
+Full-screen vertical scroll news app. Phase 2: newsmcp MCP → Groq LLM → enriched stories.json, served via GitHub Pages. Full-screen snap-scroll cards, photo background, headline + AI summary overlay. Preferences UI with 8-topic sliders synced via Cloudflare Worker. Zero monthly cost.
 
 ## Architecture Decisions (All Locked)
 | Decision | Choice |
@@ -16,16 +16,17 @@ Full-screen vertical scroll news app. Phase 2: newsmcp MCP → Groq LLM → enri
 | Category detection | Groq classification + keyword matching fallback in JS |
 | Weather | Open-Meteo + Nominatim via browser geolocation |
 | Time display | Location-based via browser |
-| Automation | GitHub Actions cron every 2 hours |
+| Automation | GitHub Actions workflow_dispatch (manual trigger via Cloudflare Worker) |
 | Hosting | GitHub Pages root/main |
 | App architecture | Single index.html — no build step |
 | Refresh | Pull-to-refresh + "Save & Refresh Feed" button dispatches workflow |
-| Preferences | 8-topic sliders, localStorage + GitHub Gist sync (GIST_ID, GIST_TOKEN) |
+| Preferences | 8-topic sliders, written to repo by Cloudflare Worker (no browser token) |
 
 ## Secrets Required (GitHub → Settings → Secrets → Actions)
 - GROQ_API_KEY — from console.groq.com
-- GIST_ID — ID of a GitHub Gist containing preferences.json
-- GIST_TOKEN — GitHub PAT with gist + workflow scopes
+
+## Secrets Required (Cloudflare → Workers → daily-pulse-refresh → Settings → Variables)
+- GITHUB_TOKEN — GitHub PAT with repo + workflow scopes (writes preferences.json + triggers dispatch)
 
 ## Phase 2 — MCP + Groq Architecture
 
@@ -46,9 +47,8 @@ Exposes 7 tools — one per news category. Groq decides at runtime which to call
 MCP client that spawns news-mcp-server.js, passes all 7 tools to Groq, runs the tool-call loop until Groq returns final JSON array. Falls back to direct get_ai_tech_news call if Groq loop fails.
 
 ### Secrets Required
-- GROQ_API_KEY — from console.groq.com
-- GIST_ID — GitHub Gist ID containing preferences.json
-- GIST_TOKEN — GitHub PAT with gist + workflow scopes
+- GROQ_API_KEY — GitHub Actions secret for Groq API
+- GITHUB_TOKEN — Cloudflare Worker secret (repo + workflow scopes); writes preferences.json to repo and triggers dispatch
 
 ## Repo Structure
 daily-pulse-v2/
@@ -56,7 +56,6 @@ daily-pulse-v2/
 ├── scripts/
 │   ├── news-mcp-server.js ← Phase 2 MCP server (7 tools)
 │   ├── agent.js           ← Phase 2 agent (MCP client + Groq loop)
-│   ├── pull-prefs.js      ← pulls preferences.json from Gist
 │   ├── fetch.js           ← Phase 1 (kept for reference)
 │   ├── app-logic.js
 │   └── smoke_test.js
