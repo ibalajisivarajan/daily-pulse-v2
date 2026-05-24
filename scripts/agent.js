@@ -76,6 +76,7 @@ function parseGroqResponse(raw) {
     if (!Array.isArray(parsed)) return [];
     return parsed
       .filter(s => !s.filtered)
+      .filter(s => s.title && s.title !== 'undefined' && s.time && !isNaN(s.time) && s.time > 0)
       .sort((a, b) => (b.relevance || 0) - (a.relevance || 0))
       .slice(0, 30);
   } catch {
@@ -168,7 +169,18 @@ async function main() {
         try {
           const args   = JSON.parse(tc.function.arguments || '{}');
           const result = await client.callTool({ name: tc.function.name, arguments: args });
-          resultText   = result.content?.[0]?.text || '[]';
+          const raw    = result.content?.[0]?.text || '[]';
+          let toolStories = [];
+          try { toolStories = JSON.parse(raw); } catch { toolStories = []; }
+          const validStories = Array.isArray(toolStories) ? toolStories.filter(s =>
+            s.title && s.title !== 'undefined' &&
+            s.url &&
+            s.time && !isNaN(s.time) && s.time > 0
+          ) : [];
+          if (validStories.length < 5) {
+            console.warn(`  Tool ${tc.function.name}: only ${validStories.length} valid stories after filtering`);
+          }
+          resultText = JSON.stringify(validStories);
         } catch (err) {
           console.error(`  Tool ${tc.function.name} failed:`, err.message);
         }

@@ -162,7 +162,7 @@
       letter-spacing: 1.5px;
       line-height: 1;
     }
-    .topbar-pills { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+    .topbar-pills { display: flex; flex-direction: column; gap: 5px; align-items: flex-end; }
     .pill {
       background: rgba(255,255,255,0.13);
       backdrop-filter: blur(14px);
@@ -408,25 +408,22 @@
 
     /* ── Refresh Feed button ────────────────────────── */
     .refresh-btn {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      padding: 6px 12px;
-      border-radius: 20px;
       background: rgba(255,255,255,0.13);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid rgba(255,255,255,0.2);
-      color: #fff;
+      border-radius: 100px;
+      color: rgba(255,255,255,0.9);
       font-family: 'Nunito Sans', sans-serif;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
+      padding: 5px 11px;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       white-space: nowrap;
     }
     .refresh-btn:disabled {
-      opacity: 0.45;
+      opacity: 0.5;
       cursor: default;
     }
 
@@ -760,7 +757,7 @@
       const ago           = timeAgo(story.time);
       const domain        = esc(story.domain || 'news.ycombinator.com');
       const scoreStr      = fmtCount(story.score);
-      const commentsStr   = fmtCount(story.comments);
+      const commentsStr   = fmtCount(story.comments || 0);
       const storyHref     = esc(safeUrl(story.url, `https://news.ycombinator.com/item?id=${story.id}`));
       const hnHref        = `https://news.ycombinator.com/item?id=${story.id}`;
 
@@ -776,11 +773,11 @@
         <span class="brand-daily">daily</span>
         <span class="brand-pulse">PULSE</span>
       </div>
-      <button class="refresh-btn" onclick="refreshFeed()">⟳ Refresh</button>
     </div>
     <div class="topbar-pills">
       <div class="pill weather-pill">📍 Enable location</div>
       <div class="pill date-pill">${esc(datePillText())}</div>
+      <button class="refresh-btn" onclick="refreshFeed()">⟳ Refresh</button>
     </div>
   </div>
 
