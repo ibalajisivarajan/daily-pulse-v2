@@ -61,6 +61,45 @@ check('First story has required fields and gradient 1–5 (skip if empty)', () =
   return true;
 });
 
+// ── Output contract ──────────────────────────────────────────────────────────
+console.log('\n── Output contract ──');
+
+try {
+  const stories = JSON.parse(
+    fs.readFileSync(path.join(process.cwd(), 'data/stories.json'), 'utf8')
+  );
+
+  const pass = (label)       => { console.log(`  ✅ ${label}`); passed++; };
+  const fail = (label, msg)  => { console.log(`  ❌ ${label}: ${msg}`); failed++; };
+
+  const hasFiltered = stories.some(s => s.filtered === true);
+  if (hasFiltered) {
+    fail('No filtered stories in output (DP2-013)',
+         'stories.json contains filtered=true stories — backfill logic must be removed');
+  } else {
+    pass('No filtered stories in final output');
+  }
+
+  if (stories.length <= 30) {
+    pass(`Story count within limit (${stories.length} stories)`);
+  } else {
+    fail('Story count within limit',
+         `${stories.length} exceeds maximum of 30`);
+  }
+
+  const categories = [...new Set(stories.map(s => s.category))];
+  if (categories.length >= 2) {
+    pass(`Multiple categories present: ${categories.join(', ')}`);
+  } else {
+    fail('Multiple categories present',
+         `Only found: ${categories.join(', ')}`);
+  }
+
+} catch (e) {
+  console.log(`  ❌ Output contract check: ${e.message}`);
+  failed++;
+}
+
 // ── 3. index.html content ────────────────────────────────────────────────────
 console.log('\n🌐  index.html content');
 const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');

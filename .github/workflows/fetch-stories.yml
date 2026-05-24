@@ -30,6 +30,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # Note: pull-prefs.js was intentionally removed from this workflow.
+      # Preferences are now written directly to data/preferences.json
+      # in this repo by the Cloudflare Worker BEFORE dispatch is triggered.
+      # By the time this step runs, data/preferences.json is already
+      # up to date with the latest user slider settings.
+      # See workers/daily-pulse-refresh.js for the write logic.
       - name: Run agent
         run: node scripts/agent.js
         env:

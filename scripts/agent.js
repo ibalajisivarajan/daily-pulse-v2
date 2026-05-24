@@ -287,32 +287,20 @@ async function main() {
     }
 
     // ── Phase 6 — Final output ────────────────────────────────────────────
-    const unfiltered = allEnrichedStories
+    // IMPORTANT: Never backfill with filtered stories (DP2-013)
+    // Filtered means Groq judged it as noise — job posts, polls,
+    // press releases. Putting them back defeats the purpose of filtering.
+    // 20 clean stories beats 30 with noise mixed in.
+    const cleaned = allEnrichedStories.map(({ _sourceCategory, ...s }) => s);
+    const finalStories = cleaned
       .filter(s => !s.filtered)
-      .map(({ _sourceCategory, ...s }) => s);
-
-    const filteredOut = allEnrichedStories
-      .filter(s => s.filtered)
-      .map(({ _sourceCategory, ...s }) => s);
-
-    unfiltered.sort((a, b) => (b.relevance || 0) - (a.relevance || 0));
-
-    // Guarantee minimum 25
-    let finalStories = [...unfiltered];
-    if (finalStories.length < 25) {
-      const needed = 25 - finalStories.length;
-      const extras = [...filteredOut]
-        .sort((a, b) => (b.relevance || 0) - (a.relevance || 0))
-        .slice(0, needed);
-      finalStories.push(...extras);
-      if (extras.length) console.log(`Added ${extras.length} filtered stories to reach minimum 25`);
-    }
-
-    finalStories = finalStories.slice(0, 30).map(s => ({
-      ...s,
-      image:    s.image    || `https://picsum.photos/seed/${s.id}/900/1600`,
-      gradient: CATEGORY_GRADIENT[s.category] || 1,
-    }));
+      .sort((a, b) => b.relevance - a.relevance)
+      .slice(0, 30)
+      .map(s => ({
+        ...s,
+        image:    s.image    || `https://picsum.photos/seed/${s.id}/900/1600`,
+        gradient: CATEGORY_GRADIENT[s.category] || 1,
+      }));
 
     writeFileSync(OUTPUT_PATH, JSON.stringify(finalStories, null, 2));
 
@@ -360,4 +348,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { parseGroqResponse };
+module.exports = { parseGroqResponse, storiesForSlider };
