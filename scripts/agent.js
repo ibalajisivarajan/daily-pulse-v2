@@ -13,6 +13,38 @@ const DEFAULT_PREFS = {
   sports: 3, science: 3, health: 3, climate: 3,
 };
 
+// ── Domain extractor (used in fallback) ──────────────────────────────────────
+
+function extractDomain(url) {
+  if (!url) return '';
+  try { return new URL(url).hostname.replace(/^www\./, ''); } catch { return ''; }
+}
+
+// ── og:image scraper ──────────────────────────────────────────────────────────
+
+async function scrapeOgImage(url) {
+  if (!url) return null;
+  try {
+    const controller = new AbortController();
+    const timeout    = setTimeout(() => controller.abort(), 3000);
+    const res = await fetch(url, {
+      signal:  controller.signal,
+      headers: { 'User-Agent': 'Mozilla/5.0 (compatible; DailyPulse/2.0)', 'Accept': 'text/html' },
+    });
+    clearTimeout(timeout);
+    if (!res.ok) return null;
+    const html  = await res.text();
+    const match = html.match(
+      /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i
+    ) || html.match(
+      /<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i
+    );
+    return match ? match[1] : null;
+  } catch {
+    return null;
+  }
+}
+
 // ── Env loader ────────────────────────────────────────────────────────────────
 
 function loadEnv() {
@@ -193,15 +225,61 @@ const CATEGORY_GRADIENT = {
   'Climate': 3,
 };
 
+// ── Category and tool maps ────────────────────────────────────────────────────
+
 const CATEGORY_MAP = {
-  get_ai_tech_news:     'AI',
-  get_finance_news:     'Finance',
-  get_geopolitics_news: 'Geo',
-  get_sports_news:      'Sports',
-  get_science_news:     'Science',
-  get_health_news:      'Health',
-  get_climate_news:     'Climate',
+  get_ai_news_hn:            'AI',
+  get_ai_news_cbc:           'AI',
+  get_tech_news_hn:          'Tech',
+  get_tech_news_ap:          'Tech',
+  get_finance_news_reuters:  'Finance',
+  get_finance_news_et:       'Finance',
+  get_geo_news_ap:           'Geo',
+  get_geo_news_aljazeera:    'Geo',
+  get_sports_news_ap:        'Sports',
+  get_sports_news_cbc:       'Sports',
+  get_science_news_guardian: 'Science',
+  get_science_news_ap:       'Science',
+  get_health_news_who:       'Health',
+  get_health_news_cbc:       'Health',
+  get_climate_news_guardian: 'Climate',
+  get_climate_news_ap:       'Climate',
 };
+
+// ── Tool count split across two sources per category ─────────────────────────
+
+function toolCountsFromPrefs(prefs) {
+  function split(value) {
+    const total = storiesForSlider(value);
+    return [Math.ceil(total / 2), Math.floor(total / 2)];
+  }
+  const [aiA,   aiB]   = split(prefs.ai);
+  const [techA, techB] = split(prefs.tech);
+  const [finA,  finB]  = split(prefs.finance);
+  const [geoA,  geoB]  = split(prefs.geo);
+  const [sptA,  sptB]  = split(prefs.sports);
+  const [sciA,  sciB]  = split(prefs.science);
+  const [hlthA, hlthB] = split(prefs.health);
+  const [climA, climB] = split(prefs.climate);
+  return {
+    get_ai_news_hn:            aiA,
+    get_ai_news_cbc:           aiB,
+    get_tech_news_hn:          techA,
+    get_tech_news_ap:          techB,
+    get_finance_news_reuters:  finA,
+    get_finance_news_et:       finB,
+    get_geo_news_ap:           geoA,
+    get_geo_news_aljazeera:    geoB,
+    get_sports_news_ap:        sptA,
+    get_sports_news_cbc:       sptB,
+    get_science_news_guardian: sciA,
+    get_science_news_ap:       sciB,
+    get_health_news_who:       hlthA,
+    get_health_news_cbc:       hlthB,
+    get_climate_news_guardian: climA,
+    get_climate_news_ap:       climB,
+  };
+}
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 
@@ -218,15 +296,7 @@ async function main() {
 
   try {
     // ── Phase 2 — Calculate fetch plan ───────────────────────────────────
-    const toolCounts = {
-      get_ai_tech_news:     storiesForSlider(prefs.ai),
-      get_finance_news:     storiesForSlider(prefs.finance),
-      get_geopolitics_news: storiesForSlider(prefs.geo),
-      get_sports_news:      storiesForSlider(prefs.sports),
-      get_science_news:     storiesForSlider(prefs.science),
-      get_health_news:      storiesForSlider(prefs.health),
-      get_climate_news:     storiesForSlider(prefs.climate),
-    };
+    const toolCounts = toolCountsFromPrefs(prefs);
     console.log('Fetch plan:', JSON.stringify(toolCounts));
 
     // ── Phase 3 — Spawn MCP server and call tools directly ───────────────
@@ -234,7 +304,7 @@ async function main() {
       command: 'node',
       args:    [join(__dirname, 'news-mcp-server.js')],
     });
-    const client = new Client({ name: 'daily-pulse-agent', version: '2.0' });
+    const client = new Client({ name: 'daily-pulse-agent', version: '3.0' });
     await client.connect(transport);
     console.log('MCP server connected.');
 
@@ -262,7 +332,12 @@ async function main() {
 
         stories = stories.map(s => ({ ...s, _sourceCategory: CATEGORY_MAP[toolName] }));
         allRawStories.push(...stories);
-        console.log(`Fetched ${stories.length} stories from ${toolName}`);
+
+        if (stories.length === 0) {
+          console.warn(`WARNING: ${toolName} returned 0 stories — feed may be thin in this category`);
+        } else {
+          console.log(`Fetched ${stories.length} valid stories from ${toolName}`);
+        }
       } catch (err) {
         console.error(`Tool ${toolName} failed:`, err.message);
       }
@@ -270,6 +345,32 @@ async function main() {
 
     await client.close();
     console.log(`Total raw stories: ${allRawStories.length}`);
+
+    // ── Minimum raw story fallback ────────────────────────────────────────
+    if (allRawStories.length < 10) {
+      console.warn('WARNING: Fewer than 10 raw stories collected.');
+      console.warn('Falling back to HN direct fetch with count=30...');
+      try {
+        const res  = await fetch('https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=30');
+        const data = await res.json();
+        const hnStories = (data.hits || [])
+          .filter(h => h.title && h.url && h.created_at_i)
+          .map(h => ({
+            id:              h.objectID,
+            title:           h.title,
+            url:             h.url,
+            domain:          extractDomain(h.url),
+            score:           h.points       || 0,
+            comments:        h.num_comments || 0,
+            time:            h.created_at_i,
+            _sourceCategory: 'Tech',
+          }));
+        allRawStories.push(...hnStories);
+        console.log(`Fallback: added ${hnStories.length} HN stories`);
+      } catch (err) {
+        console.error('HN fallback failed:', err.message);
+      }
+    }
 
     if (!allRawStories.length) {
       throw new Error('No raw stories fetched from any tool');
@@ -285,71 +386,122 @@ async function main() {
     const BATCH_SIZE         = 8;
     const totalBatches       = Math.ceil(allRawStories.length / BATCH_SIZE);
 
-    for (let i = 0; i < allRawStories.length; i += BATCH_SIZE) {
-      const batch    = allRawStories.slice(i, i + BATCH_SIZE);
-      const batchNum = Math.floor(i / BATCH_SIZE) + 1;
-      console.log(`Enriching batch ${batchNum}/${totalBatches}...`);
+    // Belt-and-suspenders guard (GROQ_API_KEY already checked at top of main)
+    if (!process.env.GROQ_API_KEY) {
+      console.warn('GROQ_API_KEY not set — skipping enrichment, using raw defaults');
+      allRawStories.forEach(s => allEnrichedStories.push({
+        ...s,
+        category:   s._sourceCategory || 'Tech',
+        imageQuery: (s._sourceCategory || 'tech').toLowerCase(),
+        summary:    '',
+        relevance:  5,
+        filtered:   false,
+      }));
+    } else {
+      for (let i = 0; i < allRawStories.length; i += BATCH_SIZE) {
+        const batch    = allRawStories.slice(i, i + BATCH_SIZE);
+        const batchNum = Math.floor(i / BATCH_SIZE) + 1;
+        console.log(`Enriching batch ${batchNum}/${totalBatches}...`);
 
-      try {
-        const completion = await groq.chat.completions.create({
-          model:       'llama-3.3-70b-versatile',
-          messages:    [
-            { role: 'system', content: systemPrompt },
-            { role: 'user',   content: JSON.stringify(batch) },
-          ],
-          max_tokens:  4000,
-          temperature: 0.1,
-        });
+        try {
+          const completion = await groq.chat.completions.create({
+            model:       'llama-3.3-70b-versatile',
+            messages:    [
+              { role: 'system', content: systemPrompt },
+              { role: 'user',   content: JSON.stringify(batch) },
+            ],
+            max_tokens:  4000,
+            temperature: 0.1,
+          });
 
-        const raw      = completion.choices[0]?.message?.content || '[]';
-        const enriched = parseGroqResponse(raw);
+          const raw      = completion.choices[0]?.message?.content || '[]';
+          const enriched = parseGroqResponse(raw);
 
-        if (enriched.length) {
-          allEnrichedStories.push(...enriched);
-          console.log(`Batch ${batchNum}: enriched ${enriched.length} stories`);
-        } else {
-          throw new Error('Empty or invalid response from Groq');
+          if (enriched.length === 0) {
+            console.warn(`Batch ${batchNum} returned 0 enriched stories — keeping raw with defaults`);
+            batch.forEach(s => allEnrichedStories.push({
+              ...s,
+              category:   s._sourceCategory || 'Tech',
+              imageQuery: (s._sourceCategory || 'tech').toLowerCase(),
+              summary:    '',
+              relevance:  5,
+              filtered:   false,
+            }));
+          } else {
+            allEnrichedStories.push(...enriched);
+            console.log(`Batch ${batchNum}: enriched ${enriched.length} stories`);
+          }
+        } catch (err) {
+          console.warn(`Batch ${batchNum} failed: ${err.message} — using raw fallback`);
+          batch.forEach(s => allEnrichedStories.push({
+            ...s,
+            category:   s._sourceCategory || 'Tech',
+            imageQuery: (s._sourceCategory || 'tech').toLowerCase(),
+            summary:    '',
+            relevance:  5,
+            filtered:   false,
+          }));
         }
-      } catch (err) {
-        console.warn(`Batch ${batchNum} failed: ${err.message} — using raw fallback`);
-        const fallback = batch.map(s => ({
-          ...s,
-          category:   s._sourceCategory,
-          imageQuery: s._sourceCategory.toLowerCase() + ' news',
-          summary:    '',
-          relevance:  5,
-          filtered:   false,
-        }));
-        allEnrichedStories.push(...fallback);
       }
     }
 
-    // ── Phase 5 — Fetch Unsplash images ──────────────────────────────────
+    // ── Phase 5 — Fetch images: og:image → Unsplash → null ───────────────
     const UNSPLASH_KEY = process.env.UNSPLASH_ACCESS_KEY;
+    let unsplashRateLimited = false;
+
+    console.log('Fetching images...');
 
     for (let i = 0; i < allEnrichedStories.length; i++) {
       const story = allEnrichedStories[i];
-      if (UNSPLASH_KEY && story.imageQuery) {
+
+      // Priority 1 — og:image from article URL
+      const ogImage = await scrapeOgImage(story.url);
+      if (ogImage) {
+        story.image       = ogImage;
+        story.imageSource = 'article';
+      }
+
+      // Priority 2 — Unsplash with Groq-picked keyword
+      if (!story.image && UNSPLASH_KEY && !unsplashRateLimited) {
         try {
           const res = await fetch(
-            `https://api.unsplash.com/search/photos?query=${encodeURIComponent(story.imageQuery)}&per_page=1&orientation=portrait&client_id=${UNSPLASH_KEY}`
+            `https://api.unsplash.com/search/photos` +
+            `?query=${encodeURIComponent(story.imageQuery || story.category)}` +
+            `&per_page=1&orientation=portrait&client_id=${UNSPLASH_KEY}`
           );
-          const data  = await res.json();
-          const photo = data.results?.[0];
-          if (photo) {
-            story.image          = photo.urls.regular;
-            story.imageCredit    = photo.user.name;
-            story.imageCreditUrl = photo.user.links.html;
+          if (res.status === 429) {
+            console.warn('Unsplash rate limit hit — skipping remaining image fetches');
+            unsplashRateLimited = true;
+          } else if (res.ok) {
+            const data  = await res.json();
+            const photo = data.results?.[0];
+            if (photo) {
+              story.image          = photo.urls.regular;
+              story.imageCredit    = photo.user.name;
+              story.imageCreditUrl = photo.user.links.html;
+              story.imageSource    = 'unsplash';
+            }
           }
-        } catch { /* gradient fallback — do not crash */ }
-        await new Promise(r => setTimeout(r, 200));
-        if ((i + 1) % 5 === 0 || i === allEnrichedStories.length - 1) {
-          console.log(`Fetched image for story ${i + 1} of ${allEnrichedStories.length}`);
+        } catch (err) {
+          console.error(`Unsplash failed for story ${i}:`, err.message);
         }
-      } else {
-        story.image = story.image || null;
+        await new Promise(r => setTimeout(r, 250));
+      }
+
+      // Priority 3 — null (CSS gradient shows in browser)
+      if (!story.image) {
+        story.image       = null;
+        story.imageSource = 'gradient';
+      }
+
+      if (i % 5 === 0) {
+        console.log(`Images: ${i + 1}/${allEnrichedStories.length}`);
       }
     }
+
+    const imgBreakdown = { article: 0, unsplash: 0, gradient: 0 };
+    allEnrichedStories.forEach(s => { imgBreakdown[s.imageSource || 'gradient']++; });
+    console.log('Image sources:', JSON.stringify(imgBreakdown));
 
     // ── Phase 6 — Final output ────────────────────────────────────────────
     // IMPORTANT: Never backfill with filtered stories (DP2-013)
@@ -362,7 +514,7 @@ async function main() {
       .sort((a, b) => b.relevance - a.relevance)
       .slice(0, 30)
       .map(s => {
-        const { filtered, imageQuery, ...rest } = s;
+        const { filtered, imageQuery, imageSource, ...rest } = s;
         return {
           ...rest,
           image:    rest.image    || `https://picsum.photos/seed/${rest.id}/900/1600`,
@@ -389,9 +541,9 @@ async function main() {
         command: 'node',
         args:    [join(__dirname, 'news-mcp-server.js')],
       });
-      const c2 = new Client({ name: 'daily-pulse-fallback', version: '2.0' });
+      const c2 = new Client({ name: 'daily-pulse-fallback', version: '3.0' });
       await c2.connect(t2);
-      const result  = await c2.callTool({ name: 'get_ai_tech_news', arguments: { count: 30 } });
+      const result  = await c2.callTool({ name: 'get_ai_news_hn', arguments: { count: 30 } });
       await c2.close();
       const raw     = JSON.parse(result.content?.[0]?.text || '[]');
       const stories = raw.slice(0, 30).map((s, i) => ({

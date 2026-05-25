@@ -1,9 +1,9 @@
 'use strict';
 
-const { McpServer }          = require('@modelcontextprotocol/sdk/server/mcp.js');
+const { McpServer }            = require('@modelcontextprotocol/sdk/server/mcp.js');
 const { StdioServerTransport } = require('@modelcontextprotocol/sdk/server/stdio.js');
-const { z }                  = require('zod');
-const { XMLParser }          = require('fast-xml-parser');
+const { z }                    = require('zod');
+const { XMLParser }            = require('fast-xml-parser');
 
 const FETCH_TIMEOUT = 5000;
 
@@ -73,11 +73,20 @@ function parseRSSItems(xml) {
   return Array.isArray(items) ? items : [items];
 }
 
-async function getRSSStories(feedUrl, count) {
+// keywords: optional array of lowercase strings to filter on title+description
+async function getRSSStories(feedUrl, count, keywords) {
   try {
     const xml   = await fetchText(feedUrl);
     const items = parseRSSItems(xml);
-    return items.slice(0, count).map(item => {
+    let filtered = items;
+    if (keywords && keywords.length) {
+      filtered = items.filter(item => {
+        const title = getItemTitle(item).toLowerCase();
+        const desc  = (typeof item.description === 'string' ? item.description : '').toLowerCase();
+        return keywords.some(kw => title.includes(kw) || desc.includes(kw));
+      });
+    }
+    return filtered.slice(0, count).map(item => {
       const url = getItemLink(item);
       const raw = getItemId(item);
       const id  = raw.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 40) || String(Date.now());
@@ -97,26 +106,22 @@ async function getRSSStories(feedUrl, count) {
   }
 }
 
-// ── MCP Server ────────────────────────────────────────────────────────────────
-
-const server = new McpServer({ name: 'news-mcp-server', version: '2.0.0' });
-
-server.tool(
-  'get_ai_tech_news',
-  'Fetch AI and technology news from Hacker News front page with real upvote scores',
-  { count: z.number().default(10) },
-  async ({ count }) => {
-    try {
-      const ctrl  = new AbortController();
-      const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT);
-      const res   = await fetch(
-        `https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=${count}`,
-        { signal: ctrl.signal, headers: { 'User-Agent': 'DailyPulse/2.0', 'Accept': 'application/json' } }
-      );
-      clearTimeout(timer);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data    = await res.json();
-      const stories = (data.hits || []).filter(h => h.url).slice(0, count).map(hit => ({
+async function getHNStories(count) {
+  try {
+    const ctrl  = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT);
+    const res   = await fetch(
+      `https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=${count}`,
+      { signal: ctrl.signal, headers: { 'User-Agent': 'DailyPulse/2.0', 'Accept': 'application/json' } }
+    );
+    clearTimeout(timer);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    return (data.hits || [])
+      .filter(h => h.url && h.title &&
+        !h.title.includes('Ask HN') && !h.title.includes('Who is hiring'))
+      .slice(0, count)
+      .map(hit => ({
         id:       String(hit.objectID),
         title:    hit.title           || '',
         url:      hit.url,
@@ -125,73 +130,170 @@ server.tool(
         comments: hit.num_comments    ?? 0,
         time:     hit.created_at_i    ?? Math.floor(Date.now() / 1000),
       }));
-      return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
-    } catch (err) {
-      console.error('get_ai_tech_news failed:', err.message);
-      return { content: [{ type: 'text', text: '[]' }] };
-    }
+  } catch (err) {
+    console.error('HN fetch failed:', err.message);
+    return [];
+  }
+}
+
+// ── MCP Server ────────────────────────────────────────────────────────────────
+
+const server = new McpServer({ name: 'news-mcp-server', version: '3.0.0' });
+
+// ── AI ────────────────────────────────────────────────────────────────────────
+
+server.tool('get_ai_news_hn', 'Fetch AI and tech news from Hacker News front page',
+  { count: z.number().default(8) },
+  async ({ count }) => {
+    const stories = await getHNStories(count);
+    return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
   }
 );
 
-server.tool(
-  'get_finance_news',
-  'Fetch business and finance news from Reuters',
+server.tool('get_ai_news_cbc', 'Fetch technology news from CBC',
+  { count: z.number().default(6) },
+  async ({ count }) => {
+    const stories = await getRSSStories('https://rss.cbc.ca/lineup/technology.xml', count);
+    return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
+  }
+);
+
+// ── Tech ──────────────────────────────────────────────────────────────────────
+
+server.tool('get_tech_news_hn', 'Fetch tech news from Hacker News front page',
   { count: z.number().default(8) },
+  async ({ count }) => {
+    const stories = await getHNStories(count);
+    return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
+  }
+);
+
+server.tool('get_tech_news_ap', 'Fetch technology news from AP News via RSSHub',
+  { count: z.number().default(6) },
+  async ({ count }) => {
+    const stories = await getRSSStories('https://rsshub.app/apnews/topics/technology', count);
+    return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
+  }
+);
+
+// ── Finance ───────────────────────────────────────────────────────────────────
+
+server.tool('get_finance_news_reuters', 'Fetch business and finance news from Reuters',
+  { count: z.number().default(6) },
   async ({ count }) => {
     const stories = await getRSSStories('https://feeds.reuters.com/reuters/businessNews', count);
     return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
   }
 );
 
-server.tool(
-  'get_geopolitics_news',
-  'Fetch world and geopolitics news from Al Jazeera',
-  { count: z.number().default(8) },
+server.tool('get_finance_news_et', 'Fetch finance and business news from Economic Times',
+  { count: z.number().default(6) },
+  async ({ count }) => {
+    const stories = await getRSSStories('https://economictimes.indiatimes.com/rssfeedstopstories.cms', count);
+    return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
+  }
+);
+
+// ── Geo ───────────────────────────────────────────────────────────────────────
+
+server.tool('get_geo_news_ap', 'Fetch world news from AP News via RSSHub',
+  { count: z.number().default(6) },
+  async ({ count }) => {
+    const stories = await getRSSStories('https://rsshub.app/apnews/topics/world-news', count);
+    return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
+  }
+);
+
+server.tool('get_geo_news_aljazeera', 'Fetch world and geopolitics news from Al Jazeera',
+  { count: z.number().default(6) },
   async ({ count }) => {
     const stories = await getRSSStories('https://www.aljazeera.com/xml/rss/all.xml', count);
     return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
   }
 );
 
-server.tool(
-  'get_sports_news',
-  'Fetch sports news from BBC Sport',
-  { count: z.number().default(6) },
+// ── Sports ────────────────────────────────────────────────────────────────────
+
+server.tool('get_sports_news_ap', 'Fetch sports news from AP News via RSSHub',
+  { count: z.number().default(5) },
   async ({ count }) => {
-    const stories = await getRSSStories('https://feeds.bbci.co.uk/news/sport/rss.xml', count);
+    const stories = await getRSSStories('https://rsshub.app/apnews/topics/sports', count);
     return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
   }
 );
 
-server.tool(
-  'get_science_news',
-  'Fetch science and research news from The Guardian',
-  { count: z.number().default(6) },
+server.tool('get_sports_news_cbc', 'Fetch sports news from CBC',
+  { count: z.number().default(5) },
+  async ({ count }) => {
+    const stories = await getRSSStories('https://rss.cbc.ca/lineup/sports.xml', count);
+    return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
+  }
+);
+
+// ── Science ───────────────────────────────────────────────────────────────────
+
+server.tool('get_science_news_guardian', 'Fetch science news from The Guardian',
+  { count: z.number().default(5) },
   async ({ count }) => {
     const stories = await getRSSStories('https://www.theguardian.com/science/rss', count);
     return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
   }
 );
 
-server.tool(
-  'get_health_news',
-  'Fetch health and medicine news from CBC',
-  { count: z.number().default(6) },
+server.tool('get_science_news_ap', 'Fetch science news from AP News via RSSHub',
+  { count: z.number().default(5) },
+  async ({ count }) => {
+    const stories = await getRSSStories('https://rsshub.app/apnews/topics/science', count);
+    return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
+  }
+);
+
+// ── Health ────────────────────────────────────────────────────────────────────
+
+server.tool('get_health_news_who', 'Fetch health news from WHO',
+  { count: z.number().default(5) },
+  async ({ count }) => {
+    const stories = await getRSSStories('https://www.who.int/rss-feeds/news-english.xml', count);
+    return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
+  }
+);
+
+server.tool('get_health_news_cbc', 'Fetch health and medicine news from CBC',
+  { count: z.number().default(5) },
   async ({ count }) => {
     const stories = await getRSSStories('https://rss.cbc.ca/lineup/health.xml', count);
     return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
   }
 );
 
-server.tool(
-  'get_climate_news',
-  'Fetch climate and environment news from The Guardian',
-  { count: z.number().default(6) },
+// ── Climate ───────────────────────────────────────────────────────────────────
+
+server.tool('get_climate_news_guardian', 'Fetch climate and environment news from The Guardian',
+  { count: z.number().default(5) },
   async ({ count }) => {
     const stories = await getRSSStories('https://www.theguardian.com/environment/rss', count);
     return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
   }
 );
+
+const CLIMATE_KEYWORDS = [
+  'climate', 'carbon', 'emissions', 'wildfire', 'flood', 'drought',
+  'sea level', 'fossil fuel', 'renewable', 'hurricane', 'glacier',
+];
+
+server.tool('get_climate_news_ap', 'Fetch climate-related science news from AP filtered by climate keywords',
+  { count: z.number().default(5) },
+  async ({ count }) => {
+    const stories = await getRSSStories(
+      'https://rsshub.app/apnews/topics/science',
+      count,
+      CLIMATE_KEYWORDS
+    );
+    return { content: [{ type: 'text', text: JSON.stringify(stories) }] };
+  }
+);
+
+// ── Start ─────────────────────────────────────────────────────────────────────
 
 const transport = new StdioServerTransport();
 server.connect(transport).catch(err => {
