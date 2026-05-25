@@ -3,12 +3,17 @@ name: Fetch Stories
 on:
   workflow_dispatch:
 
+concurrency:
+  group: fetch-stories
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repo
