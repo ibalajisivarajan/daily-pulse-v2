@@ -68,52 +68,116 @@ function parseGroqResponse(raw) {
 // ── Phase 4 — Groq enrichment prompt ─────────────────────────────────────────
 
 function buildEnrichPrompt(prefs) {
-  return `You are a news curator. For each story in the array enrich it with four fields: category, imageQuery, summary, relevance.
+  return `You are a strict news curator. For each story return enriched JSON.
 
-CATEGORY RULES — apply in this exact order, stop at first match:
-1. Title contains any of: AI, LLM, GPT, Claude, Gemini, neural, machine learning, artificial intelligence, chatbot, OpenAI, Anthropic, DeepMind → category = "AI"
-2. Title contains any of: startup, software, app, developer, cloud, Apple, Google, Microsoft, Meta, Amazon, chip, semiconductor, programming, algorithm → category = "Tech"
-3. Title contains any of: market, stock, inflation, Fed, rate, bank, economy, GDP, recession, crypto, bitcoin, investment, earnings, trade, tariff, dollar → category = "Finance"
-4. Title contains any of: war, military, election, president, minister, government, NATO, sanctions, treaty, diplomacy, Trump, Putin, Xi, nuclear, missile, ceasefire → category = "Geo"
-5. Title contains any of: match, game, championship, league, FIFA, NBA, NFL, Olympics, player, team, score, tournament, cricket, football, soccer → category = "Sports"
-6. Title contains any of: climate, carbon, emissions, wildfire, flood, drought, sea level, fossil fuel, renewable, hurricane, glacier, deforestation → category = "Climate"
-7. Title contains any of: health, hospital, disease, cancer, vaccine, FDA, drug, treatment, virus, pandemic, surgery, mental health, nutrition → category = "Health"
-8. Title contains any of: space, NASA, planet, research, study, discovery, experiment, species, fossil, physics, biology, genetics, quantum → category = "Science"
-9. Anything else → use the _sourceCategory field provided.
+CATEGORY RULES — read the title carefully, apply rules IN ORDER,
+stop at the FIRST match:
+
+1. Title or domain contains any of:
+   AI, LLM, GPT, Claude, Gemini, neural, machine learning,
+   artificial intelligence, chatbot, OpenAI, Anthropic, DeepMind,
+   Mistral, Llama, Grok → category = "AI"
+
+2. Title or domain contains any of:
+   startup, software, app, developer, cloud, Apple, Google,
+   Microsoft, Meta, Amazon, chip, semiconductor, programming,
+   algorithm, coding, cybersecurity, data breach → category = "Tech"
+
+3. Title or domain contains any of:
+   market, stock, inflation, Fed, federal reserve, rate, bank,
+   economy, GDP, recession, crypto, bitcoin, investment, earnings,
+   trade war, tariff, dollar, IMF, Wall Street → category = "Finance"
+
+4. Title contains any of:
+   war, military, election, president, prime minister, minister,
+   government, NATO, sanctions, treaty, diplomacy, Trump, Putin,
+   Xi, nuclear, missile, ceasefire, coup, protest, summit,
+   geopolitical → category = "Geo"
+
+5. Title contains any of:
+   match, game, championship, league, FIFA, NBA, NFL, NHL, MLB,
+   Olympics, athlete, player, team, score, tournament, cricket,
+   football, soccer, tennis, boxing → category = "Sports"
+
+6. Title contains any of:
+   climate, carbon, emissions, wildfire, flood, drought, sea level,
+   fossil fuel, renewable, hurricane, glacier, deforestation,
+   EPA, environmental → category = "Climate"
+
+7. Title contains any of:
+   health, hospital, disease, cancer, vaccine, FDA, drug,
+   treatment, virus, pandemic, surgery, mental health, Ebola,
+   outbreak, epidemic, NHS, WHO → category = "Health"
+
+8. Title contains any of:
+   space, NASA, planet, research, study, discovery, experiment,
+   species, fossil, physics, biology, genetics, quantum,
+   archaeology, prehistoric → category = "Science"
+
+9. If no rule matched above → use the _sourceCategory value exactly.
 
 IMAGEQUERY RULES:
 Write a 2-4 word search query for a relevant Unsplash photo. Think: what visual best represents this story?
 Examples: "Fed signals rate cuts" → "federal reserve building" / "SpaceX rocket explodes" → "rocket launch fire" / "Iran nuclear deal" → "diplomatic negotiation table" / "NBA playoffs overtime" → "basketball court crowd" / "Ebola outbreak DRC" → "medical workers africa" / "Wildfire threatens island" → "wildfire smoke forest"
 Never use people's names as queries. Use scenes and concepts.
 
-SUMMARY RULES:
-Write one punchy sentence. Minimum 12 words. Maximum 20 words.
-Formula: [what happened] + [why it matters right now]
-Rules:
-- NEVER repeat words from the headline
-- Must answer "so what" — state the consequence or impact
-- Create urgency, surprise, relevance, or concern
-- If it affects money, jobs, health, or safety — say so directly
-- If it is surprising or counterintuitive — lead with that
-BANNED phrases: important, breaking, developing, update, latest, new, officials say, sources say, report says, situation, event
+SUMMARY RULES — this is the most important field:
+Write exactly ONE sentence. COUNT THE WORDS before outputting.
+MINIMUM 12 words. MAXIMUM 20 words. Non-negotiable.
+If your draft is under 12 words — rewrite it. Keep rewriting until
+it is 12-20 words.
 
-Bad: "Diplomatic breakthrough"
-Good: "Nuclear standoff closer to resolution than any point in a decade — oil markets already reacting"
-Bad: "Health crisis worsens"
-Good: "Ebola spreading faster than responders can contain — WHO warning is the most urgent in three years"
+Formula: [what happened] + [why it matters right now]
+
+Hard rules:
+- NEVER use words that appear in the headline
+- Must answer "so what" — state a real consequence or impact
+- Must make the reader feel something: urgency, surprise, or relevance
+- If it affects money, jobs, health, or safety — say so explicitly
+- If surprising or counterintuitive — lead with that angle
+
+BANNED words and phrases — never use these:
+important, breaking, developing, update, latest, new development,
+officials say, sources say, situation, event, marks a, comes as,
+follows, concerns raised, potential impact, potential implications,
+sheds light on, sparks interest, gains popularity, offers hope,
+emerges, looms, underway
+
+Bad (9 words, banned phrases): "Building collapse threatens lives of trapped individuals"
+Good (16 words): "Rescue teams have a 72-hour window to reach 19 people still unaccounted for under the rubble"
+
+Bad (7 words): "Iran-US deal details emerge with potential impact"
+Good (15 words): "Nuclear standoff closer to resolution than at any point in a decade as oil markets begin pricing in a deal"
+
+Bad (8 words): "Medics deaths in air strikes spark humanitarian concerns"
+Good (14 words): "Twelve medical workers killed in strikes that violated international humanitarian law — accountability demands are mounting"
+
+FILTERED RULES — mark filtered: true for ANY of these:
+- Job postings or hiring announcements
+- Polls or surveys
+- Sponsored content or advertorials
+- Press releases with no independent news value
+- Listicles: "10 best...", "5 ways to...", "Top tips for..."
+- How-to guides and tutorials
+- Book recommendations or reviews
+- Productivity tips and life advice
+- Home decor or lifestyle content
+- Opinion pieces with no hard news peg
+- Any story that is clearly not a news event
+
+Mark filtered: false for all genuine news stories — even if the
+topic has low relevance to the user's interests.
 
 RELEVANCE RULES:
-Score 1-10 based on these user interest levels:
+Score 1-10 weighted by these interest levels:
 AI:${prefs.ai} Finance:${prefs.finance} Geo:${prefs.geo}
 Sports:${prefs.sports} Science:${prefs.science}
 Health:${prefs.health} Climate:${prefs.climate}
-10 = perfectly matches highest interest
-1 = completely outside all interests
-Do NOT mark any real news story as filtered=true.
-Only mark filtered=true for: job postings, polls, sponsored content, press releases disguised as news.
 
 Return ONLY a valid JSON array. No markdown. No explanation.
-Each object must have ALL original fields plus: category, imageQuery, summary, relevance, filtered`;
+No text before or after the array.
+Each object must include ALL original fields plus:
+category, imageQuery, summary, relevance, filtered`;
 }
 
 // ── Gradient by category ──────────────────────────────────────────────────────
@@ -228,12 +292,13 @@ async function main() {
 
       try {
         const completion = await groq.chat.completions.create({
-          model:      'llama-3.3-70b-versatile',
-          messages:   [
+          model:       'llama-3.3-70b-versatile',
+          messages:    [
             { role: 'system', content: systemPrompt },
             { role: 'user',   content: JSON.stringify(batch) },
           ],
-          max_tokens: 4000,
+          max_tokens:  4000,
+          temperature: 0.1,
         });
 
         const raw      = completion.choices[0]?.message?.content || '[]';
@@ -296,11 +361,14 @@ async function main() {
       .filter(s => !s.filtered)
       .sort((a, b) => b.relevance - a.relevance)
       .slice(0, 30)
-      .map(s => ({
-        ...s,
-        image:    s.image    || `https://picsum.photos/seed/${s.id}/900/1600`,
-        gradient: CATEGORY_GRADIENT[s.category] || 1,
-      }));
+      .map(s => {
+        const { filtered, imageQuery, ...rest } = s;
+        return {
+          ...rest,
+          image:    rest.image    || `https://picsum.photos/seed/${rest.id}/900/1600`,
+          gradient: CATEGORY_GRADIENT[rest.category] || 1,
+        };
+      });
 
     writeFileSync(OUTPUT_PATH, JSON.stringify(finalStories, null, 2));
 
