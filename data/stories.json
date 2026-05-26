@@ -1,92 +1,12 @@
 [
   {
-    "title": "SpaceX reveals plan for $1.75tn stock market debut that could make Musk a trillionaire",
-    "url": "https://www.theguardian.com/science/2026/may/20/spacex-finances-stock-market-debut",
-    "time": 1779317849,
+    "title": "Oil price rises back above $100 a barrel as energy market may be past ‘point of no return’",
+    "url": "https://www.theguardian.com/business/2026/may/26/oil-price-energy-market-us-iran-peace-talks",
+    "time": 1779798596,
     "category": "Finance",
-    "summary": "SpaceX plans $1.75tn stock market debut making Musk a trillionaire",
-    "relevance": 10,
-    "image": "https://i.guim.co.uk/img/media/e4127a1b51b188bb902aa5bad7859f6d101b2219/488_0_4024_3220/master/4024.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=8e84456c22483a48da2223f5995b0873",
-    "gradient": 2
-  },
-  {
-    "title": "Waymo suspends all freeway rides over safety issues",
-    "url": "https://sfstandard.com/2026/05/21/waymo-suspends-all-freeway-rides-safety-issues/",
-    "time": 1779764222,
-    "category": "Tech",
-    "summary": "Waymo suspends freeway rides due to safety issues and concerns",
+    "summary": "Oil price exceeds $100 a barrel due to energy market concerns",
     "relevance": 9,
-    "image": "https://assets.sfstandard.com/image/994911177489/image_nr4qjjv0ud3cf6337ncb5ra90v/-S1200x630-FPNG",
-    "gradient": 1
-  },
-  {
-    "title": "Kevin Warsh sworn in as Fed chair as Trump faces backlash over economy",
-    "url": "https://www.theguardian.com/us-news/2026/may/22/trump-not-focused-on-economy-poll",
-    "time": 1779484804,
-    "category": "Geo",
-    "summary": "Kevin Warsh becomes Fed chair amidst Trump economy backlash",
-    "relevance": 9,
-    "image": "https://i.guim.co.uk/img/media/95ce4c5deb04fc3fcc4a25e89c57a5eccc7cb025/104_0_2534_2027/master/2534.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=52e6d92bedec1003abdbaffdd29b9bc9",
-    "gradient": 3
-  },
-  {
-    "title": "US military launches strikes on southern Iran amid talks in Qatar",
-    "url": "https://www.aljazeera.com/news/2026/5/26/us-military-launches-strikes-on-southern-iran-amid-talks-in-qatar?traffic_source=rss",
-    "time": 1779757027,
-    "category": "Geo",
-    "summary": "US launches strikes on southern Iran amid Qatar talks escalation",
-    "relevance": 9,
-    "image": "https://www.aljazeera.com/wp-content/uploads/2026/05/AFP__20260518__B3736T3__v1__MidRes__OmanIranUsIsraelWarHormuz-1779755931.jpg?resize=1200%2C630",
-    "gradient": 3
-  },
-  {
-    "title": "U.S. military strikes targets in southern Iran, citing 'threats posed by Iranian forces'",
-    "url": "https://www.cbc.ca/news/world/iran-u-s-ceasefire-deal-9.7210824?cmp=rss",
-    "time": 1779702901,
-    "category": "Geo",
-    "summary": "US military strikes Iranian targets citing threats from Iranian forces",
-    "relevance": 9,
-    "image": "https://i.cbc.ca/ais/81b85f82-701a-4157-bb66-f1a6ffc7bc5b,1779717267929/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C155%2C2976%2C1674%29%3BResize%3D620",
-    "gradient": 3
-  },
-  {
-    "title": "‘I begged for help’: the police failings that led to UK mother’s death at hands of her daughter’s stalker",
-    "url": "https://www.theguardian.com/society/2026/may/25/i-begged-for-help-the-police-failings-that-led-to-uk-mothers-death-at-hands-of-her-daughters-stalker",
-    "time": 1779710426,
-    "category": "Health",
-    "summary": "UK police failings lead to mother's death at hands of stalker",
-    "relevance": 9,
-    "image": "https://i.guim.co.uk/img/media/5ae2739900dced18bfe00d7ceaf9ecc7e885d755/517_0_5802_4640/master/5802.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=3d4af4b567de25e4283fbd81bd28ec81",
-    "gradient": 2
-  },
-  {
-    "title": "Why Michigan is emerging as one of America’s worst-hit climate states",
-    "url": "https://www.theguardian.com/us-news/2026/may/25/michigan-climate-crisis",
-    "time": 1779706823,
-    "category": "Climate",
-    "summary": "Michigan emerges as one of America's worst-hit climate states",
-    "relevance": 9,
-    "image": "https://i.guim.co.uk/img/media/3e39fa36de3dead9f366725f65abd28545930c90/942_846_3913_3130/master/3913.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=9e49b1259ab0dbb6ad1c205393a9f96a",
-    "gradient": 3
-  },
-  {
-    "title": "Overheated chemical tank in southern California ‘will fail’, EPA chief says",
-    "url": "https://www.theguardian.com/us-news/2026/may/24/chemical-tank-california-epa-lee-zeldin",
-    "time": 1779651374,
-    "category": "Climate",
-    "summary": "Overheated chemical tank in California will fail says EPA chief",
-    "relevance": 9,
-    "image": "https://i.guim.co.uk/img/media/ee8e15a50e6915c6017fba9f14b886e15f5dc8ba/833_0_4167_3335/master/4167.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=68ddd27ea545d5c6e5898433701110d3",
-    "gradient": 3
-  },
-  {
-    "title": "SK Group chairman says memory chip shortage will last until 2030",
-    "url": "https://www.tomshardware.com/pc-components/dram/sk-group-chairman-says-memory-chip-shortage-will-last-until-2030",
-    "time": 1779765081,
-    "category": "Finance",
-    "summary": "Memory chip shortage expected to last until 2030 due to demand",
-    "relevance": 8,
-    "image": "https://cdn.mos.cms.futurecdn.net/H2W39McUJD9PvHn7aRQM6d-1920-80.jpg",
+    "image": "https://i.guim.co.uk/img/media/632a04d3c43a27d2b35c096ab90429263ad750fc/792_0_4190_3354/master/4190.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=198909e3d28324b1924178ae75ee8409",
     "gradient": 2
   },
   {
@@ -95,9 +15,69 @@
     "time": 1779725141,
     "category": "Finance",
     "summary": "Oil prices drop below $100 a barrel on Iran peace deal hopes",
-    "relevance": 8,
+    "relevance": 9,
     "image": "https://i.guim.co.uk/img/media/8f6482b2e98c5a232833cfe92228e0c1bf316462/230_0_2503_2003/master/2503.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=d6c6a323192577a01af0ba40876b3217",
     "gradient": 2
+  },
+  {
+    "title": "Albert Manifold ousted as BP chair over governance and conduct concerns",
+    "url": "https://www.aljazeera.com/economy/2026/5/26/albert-manifold-ousted-as-bp-chair-over-governance-and-conduct-concerns?traffic_source=rss",
+    "time": 1779812380,
+    "category": "Finance",
+    "summary": "BP chair Albert Manifold ousted over governance concerns",
+    "relevance": 9,
+    "image": "https://www.aljazeera.com/wp-content/uploads/2026/05/getty_6a15ba566d-1779808854.jpg?resize=1920%2C1440",
+    "gradient": 2
+  },
+  {
+    "title": "Iranian fishermen struggle to survive amid Hormuz blockade",
+    "url": "https://www.aljazeera.com/video/newsfeed/2026/5/26/iranian-fishermen-struggle-to-survive-amid-hormuz-blockade?traffic_source=rss",
+    "time": 1779812038,
+    "category": "Geo",
+    "summary": "Iranian fishermen struggle amid Hormuz blockade and sanctions",
+    "relevance": 9,
+    "image": "https://www.aljazeera.com/wp-content/uploads/2026/05/Ebrahim-clean-thumbnail-1779811732.png?resize=1920%2C1080&amp;quality=80",
+    "gradient": 3
+  },
+  {
+    "title": "Israeli strike on village in eastern Lebanon kills 12, as troops try to push farther north",
+    "url": "https://www.cbc.ca/news/world/lebanon-israel-strike-hezbollah-9.7212091?cmp=rss",
+    "time": 1779785927,
+    "category": "Geo",
+    "summary": "Israeli strike kills 12 in eastern Lebanon village",
+    "relevance": 9,
+    "image": "https://i.cbc.ca/ais/7659e691-16cc-4841-bf1b-09fba902f3c5,1779805044552/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C31%2C594%2C334%29%3BResize%3D620",
+    "gradient": 3
+  },
+  {
+    "title": "‘I begged for help’: the police failings that led to UK mother’s death at hands of her daughter’s stalker",
+    "url": "https://www.theguardian.com/society/2026/may/25/i-begged-for-help-the-police-failings-that-led-to-uk-mothers-death-at-hands-of-her-daughters-stalker",
+    "time": 1779710426,
+    "category": "Geo",
+    "summary": "UK police failings led to mother's death at hands of her daughter's stalker",
+    "relevance": 9,
+    "image": "https://i.guim.co.uk/img/media/5ae2739900dced18bfe00d7ceaf9ecc7e885d755/517_0_5802_4640/master/5802.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=3d4af4b567de25e4283fbd81bd28ec81",
+    "gradient": 3
+  },
+  {
+    "title": "It Takes Two Neurons to Ride a Bicycle",
+    "url": "https://fermatslibrary.com/s/it-takes-two-neurons-to-ride-a-bicycle#email-newsletter",
+    "time": 1779814315,
+    "category": "Science",
+    "summary": "Two neurons simulate bicycle riding in research study",
+    "relevance": 8,
+    "image": "https://fermatslibrary.com/fl-card.png",
+    "gradient": 5
+  },
+  {
+    "title": "Musk and Altman’s AI rivalry reaches boiling point as IPO race heats up",
+    "url": "https://www.theguardian.com/technology/2026/may/25/musk-altman-ai-rivalry-ipo",
+    "time": 1779796886,
+    "category": "AI",
+    "summary": "Musk and Altman's AI companies compete in intense IPO race",
+    "relevance": 8,
+    "image": "https://i.guim.co.uk/img/media/e58e6018ecf5d31f073cbecec654aa2d8ffd0a7b/0_0_3000_2399/master/3000.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=a5b9b37d6c5e47a17984d750fa8c782f",
+    "gradient": 1
   },
   {
     "title": "Wealthsimple wants to expand its banking to kids and businesses",
@@ -110,122 +90,32 @@
     "gradient": 2
   },
   {
-    "title": "Istanbul’s Bilgi University reopened after police crackdown",
-    "url": "https://www.aljazeera.com/video/newsfeed/2026/5/26/istanbuls-bilgi-university-reopened-after-police-crackdown?traffic_source=rss",
-    "time": 1779763729,
-    "category": "Geo",
-    "summary": "Istanbul's Bilgi University reopens after police crackdown ends",
-    "relevance": 8,
-    "image": "https://www.aljazeera.com/wp-content/uploads/2026/05/image-1779763566.jpg?resize=1896%2C1080&amp;quality=80",
-    "gradient": 3
-  },
-  {
-    "title": "Ukraine's cultural, historical institutions heavily damaged in mass-scale Russian attack",
-    "url": "https://www.cbc.ca/news/world/ukraine-museums-cultural-institutions-russia-attacks-9.7210980?cmp=rss",
-    "time": 1779737100,
-    "category": "Geo",
-    "summary": "Russian attack heavily damages Ukraine's cultural institutions nationwide",
-    "relevance": 8,
-    "image": "https://i.cbc.ca/ais/d6bed13e-09a4-48af-bd86-5733cd69b8aa,1779728141650/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C272%2C5224%2C2938%29%3BResize%3D620",
-    "gradient": 3
-  },
-  {
-    "title": "Injured Alphonso Davies to miss Canada's World Cup camp, but coach Marsch optimistic he will play tournament",
-    "url": "https://www.cbc.ca/sports/soccer/canada-soccer-camp-roster-chris-jones-may-25-9.7210920?cmp=rss",
-    "time": 1779717632,
+    "title": "France’s Kouame becomes youngest male Grand Slam match-winner in 17 years",
+    "url": "https://www.aljazeera.com/sports/2026/5/26/frances-kouame-becomes-youngest-male-grand-slam-match-winner-in-17-years?traffic_source=rss",
+    "time": 1779812470,
     "category": "Sports",
-    "summary": "Knicks return to NBA finals for first time since 1999 after sweeping Cavaliers",
+    "summary": "France's Kouame becomes youngest Grand Slam match winner",
     "relevance": 8,
-    "image": "https://i.cbc.ca/ais/39d2cba3-e98d-4b41-a693-29537436f219,1779714484264/full/max/0/default.jpg?im=Crop%2Crect%3D%28956%2C358%2C1568%2C882%29%3BResize%3D620",
+    "image": "https://www.aljazeera.com/wp-content/uploads/2026/05/AFP__20260526__B42H28W__v2__MidRes__TopshotTennisFraOpen2026-1779811601.jpg?resize=1200%2C630",
     "gradient": 4
   },
   {
-    "title": "China launches three-crew spaceflight as part of lunar ambitions",
-    "url": "https://www.theguardian.com/world/2026/may/24/china-launches-three-crew-space-flight-moon-shenzhou-23-mission",
-    "time": 1779635446,
-    "category": "Science",
-    "summary": "China launches three-crew spaceflight for lunar ambitions",
-    "relevance": 8,
-    "image": "https://i.guim.co.uk/img/media/0c7481367ee503113e071363abb2dfad0617a302/283_0_2817_2255/master/2817.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=4f47ecf69fe5969f8a82352a6a0e6ff8",
-    "gradient": 5
-  },
-  {
-    "title": "Congo's Ebola outbreak complicated by aid cuts, armed rebels and anger",
-    "url": "https://www.cbc.ca/news/world/congo-battling-ebola-outbreak-9.7210698?cmp=rss",
-    "time": 1779001514,
+    "title": "'Race against time' to contain Ebola outbreak in central Africa",
+    "url": "https://www.cbc.ca/news/health/ebola-outbreak-may-26-9.7211604?cmp=rss",
+    "time": 1779782400,
     "category": "Health",
-    "summary": "Ebola outbreak in Congo worsens due to aid cuts and rebels",
+    "summary": "Ebola outbreak in central Africa prompts containment efforts",
     "relevance": 8,
-    "image": "https://i.cbc.ca/ais/41db8f99-6b51-4bd3-b3f1-efd52ffa2516,1779663410823/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C430%2C8256%2C4644%29%3BResize%3D620",
+    "image": "https://i.cbc.ca/ais/b7794aaf-4d57-4c68-80ad-fcbc34c0c751,1779380637649/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C53%2C1024%2C576%29%3BResize%3D620",
     "gradient": 2
-  },
-  {
-    "title": "Misinformation about perimenopause on social media ‘putting women at risk’",
-    "url": "https://www.theguardian.com/society/2026/may/25/misinformation-about-perimenopause-on-social-media-putting-women-at-risk",
-    "time": 1779699622,
-    "category": "Health",
-    "summary": "Misinformation on social media puts women at risk during perimenopause",
-    "relevance": 8,
-    "image": "https://i.guim.co.uk/img/media/7d41e601578886c700c648de9ce2827936adc981/340_0_3017_2414/master/3017.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=b4d9f52e90141ccd2698a6ce3e88f5bc",
-    "gradient": 2
-  },
-  {
-    "title": "This US island is home to flora found nowhere else. Now, a wildfire threatens extinction",
-    "url": "https://www.theguardian.com/us-news/2026/may/23/santa-rosa-island-wildfire",
-    "time": 1779541228,
-    "category": "Climate",
-    "summary": "Wildfire threatens extinction of unique flora on US island ecosystem",
-    "relevance": 8,
-    "image": "https://i.guim.co.uk/img/media/abb22fc987b4c7afaff0b31e877331d46d840580/126_0_3781_3024/master/3781.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=ff982a6a5467ee70dd387d0bca9722ee",
-    "gradient": 3
-  },
-  {
-    "title": "Publishing's Latest Piracy Problem: Audiobooks on YouTube",
-    "url": "https://www.nytimes.com/2026/05/21/books/audiobook-piracy-youtube.html",
-    "time": 1779764825,
-    "category": "Tech",
-    "summary": "Audiobooks on YouTube pose piracy problem for publishing industry",
-    "relevance": 7,
-    "image": "https://images.unsplash.com/photo-1571302171913-c4cecd3e4780?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTk0Njl8MHwxfHNlYXJjaHwxfHxhdWRpb2Jvb2slMjBwaXJhY3l8ZW58MHwwfHx8MTc3OTc2NTQ3MXww&ixlib=rb-4.1.0&q=80&w=1080",
-    "gradient": 1
-  },
-  {
-    "title": "Pope Leo denounces ‘culture of power’ driving rise of AI",
-    "url": "https://www.theguardian.com/world/2026/may/25/pope-leo-encyclical-ai-artificial-intelligence-slavery",
-    "time": 1779712179,
-    "category": "AI",
-    "summary": "Pope Leo criticizes power culture driving AI rise significantly",
-    "relevance": 7,
-    "image": "https://i.guim.co.uk/img/media/29470a09c5de3ee3c4c64574e6c5bcb096a1e84c/190_0_1898_1519/master/1898.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=cafaa90a59f6891871d6663e13ab8ab0",
-    "gradient": 1
-  },
-  {
-    "title": "Fast-fashion brand Shein buys eco-conscious Everlane",
-    "url": "https://www.cbc.ca/news/business/shein-buys-everlane-9.7208759?cmp=rss",
-    "time": 1779467668,
-    "category": "Finance",
-    "summary": "Shein acquires eco-friendly fashion brand Everlane",
-    "relevance": 7,
-    "image": "https://i.cbc.ca/ais/819d85b6-8968-4bde-80cc-8ec6b3a0061e,1779466024849/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C400%2C5850%2C3290%29%3BResize%3D620",
-    "gradient": 2
-  },
-  {
-    "title": "Cost of living crisis reshapes Eid spending in Nigeria",
-    "url": "https://www.aljazeera.com/news/2026/5/26/cost-of-living-crisis-reshapes-eid-spending-in-nigeria?traffic_source=rss",
-    "time": 1779763461,
-    "category": "Geo",
-    "summary": "Nigeria's Eid spending changes due to cost of living crisis",
-    "relevance": 7,
-    "image": "https://www.aljazeera.com/wp-content/uploads/2026/05/Men-at-the-flock-of-ram-at-the-Kubwa-Sallah-market-by-Federal-Housing-junction-beside-Zenith-House-along-Dutse-Road-Abuja-1779725375.jpg?resize=1920%2C1440",
-    "gradient": 3
   },
   {
     "title": "Spanish passenger from the MV Hondius cruise ship tests positive for hantavirus",
     "url": "https://www.cbc.ca/news/world/hantavirus-hondius-cruise-ship-positive-spanish-passenger-9.7211446?cmp=rss",
     "time": 1779735000,
     "category": "Health",
-    "summary": "Spanish passenger tests positive for hantavirus after cruise ship trip",
-    "relevance": 7,
+    "summary": "Spanish passenger tests positive for hantavirus after cruise",
+    "relevance": 8,
     "image": "https://i.cbc.ca/ais/fe72acd9-db16-4319-a141-388dc44e0ce9,1779734194739/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C574%2C5500%2C3093%29%3BResize%3D620",
     "gradient": 2
   },
@@ -234,50 +124,140 @@
     "url": "https://www.theguardian.com/society/2026/may/25/labour-needs-system-reset-to-tackle-youth-unemployment-report-to-say",
     "time": 1779714026,
     "category": "Geo",
-    "summary": "Labour report calls for system reset to tackle youth unemployment",
-    "relevance": 7,
+    "summary": "Labour report calls for system reset to tackle rising youth unemployment rates",
+    "relevance": 8,
     "image": "https://i.guim.co.uk/img/media/98861acc48d37f8249cf7e246a0b3e84d0e86ddd/169_0_4991_3993/master/4991.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=4fcff0b8808907e14e85213829d48d81",
     "gradient": 3
   },
   {
-    "title": "Do old buildings give you the creeps? New research could explain haunted feelings",
-    "url": "https://www.cbc.ca/radio/quirks/infrasound-paranormal-9.7209127?cmp=rss",
-    "time": 1779609600,
-    "category": "Science",
-    "summary": "Research explains haunted feelings in old buildings through science",
-    "relevance": 6,
-    "image": "https://i.cbc.ca/ais/f570c7d8-7cd5-4b90-b7e7-b88a5f21d3d9,1779480064418/full/max/0/default.jpg?im=Crop%2Crect%3D%2890%2C0%2C4270%2C2401%29%3BResize%3D620",
-    "gradient": 5
+    "title": "Misinformation about perimenopause on social media ‘putting women at risk’",
+    "url": "https://www.theguardian.com/society/2026/may/25/misinformation-about-perimenopause-on-social-media-putting-women-at-risk",
+    "time": 1779699622,
+    "category": "Health",
+    "summary": "Misinformation about perimenopause on social media puts women's health at risk",
+    "relevance": 8,
+    "image": "https://i.guim.co.uk/img/media/7d41e601578886c700c648de9ce2827936adc981/340_0_3017_2414/master/3017.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=b4d9f52e90141ccd2698a6ce3e88f5bc",
+    "gradient": 2
   },
   {
-    "title": "What centuries-old whaler logs can tell us about why bowheads struggle today",
-    "url": "https://www.cbc.ca/news/science/whaling-logbook-bowhead-populations-9.7208739?cmp=rss",
-    "time": 1779609600,
-    "category": "Science",
-    "summary": "Whaler logs reveal reasons for bowhead struggle and decline",
-    "relevance": 6,
-    "image": "https://i.cbc.ca/ais/43979df7-8023-4685-a1c6-741a386301ad,1779471457094/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C361%2C1872%2C1053%29%3BResize%3D620",
-    "gradient": 5
+    "title": "Revealed: huge climate cost of harmful emissions from US immigration flights",
+    "url": "https://www.theguardian.com/us-news/2026/may/26/us-immigration-flights-emissions",
+    "time": 1779786051,
+    "category": "Climate",
+    "summary": "US immigration flights produce huge amounts of harmful emissions contributing to climate change",
+    "relevance": 8,
+    "image": "https://i.guim.co.uk/img/media/29ce961666a55ceb499630944678cd10900618c8/156_0_2072_1657/master/2072.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=80197e5c8defcd9e243f36767217fdb1",
+    "gradient": 3
   },
   {
-    "title": "Scotland’s ‘green datacentres’ policy ignores emissions impact of AI, analysis shows",
-    "url": "https://www.theguardian.com/uk-news/2026/may/25/scotland-policy-green-datacentres-emissions-impact-ai-analysis",
-    "time": 1779663669,
-    "category": "AI",
-    "summary": "Scotland's green datacentres policy overlooks AI emissions impact greatly",
-    "relevance": 6,
-    "image": "https://i.guim.co.uk/img/media/2376ec6dae4dcbd920110145a1929a2e3521de6e/329_0_3083_2467/master/3083.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=f560969cc2e55fbe4dbb983ee4f10249",
+    "title": "Why Michigan is emerging as one of America’s worst-hit climate states",
+    "url": "https://www.theguardian.com/us-news/2026/may/25/michigan-climate-crisis",
+    "time": 1779706823,
+    "category": "Climate",
+    "summary": "Michigan emerges as one of America's worst-hit climate states due to rising temperatures",
+    "relevance": 8,
+    "image": "https://i.guim.co.uk/img/media/3e39fa36de3dead9f366725f65abd28545930c90/942_846_3913_3130/master/3913.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=9e49b1259ab0dbb6ad1c205393a9f96a",
+    "gradient": 3
+  },
+  {
+    "title": "DoomBench – Can Your Data Stack Run Doom?",
+    "url": "https://cedardb.com/blog/doombench/",
+    "time": 1779814406,
+    "category": "Tech",
+    "summary": "DoomBench tests data stack performance with Doom game",
+    "relevance": 7,
+    "image": "/blog/doombench/hero.png",
     "gradient": 1
   },
   {
-    "title": "Amtrak is smashing ridership records. Is it ready to handle the World Cup?",
-    "url": "https://www.theguardian.com/football/2026/may/24/amtrak-world-cup",
-    "time": 1779638243,
+    "title": "Mother of boy who may have died in TikTok challenge urges No 10 to ban social media",
+    "url": "https://www.theguardian.com/media/2026/may/26/mother-of-boy-who-died-urges-no-10-social-media-ban",
+    "time": 1779784457,
+    "category": "Geo",
+    "summary": "UK government urged to ban social media after boy's death",
+    "relevance": 7,
+    "image": "https://i.guim.co.uk/img/media/fd3bb0055f77d54f8efc5da821a72740a665e833/67_0_1012_810/master/1012.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=0e51098c5d170d67be9229773aa4c744",
+    "gradient": 3
+  },
+  {
+    "title": "BP removes chair Albert Manifold over ‘serious’ governance and conduct concerns",
+    "url": "https://www.theguardian.com/business/2026/may/26/bp-chair-albert-manifold-ian-tyler",
+    "time": 1779796709,
+    "category": "Finance",
+    "summary": "BP chair removed over governance and conduct concerns",
+    "relevance": 7,
+    "image": "https://i.guim.co.uk/img/media/4a9cd4ea64ccbd03ea98ef03576d08f9fe1ebbf5/232_296_2239_1791/master/2239.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=08161ceae7ba79a070bc5c022eac432f",
+    "gradient": 2
+  },
+  {
+    "title": "Fast-fashion brand Shein buys eco-conscious Everlane",
+    "url": "https://www.cbc.ca/news/business/shein-buys-everlane-9.7208759?cmp=rss",
+    "time": 1779467668,
+    "category": "Finance",
+    "summary": "Shein acquires Everlane, expands eco-friendly product lines",
+    "relevance": 7,
+    "image": "https://i.cbc.ca/ais/819d85b6-8968-4bde-80cc-8ec6b3a0061e,1779466024849/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C400%2C5850%2C3290%29%3BResize%3D620",
+    "gradient": 2
+  },
+  {
+    "title": "Man City ahead of Man Utd in race for Anderson",
+    "url": "https://www.bbc.com/sport/football/articles/cj0ppgdlll7o?at_medium=RSS&at_campaign=rss",
+    "time": 1779808817,
     "category": "Sports",
-    "summary": "Amtrak breaks ridership records ahead of World Cup handling challenge",
-    "relevance": 6,
-    "image": "https://i.guim.co.uk/img/media/a778be4992156c3dfb48e4de2db310f6b389c1ea/119_0_5001_4000/master/5001.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=4ba1c04bbd397cc206dd2c1cbfaea760",
+    "summary": "Man City leads Man Utd in race to sign Anderson",
+    "relevance": 7,
+    "image": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/cc02/live/509639c0-590f-11f1-8d34-d7341b720fc6.jpg",
     "gradient": 4
+  },
+  {
+    "title": "French Open 2026: Osaka and Gauff through; Medvedev crashes out on boiling day three – live",
+    "url": "https://www.theguardian.com/sport/live/2026/may/26/french-open-2026-sabalenka-gauff-and-medvedev-in-action-on-sweltering-day-three-live",
+    "time": 1779814088,
+    "category": "Sports",
+    "summary": "Osaka and Gauff advance in French Open tournament",
+    "relevance": 7,
+    "image": "https://i.guim.co.uk/img/media/6ce2910d8e27bc392ddb3ca32c876a7a9b3dfe15/644_19_3235_2589/master/3235.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctbGl2ZS5wbmc&enable=upscale&s=1bbdc84c80c2f65368201a7a39da7c2c",
+    "gradient": 4
+  },
+  {
+    "title": "Sault Ste. Marie residents among Canadians concerned about decades of 'forever chemicals' contamination",
+    "url": "https://www.cbc.ca/news/canada/sudbury/sault-ontario-pfas-contamination-9.7207103?cmp=rss",
+    "time": 1779789600,
+    "category": "Health",
+    "summary": "Canadians concerned about decades of forever chemicals contamination affecting health",
+    "relevance": 7,
+    "image": "https://i.cbc.ca/ais/01e3d334-5062-4f30-9848-19cfd5ddec16,1779373942922/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C223%2C4240%2C2385%29%3BResize%3D620",
+    "gradient": 2
+  },
+  {
+    "title": "Laurentian University researcher will use honey bee ‘research assistants’ to track mine rehabilitation",
+    "url": "https://www.cbc.ca/news/canada/sudbury/bee-research-laurentian-mining-rehabilitation-9.7211593?cmp=rss",
+    "time": 1779782400,
+    "category": "Science",
+    "summary": "Honey bees track mine rehabilitation progress effectively",
+    "relevance": 6,
+    "image": "https://i.cbc.ca/ais/7ecd9d44-9f93-4186-8637-1e0a24f67670,1779388442748/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C0%2C1920%2C1080%29%3BResize%3D620",
+    "gradient": 5
+  },
+  {
+    "title": "Mirror – Open-source job search and resume tool with integrated memory",
+    "url": "https://github.com/prateekpuri01/mirror",
+    "time": 1779814389,
+    "category": "Tech",
+    "summary": "Mirror offers open-source job search and resume tools",
+    "relevance": 6,
+    "image": "https://opengraph.githubassets.com/35333c7c76f40f0a2b93f4b668e6f3ac6840533499c8d5a2fb7a2f164be528ec/prateekpuri01/mirror",
+    "gradient": 1
+  },
+  {
+    "title": "Spotify boss defends move to AI music, saying it is better than ‘slop’",
+    "url": "https://www.theguardian.com/technology/2026/may/26/spotify-ai-remix-tool-protects-artists-slop",
+    "time": 1779802837,
+    "category": "AI",
+    "summary": "Spotify defends AI music as better than traditional music",
+    "relevance": 6,
+    "image": "https://i.guim.co.uk/img/media/d950e5360d1f85482f2da9d67d66dea5ea23cb64/849_0_5195_4156/master/5195.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=4ea16d0b8968464bc684455c43220d6e",
+    "gradient": 1
   },
   {
     "title": "Tim Hortons commits to hiring 10,000 local employees, scaling back on temporary foreign workers",
@@ -290,13 +270,33 @@
     "gradient": 2
   },
   {
-    "title": "Hajj pilgrims arrive near Mecca ahead of Arafah Day",
-    "url": "https://www.aljazeera.com/video/newsfeed/2026/5/26/hajj-pilgrims-arrive-near-mecca-ahead-of-arafah-day?traffic_source=rss",
-    "time": 1779757293,
-    "category": "Geo",
-    "summary": "Hajj pilgrims arrive near Mecca for Arafah Day celebrations",
+    "title": "Scotland fans book 20 school buses for games at ‘inaccessible’ US World Cup",
+    "url": "https://www.aljazeera.com/sports/2026/5/26/scotland-fans-book-school-bus-for-matches-at-inaccessible-world-cup?traffic_source=rss",
+    "time": 1779811324,
+    "category": "Sports",
+    "summary": "Scotland fans book school buses for US World Cup games",
     "relevance": 6,
-    "image": "https://www.aljazeera.com/wp-content/uploads/2026/05/image-1779757070.jpg?resize=1559%2C1080&amp;quality=80",
-    "gradient": 3
+    "image": "https://www.aljazeera.com/wp-content/uploads/2026/05/2026-05-07T230320Z_1348142667_RC2L4LAARRM1_RTRMADP_3_SOCCER-WORLD-CUP-USA-1779809975.jpg?resize=1920%2C1440",
+    "gradient": 4
+  },
+  {
+    "title": "The big VAR debrief - did it deny Bournemouth Champions League spot?",
+    "url": "https://www.bbc.com/sport/football/articles/c4g090pjr7ro?at_medium=RSS&at_campaign=rss",
+    "time": 1779809667,
+    "category": "Sports",
+    "summary": "VAR decisions impact Bournemouth's Champions League spot",
+    "relevance": 6,
+    "image": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/563c/live/551b5da0-5918-11f1-8b8c-6d33e1d5abb6.jpg",
+    "gradient": 4
+  },
+  {
+    "title": "Premier League 2025-26 season review: our predictions v reality",
+    "url": "https://www.theguardian.com/football/2026/may/26/premier-league-2025-26-season-review-predictions-reality-liverpool-chelsea-brentford-sunderland",
+    "time": 1779810984,
+    "category": "Sports",
+    "summary": "Premier League season review compares predictions to reality",
+    "relevance": 6,
+    "image": "https://i.guim.co.uk/img/media/ee61f09a3f088eacc7ebf0d28279b04e963d9595/0_0_5000_4000/master/5000.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=5d848526e0cffeb652dc0ffed0ed6572",
+    "gradient": 4
   }
 ]
