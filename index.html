@@ -849,6 +849,7 @@
         return;
       }
       document.getElementById('empty').classList.remove('show');
+      totalCards = stories.length;
       feed.innerHTML = stories.map((s, i) => buildCard(s, i, stories.length)).join('');
       document.querySelectorAll('.photo').forEach(el => {
         const img = el.dataset.img;
@@ -882,6 +883,7 @@
     let nudgeTimer = null;
     let nudgeHideTimer = null;
     let currentCardIndex = 0;
+    let totalCards = 0;
 
     function showNudge(index) {
       const el = document.getElementById(`nudge-${index}`);
@@ -897,6 +899,7 @@
       clearTimeout(nudgeTimer);
       clearTimeout(nudgeHideTimer);
       hideNudge(index);
+      if (totalCards > 0 && index === totalCards - 1) return;
       nudgeTimer = setTimeout(() => {
         showNudge(index);
         nudgeHideTimer = setTimeout(() => hideNudge(index), 3000);
