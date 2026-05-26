@@ -1066,6 +1066,9 @@
       const btns = document.querySelectorAll('.refresh-btn');
       btns.forEach(b => { b.textContent = 'Refreshing…'; b.disabled = true; });
 
+      // Snapshot current first story URL to detect when feed changes
+      const currentFirst = document.querySelector('.btn-share')?.dataset?.url || '';
+
       try {
         const res  = await fetch(WORKER_URL, {
           method:  'POST',
@@ -1075,29 +1078,46 @@
         const data = await res.json();
 
         if (data.ok) {
-          showToast('Feed refreshing in ~2 minutes…');
-          setTimeout(async () => {
-            const stories = await loadStories(true);
-            if (stories.length) {
-              renderFeed(stories);
-              document.getElementById('feed').scrollTop = 0;
-              showToast('Feed updated!');
-            }
-          }, 150000);
+          showToast('Feed refreshing — checking every 30s…');
+          pollForNewStories(currentFirst);
         } else {
           showToast('Refresh failed — try again');
+          btns.forEach(b => { b.textContent = '⟳ Refresh'; b.disabled = false; });
         }
       } catch (err) {
         console.error('Refresh error:', err);
         showToast('Refresh failed — check connection');
-      } finally {
-        setTimeout(() => {
-          document.querySelectorAll('.refresh-btn').forEach(b => {
-            b.textContent = '⟳ Refresh';
-            b.disabled    = false;
-          });
-        }, 150000);
+        btns.forEach(b => { b.textContent = '⟳ Refresh'; b.disabled = false; });
       }
+    }
+
+    /* Poll stories.json every 30s until content changes or 10min elapses */
+    function pollForNewStories(oldFirstUrl) {
+      const INTERVAL = 30000;
+      const DEADLINE = Date.now() + 600000; // 10 minutes
+      const btns = document.querySelectorAll('.refresh-btn');
+
+      const tick = async () => {
+        if (Date.now() > DEADLINE) {
+          showToast('Feed refresh timed out — try again later');
+          btns.forEach(b => { b.textContent = '⟳ Refresh'; b.disabled = false; });
+          return;
+        }
+        const stories = await loadStories(true);
+        const newFirst = stories[0]?.url || '';
+        if (stories.length && newFirst !== oldFirstUrl) {
+          renderFeed(stories);
+          document.getElementById('feed').scrollTop = 0;
+          showToast('Feed updated!');
+          btns.forEach(b => { b.textContent = '⟳ Refresh'; b.disabled = false; });
+        } else {
+          const minsLeft = Math.ceil((DEADLINE - Date.now()) / 60000);
+          showToast(`Still refreshing… (checking again in 30s)`);
+          setTimeout(tick, INTERVAL);
+        }
+      };
+
+      setTimeout(tick, INTERVAL);
     }
 
     function openSettings()  { document.getElementById('settings').classList.add('open');    }
@@ -1115,15 +1135,9 @@
         });
         const data = await res.json();
         if (data.ok) {
-          showToast('Preferences saved. Feed refreshing in ~2 minutes…');
-          setTimeout(async () => {
-            const stories = await loadStories(true);
-            if (stories.length) {
-              renderFeed(stories);
-              document.getElementById('feed').scrollTop = 0;
-              showToast('Feed updated!');
-            }
-          }, 150000);
+          showToast('Preferences saved. Checking for updates every 30s…');
+          const currentFirst = document.querySelector('.btn-share')?.dataset?.url || '';
+          pollForNewStories(currentFirst);
         } else {
           showToast('Save failed — check connection');
         }
