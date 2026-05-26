@@ -2,26 +2,31 @@
   "name": "daily-pulse",
   "version": "1.0.0",
   "scripts": {
-    "fetch":      "node scripts/fetch.js",
-    "agent":      "node scripts/agent.js",
-    "test":       "jest --coverage",
+    "fetch": "node scripts/fetch.js",
+    "agent": "node scripts/agent.js",
+    "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "smoke":      "node scripts/smoke_test.js",
+    "smoke": "node scripts/smoke_test.js",
     "prerelease": "npm test && node scripts/smoke_test.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "latest",
-    "cheerio":          "^1.0.0",
-    "fast-xml-parser":  "latest",
-    "groq-sdk":         "latest",
-    "node-fetch":       "^3.3.2"
+    "cheerio": "^1.0.0",
+    "fast-xml-parser": "latest",
+    "groq-sdk": "latest",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "playwright": "^1.60.0"
   },
   "jest": {
     "testEnvironment": "node",
-    "testMatch": ["**/tests/**/*.test.js"]
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ]
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  }
 }
