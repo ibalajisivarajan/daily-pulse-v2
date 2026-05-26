@@ -1,113 +1,133 @@
 [
   {
-    "title": "Oil prices fall below $100 a barrel on hopes of Iran peace deal",
-    "url": "https://www.theguardian.com/business/2026/may/25/oil-prices-fall-below-100-dollars-a-barrel-iran",
-    "time": 1779725141,
+    "title": "SpaceX reveals plan for $1.75tn stock market debut that could make Musk a trillionaire",
+    "url": "https://www.theguardian.com/science/2026/may/20/spacex-finances-stock-market-debut",
+    "time": 1779317849,
     "category": "Finance",
-    "summary": "Oil prices drop below $100 on hopes of Iran peace deal progress",
-    "relevance": 9,
-    "image": "https://i.guim.co.uk/img/media/8f6482b2e98c5a232833cfe92228e0c1bf316462/230_0_2503_2003/master/2503.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=d6c6a323192577a01af0ba40876b3217",
+    "summary": "SpaceX plans $1.75tn stock market debut making Musk trillionaire",
+    "relevance": 10,
+    "image": "https://i.guim.co.uk/img/media/e4127a1b51b188bb902aa5bad7859f6d101b2219/488_0_4024_3220/master/4024.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=8e84456c22483a48da2223f5995b0873",
     "gradient": 2
   },
   {
-    "title": "Ukraine's cultural, historical institutions heavily damaged in mass-scale Russian attack",
-    "url": "https://www.cbc.ca/news/world/ukraine-museums-cultural-institutions-russia-attacks-9.7210980?cmp=rss",
-    "time": 1779737100,
-    "category": "Geo",
-    "summary": "Russian attack heavily damages Ukrainian cultural institutions",
-    "relevance": 9,
-    "image": "https://i.cbc.ca/ais/d6bed13e-09a4-48af-bd86-5733cd69b8aa,1779728141650/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C272%2C5224%2C2938%29%3BResize%3D620",
-    "gradient": 3
-  },
-  {
-    "title": "Congo's Ebola outbreak complicated by aid cuts, armed rebels and anger",
-    "url": "https://www.cbc.ca/news/world/congo-battling-ebola-outbreak-9.7210698?cmp=rss",
-    "time": 1779001514,
-    "category": "Geo",
-    "summary": "Congo's Ebola outbreak complicated by aid cuts and rebels",
-    "relevance": 9,
-    "image": "https://i.cbc.ca/ais/41db8f99-6b51-4bd3-b3f1-efd52ffa2516,1779663410823/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C430%2C8256%2C4644%29%3BResize%3D620",
-    "gradient": 3
-  },
-  {
-    "title": "Misinformation about perimenopause on social media ‘putting women at risk’",
-    "url": "https://www.theguardian.com/society/2026/may/25/misinformation-about-perimenopause-on-social-media-putting-women-at-risk",
-    "time": 1779699622,
-    "category": "Health",
-    "summary": "Police failings led to UK mother's death at hands of her daughter's stalker",
-    "relevance": 9,
-    "image": "https://i.guim.co.uk/img/media/7d41e601578886c700c648de9ce2827936adc981/340_0_3017_2414/master/3017.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=b4d9f52e90141ccd2698a6ce3e88f5bc",
-    "gradient": 2
-  },
-  {
-    "title": "Overheated chemical tank in southern California ‘will fail’, EPA chief says",
-    "url": "https://www.theguardian.com/us-news/2026/may/24/chemical-tank-california-epa-lee-zeldin",
-    "time": 1779651374,
-    "category": "Climate",
-    "summary": "Overheated chemical tank in southern California will fail soon",
-    "relevance": 9,
-    "image": "https://i.guim.co.uk/img/media/ee8e15a50e6915c6017fba9f14b886e15f5dc8ba/833_0_4167_3335/master/4167.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=68ddd27ea545d5c6e5898433701110d3",
-    "gradient": 3
-  },
-  {
-    "title": "LLMs require curated context for reliable political fact-checking",
-    "url": "https://arxiv.org/abs/2511.18749",
-    "time": 1779751476,
+    "title": "CVE-2026-28952: Apple macOS 26.5 Kernel Vuln found by Claude",
+    "url": "https://support.apple.com/en-us/127115",
+    "time": 1779752440,
     "category": "AI",
-    "summary": "LLMs require curated context for reliable and accurate political fact-checking outcomes",
-    "relevance": 8,
-    "image": "/static/browse/0.3.4/images/arxiv-logo-fb.png",
+    "summary": "Claude discovers Apple macOS kernel vulnerability CVE-2026-28952",
+    "relevance": 9,
+    "image": "https://images.unsplash.com/photo-1527443154391-507e9dc6c5cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTk0Njl8MHwxfHNlYXJjaHwxfHxtYWNvcyUyMHZ1bG58ZW58MHwwfHx8MTc3OTc1MzcxM3ww&ixlib=rb-4.1.0&q=80&w=1080",
     "gradient": 1
   },
   {
-    "title": "Scotland’s ‘green datacentres’ policy ignores emissions impact of AI, analysis shows",
-    "url": "https://www.theguardian.com/uk-news/2026/may/25/scotland-policy-green-datacentres-emissions-impact-ai-analysis",
-    "time": 1779663669,
-    "category": "AI",
-    "summary": "Scotland's green datacentres policy overlooks AI emissions impact greatly",
-    "relevance": 8,
-    "image": "https://i.guim.co.uk/img/media/2376ec6dae4dcbd920110145a1929a2e3521de6e/329_0_3083_2467/master/3083.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=f560969cc2e55fbe4dbb983ee4f10249",
-    "gradient": 1
-  },
-  {
-    "title": "Amtrak is smashing ridership records. Is it ready to handle the World Cup?",
-    "url": "https://www.theguardian.com/football/2026/may/24/amtrak-world-cup",
-    "time": 1779638243,
-    "category": "Sports",
-    "summary": "Amtrak breaks ridership records ahead of World Cup tournament",
-    "relevance": 8,
-    "image": "https://i.guim.co.uk/img/media/a778be4992156c3dfb48e4de2db310f6b389c1ea/119_0_5001_4000/master/5001.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=4ba1c04bbd397cc206dd2c1cbfaea760",
-    "gradient": 4
+    "title": "Kevin Warsh sworn in as Fed chair as Trump faces backlash over economy",
+    "url": "https://www.theguardian.com/us-news/2026/may/22/trump-not-focused-on-economy-poll",
+    "time": 1779484804,
+    "category": "Geo",
+    "summary": "Kevin Warsh sworn in as Fed chair amidst Trump economy backlash",
+    "relevance": 9,
+    "image": "https://i.guim.co.uk/img/media/95ce4c5deb04fc3fcc4a25e89c57a5eccc7cb025/104_0_2534_2027/master/2534.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=52e6d92bedec1003abdbaffdd29b9bc9",
+    "gradient": 3
   },
   {
     "title": "Israel to intensify Lebanon offensive to ‘crush’ Hezbollah",
     "url": "https://www.aljazeera.com/news/2026/5/25/israel-to-intensify-lebanon-offensive-in-bid-to-crush-hezbollah?traffic_source=rss",
     "time": 1779742168,
     "category": "Geo",
-    "summary": "Israel intensifies Lebanon offensive against Hezbollah forces",
-    "relevance": 8,
+    "summary": "Israel launches intensified offensive in Lebanon to crush Hezbollah militant group",
+    "relevance": 9,
     "image": "https://www.aljazeera.com/wp-content/uploads/2026/05/reuters_6a149921-1779734817.jpg?resize=1920%2C1440",
     "gradient": 3
   },
   {
-    "title": "Trump demands Arab countries sign Abraham Accords with Israel as part of deal to end Iran war",
+    "title": "Ukraine's cultural, historical institutions heavily damaged in mass-scale Russian attack",
+    "url": "https://www.cbc.ca/news/world/ukraine-museums-cultural-institutions-russia-attacks-9.7210980?cmp=rss",
+    "time": 1779737100,
+    "category": "Geo",
+    "summary": "Russian attack heavily damages Ukraine's cultural institutions",
+    "relevance": 9,
+    "image": "https://i.cbc.ca/ais/d6bed13e-09a4-48af-bd86-5733cd69b8aa,1779728141650/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C272%2C5224%2C2938%29%3BResize%3D620",
+    "gradient": 3
+  },
+  {
+    "title": "U.S. military strikes targets in southern Iran, citing 'threats posed by Iranian forces'",
     "url": "https://www.cbc.ca/news/world/iran-u-s-ceasefire-deal-9.7210824?cmp=rss",
     "time": 1779702901,
     "category": "Geo",
-    "summary": "Trump pushes Arab countries to sign Abraham Accords with Israel",
-    "relevance": 8,
+    "summary": "US military strikes targets in southern Iran citing threats",
+    "relevance": 9,
     "image": "https://i.cbc.ca/ais/81b85f82-701a-4157-bb66-f1a6ffc7bc5b,1779717267929/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C155%2C2976%2C1674%29%3BResize%3D620",
     "gradient": 3
   },
   {
-    "title": "Rays' Wander Franco criminally responsible for abuse, judge finds, but spared punishment in Dominican case",
-    "url": "https://www.cbc.ca/sports/baseball/mlb/wander-franco-trial-dominican-republic-9.7211852?cmp=rss",
-    "time": 1779749715,
-    "category": "Sports",
-    "summary": "Wander Franco found criminally responsible for abuse",
+    "title": "Congo's Ebola outbreak complicated by aid cuts, armed rebels and anger",
+    "url": "https://www.cbc.ca/news/world/congo-battling-ebola-outbreak-9.7210698?cmp=rss",
+    "time": 1779001514,
+    "category": "Health",
+    "summary": "Congo's Ebola outbreak worsens with aid cuts and rebels",
+    "relevance": 9,
+    "image": "https://i.cbc.ca/ais/41db8f99-6b51-4bd3-b3f1-efd52ffa2516,1779663410823/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C430%2C8256%2C4644%29%3BResize%3D620",
+    "gradient": 2
+  },
+  {
+    "title": "‘I begged for help’: the police failings that led to UK mother’s death at hands of her daughter’s stalker",
+    "url": "https://www.theguardian.com/society/2026/may/25/i-begged-for-help-the-police-failings-that-led-to-uk-mothers-death-at-hands-of-her-daughters-stalker",
+    "time": 1779710426,
+    "category": "Geo",
+    "summary": "Police failings led to UK mother's death at hands of stalker",
+    "relevance": 9,
+    "image": "https://i.guim.co.uk/img/media/5ae2739900dced18bfe00d7ceaf9ecc7e885d755/517_0_5802_4640/master/5802.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=3d4af4b567de25e4283fbd81bd28ec81",
+    "gradient": 3
+  },
+  {
+    "title": "Why Michigan is emerging as one of America’s worst-hit climate states",
+    "url": "https://www.theguardian.com/us-news/2026/may/25/michigan-climate-crisis",
+    "time": 1779706823,
+    "category": "Climate",
+    "summary": "Michigan emerges as one of America's worst-hit climate states rapidly",
+    "relevance": 9,
+    "image": "https://i.guim.co.uk/img/media/3e39fa36de3dead9f366725f65abd28545930c90/942_846_3913_3130/master/3913.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=9e49b1259ab0dbb6ad1c205393a9f96a",
+    "gradient": 3
+  },
+  {
+    "title": "Overheated chemical tank in southern California ‘will fail’, EPA chief says",
+    "url": "https://www.theguardian.com/us-news/2026/may/24/chemical-tank-california-epa-lee-zeldin",
+    "time": 1779651374,
+    "category": "Climate",
+    "summary": "Overheated chemical tank in California will fail soon",
+    "relevance": 9,
+    "image": "https://i.guim.co.uk/img/media/ee8e15a50e6915c6017fba9f14b886e15f5dc8ba/833_0_4167_3335/master/4167.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=68ddd27ea545d5c6e5898433701110d3",
+    "gradient": 3
+  },
+  {
+    "title": "Promising One and done heart disease genetic therapy",
+    "url": "https://www.nytimes.com/2026/05/25/health/cholesterol-ldl-gene-therapy.html",
+    "time": 1779752512,
+    "category": "Health",
+    "summary": "Genetic therapy shows promise for treating heart disease effectively",
     "relevance": 8,
-    "image": "https://i.cbc.ca/ais/25ea72ca-44b7-4e0c-be50-e555904ade30,1779749176770/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C273%2C4279%2C2406%29%3BResize%3D620",
-    "gradient": 4
+    "image": "https://images.unsplash.com/photo-1596436643132-6e58c3ae4cd4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTk0Njl8MHwxfHNlYXJjaHwxfHxoZWFydCUyMHRoZXJhcHl8ZW58MHwwfHx8MTc3OTc1MzcxM3ww&ixlib=rb-4.1.0&q=80&w=1080",
+    "gradient": 2
+  },
+  {
+    "title": "Oil prices fall below $100 a barrel on hopes of Iran peace deal",
+    "url": "https://www.theguardian.com/business/2026/may/25/oil-prices-fall-below-100-dollars-a-barrel-iran",
+    "time": 1779725141,
+    "category": "Finance",
+    "summary": "Oil prices drop below $100 per barrel on Iran peace deal hopes",
+    "relevance": 8,
+    "image": "https://i.guim.co.uk/img/media/8f6482b2e98c5a232833cfe92228e0c1bf316462/230_0_2503_2003/master/2503.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=d6c6a323192577a01af0ba40876b3217",
+    "gradient": 2
+  },
+  {
+    "title": "Tim Hortons commits to hiring 10,000 local employees, scaling back on temporary foreign workers",
+    "url": "https://www.cbc.ca/news/business/tim-hortons-hiring-spree-9.7211494?cmp=rss",
+    "time": 1779739772,
+    "category": "Geo",
+    "summary": "Israel intensifies Lebanon offensive to crush Hezbollah forces completely",
+    "relevance": 8,
+    "image": "https://i.cbc.ca/ais/41765543-7bfe-4878-9361-fa815206de16,1779735091311/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C0%2C4930%2C2773%29%3BResize%3D620",
+    "gradient": 3
   },
   {
     "title": "China launches three-crew spaceflight as part of lunar ambitions",
@@ -124,30 +144,20 @@
     "url": "https://www.theguardian.com/society/2026/may/25/labour-needs-system-reset-to-tackle-youth-unemployment-report-to-say",
     "time": 1779714026,
     "category": "Geo",
-    "summary": "Labour report calls for system reset to tackle youth unemployment",
+    "summary": "Labour report urges system reset to tackle youth unemployment effectively",
     "relevance": 8,
     "image": "https://i.guim.co.uk/img/media/98861acc48d37f8249cf7e246a0b3e84d0e86ddd/169_0_4991_3993/master/4991.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=4fcff0b8808907e14e85213829d48d81",
     "gradient": 3
   },
   {
-    "title": "‘I begged for help’: the police failings that led to UK mother’s death at hands of her daughter’s stalker",
-    "url": "https://www.theguardian.com/society/2026/may/25/i-begged-for-help-the-police-failings-that-led-to-uk-mothers-death-at-hands-of-her-daughters-stalker",
-    "time": 1779710426,
+    "title": "Misinformation about perimenopause on social media ‘putting women at risk’",
+    "url": "https://www.theguardian.com/society/2026/may/25/misinformation-about-perimenopause-on-social-media-putting-women-at-risk",
+    "time": 1779699622,
     "category": "Health",
     "summary": "Misinformation about perimenopause on social media puts women at risk",
     "relevance": 8,
-    "image": "https://i.guim.co.uk/img/media/5ae2739900dced18bfe00d7ceaf9ecc7e885d755/517_0_5802_4640/master/5802.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=3d4af4b567de25e4283fbd81bd28ec81",
+    "image": "https://i.guim.co.uk/img/media/7d41e601578886c700c648de9ce2827936adc981/340_0_3017_2414/master/3017.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=b4d9f52e90141ccd2698a6ce3e88f5bc",
     "gradient": 2
-  },
-  {
-    "title": "Why Michigan is emerging as one of America’s worst-hit climate states",
-    "url": "https://www.theguardian.com/us-news/2026/may/25/michigan-climate-crisis",
-    "time": 1779706823,
-    "category": "Climate",
-    "summary": "Michigan emerges as one of America's worst-hit climate states",
-    "relevance": 8,
-    "image": "https://i.guim.co.uk/img/media/3e39fa36de3dead9f366725f65abd28545930c90/942_846_3913_3130/master/3913.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=9e49b1259ab0dbb6ad1c205393a9f96a",
-    "gradient": 3
   },
   {
     "title": "This US island is home to flora found nowhere else. Now, a wildfire threatens extinction",
@@ -160,6 +170,16 @@
     "gradient": 3
   },
   {
+    "title": "Google is its own worst enemy",
+    "url": "https://disconnect.blog/google-is-its-own-worst-enemy/",
+    "time": 1779752420,
+    "category": "Tech",
+    "summary": "Google faces challenges and competition from itself in market",
+    "relevance": 7,
+    "image": "https://storage.ghost.io/c/a3/8c/a38c83f8-bcf7-4a9e-a1e8-14d4368e6b10/content/images/size/w1200/2026/05/googleai.png",
+    "gradient": 1
+  },
+  {
     "title": "Pope Leo denounces ‘culture of power’ driving rise of AI",
     "url": "https://www.theguardian.com/world/2026/may/25/pope-leo-encyclical-ai-artificial-intelligence-slavery",
     "time": 1779712179,
@@ -170,133 +190,113 @@
     "gradient": 1
   },
   {
+    "title": "Wealthsimple wants to expand its banking to kids and businesses",
+    "url": "https://www.cbc.ca/news/business/wealthsimple-launching-kids-businesses-9.7207296?cmp=rss",
+    "time": 1779394800,
+    "category": "Finance",
+    "summary": "Wealthsimple expands banking services to kids and businesses with new products",
+    "relevance": 7,
+    "image": "https://i.cbc.ca/ais/51fd7d8c-7ad4-470a-a338-3f80ecac945d,1779379562870/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C270%2C5188%2C2918%29%3BResize%3D620",
+    "gradient": 2
+  },
+  {
     "title": "Bolivia’s president cuts salary in half amid protests",
     "url": "https://www.aljazeera.com/video/newsfeed/2026/5/25/bolivias-president-cuts-salary-in-half-amid-protests?traffic_source=rss",
     "time": 1779740982,
     "category": "Geo",
-    "summary": "Bolivian president reduces salary amid nationwide protests",
+    "summary": "Bolivia's president reduces salary by half due to protests",
     "relevance": 7,
     "image": "https://www.aljazeera.com/wp-content/uploads/2026/05/image-1779740937.jpg?resize=1920%2C1080&amp;quality=80",
     "gradient": 3
   },
   {
-    "title": "Spurs admit 'football success was not driving decisions'",
-    "url": "https://www.bbc.com/sport/football/articles/c3v22p6nvx5o?at_medium=RSS&at_campaign=rss",
-    "time": 1779724048,
-    "category": "Sports",
-    "summary": "Spurs admit football success not driving decisions",
+    "title": "B.C. island turns to recruiter as doctor's retirement puts clinic in jeopardy",
+    "url": "https://www.cbc.ca/news/canada/british-columbia/quadra-island-family-doctor-shortage-9.7209334?cmp=rss",
+    "time": 1779710400,
+    "category": "Health",
+    "summary": "Doctor's retirement puts B.C. island clinic in jeopardy",
     "relevance": 7,
-    "image": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/295c/live/3bab2760-584b-11f1-8b8c-6d33e1d5abb6.jpg",
-    "gradient": 4
+    "image": "https://i.cbc.ca/ais/b1bf1851-b88b-460e-8482-87d02554d1b9,1779486271101/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C13%2C960%2C540%29%3BResize%3D620",
+    "gradient": 2
   },
   {
     "title": "Woodchips on trails reduce tick populations, Ottawa researchers find",
     "url": "https://www.cbc.ca/news/canada/ottawa/woodchips-on-trails-reduce-tick-populations-ottawa-researchers-find-9.7206851?cmp=rss",
     "time": 1779609600,
-    "category": "Science",
-    "summary": "Woodchips on trails reduce tick populations, researchers find",
+    "category": "Health",
+    "summary": "Woodchips on trails reduce tick populations significantly",
     "relevance": 7,
     "image": "https://i.cbc.ca/ais/6b28f8b7-0251-43aa-9338-3b104e7dc028,1778525556765/full/max/0/default.jpg?im=Crop%2Crect%3D%2815%2C38%2C495%2C278%29%3BResize%3D620",
-    "gradient": 5
-  },
-  {
-    "title": "Do old buildings give you the creeps? New research could explain haunted feelings",
-    "url": "https://www.cbc.ca/radio/quirks/infrasound-paranormal-9.7209127?cmp=rss",
-    "time": 1779609600,
-    "category": "Science",
-    "summary": "Research explains haunted feelings in old buildings through new study findings",
-    "relevance": 6,
-    "image": "https://i.cbc.ca/ais/f570c7d8-7cd5-4b90-b7e7-b88a5f21d3d9,1779480064418/full/max/0/default.jpg?im=Crop%2Crect%3D%2890%2C0%2C4270%2C2401%29%3BResize%3D620",
-    "gradient": 5
+    "gradient": 2
   },
   {
     "title": "What centuries-old whaler logs can tell us about why bowheads struggle today",
     "url": "https://www.cbc.ca/news/science/whaling-logbook-bowhead-populations-9.7208739?cmp=rss",
     "time": 1779609600,
     "category": "Science",
-    "summary": "Whaler logs reveal historical data on bowhead struggles and population decline",
+    "summary": "Whaler logs reveal reasons for bowhead struggle and decline today",
     "relevance": 6,
     "image": "https://i.cbc.ca/ais/43979df7-8023-4685-a1c6-741a386301ad,1779471457094/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C361%2C1872%2C1053%29%3BResize%3D620",
     "gradient": 5
   },
   {
-    "title": "Czech police detain Russian priest over ‘white substance’ find",
-    "url": "https://www.aljazeera.com/news/2026/5/25/czech-police-detain-russian-priest-over-white-substance-find?traffic_source=rss",
-    "time": 1779742500,
-    "category": "Geo",
-    "summary": "Czech police detain Russian priest over suspicious substance found",
+    "title": "Leadwerks Game Engine 5.1 Beta Releases with Support for \"Potato PCs\"",
+    "url": "https://www.leadwerks.com/community/blogs/entry/2896-leadwerks-51-beta-is-now-available-with-support-for-potato-pcs/",
+    "time": 1779752902,
+    "category": "Tech",
+    "summary": "Leadwerks Game Engine 5.1 beta supports low-end hardware PCs",
     "relevance": 6,
-    "image": "https://www.aljazeera.com/wp-content/uploads/2026/05/10340758-1779729411.jpg?resize=1920%2C1440",
-    "gradient": 3
+    "image": "https://leadwerksstorage.s3.us-east-2.amazonaws.com/monthly_2026_05/icean.jpg.7ce3463ef030326162ae3e06d4079ce6.jpg",
+    "gradient": 1
   },
   {
-    "title": "Spanish passenger from the MV Hondius cruise ship tests positive for hantavirus",
-    "url": "https://www.cbc.ca/news/world/hantavirus-hondius-cruise-ship-positive-spanish-passenger-9.7211446?cmp=rss",
-    "time": 1779735000,
-    "category": "Health",
-    "summary": "Spanish passenger tests positive for hantavirus after cruise ship trip",
+    "title": "Scotland’s ‘green datacentres’ policy ignores emissions impact of AI, analysis shows",
+    "url": "https://www.theguardian.com/uk-news/2026/may/25/scotland-policy-green-datacentres-emissions-impact-ai-analysis",
+    "time": 1779663669,
+    "category": "AI",
+    "summary": "Scotland's green datacentres policy overlooks AI emissions impact greatly",
     "relevance": 6,
-    "image": "https://i.cbc.ca/ais/fe72acd9-db16-4319-a141-388dc44e0ce9,1779734194739/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C574%2C5500%2C3093%29%3BResize%3D620",
+    "image": "https://i.guim.co.uk/img/media/2376ec6dae4dcbd920110145a1929a2e3521de6e/329_0_3083_2467/master/3083.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=f560969cc2e55fbe4dbb983ee4f10249",
+    "gradient": 1
+  },
+  {
+    "title": "Amtrak is smashing ridership records. Is it ready to handle the World Cup?",
+    "url": "https://www.theguardian.com/football/2026/may/24/amtrak-world-cup",
+    "time": 1779638243,
+    "category": "Sports",
+    "summary": "Amtrak breaks ridership records ahead of World Cup handling challenge",
+    "relevance": 6,
+    "image": "https://images.unsplash.com/photo-1653155835481-dd637d857acb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTk0Njl8MHwxfHNlYXJjaHwxfHxhbXRyYWslMjB0cmFpbnxlbnwwfDB8fHwxNzc5NzUzNzE1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    "gradient": 4
+  },
+  {
+    "title": "Fast-fashion brand Shein buys eco-conscious Everlane",
+    "url": "https://www.cbc.ca/news/business/shein-buys-everlane-9.7208759?cmp=rss",
+    "time": 1779467668,
+    "category": "Finance",
+    "summary": "Shein acquires Everlane to expand sustainable fashion product lines",
+    "relevance": 6,
+    "image": "https://i.cbc.ca/ais/819d85b6-8968-4bde-80cc-8ec6b3a0061e,1779466024849/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C400%2C5850%2C3290%29%3BResize%3D620",
     "gradient": 2
+  },
+  {
+    "title": "Jordan leads star names at Guardiola leaving party",
+    "url": "https://www.bbc.com/sport/football/articles/c74rrwj9gdzo?at_medium=RSS&at_campaign=rss",
+    "time": 1779744861,
+    "category": "Sports",
+    "summary": "Jordan attends Guardiola leaving party with star names",
+    "relevance": 6,
+    "image": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/e342/live/e3802b20-587d-11f1-bd03-bd523285b00d.png",
+    "gradient": 4
   },
   {
     "title": "Man Utd captain Fernandes takes on Keane over 'lie'",
     "url": "https://www.bbc.com/sport/football/articles/cn9ppv3lq4lo?at_medium=RSS&at_campaign=rss",
     "time": 1779726370,
     "category": "Sports",
-    "summary": "Fernandes disputes Keane's claim as a lie",
+    "summary": "Fernandes disputes Keane's claim as a lie publicly",
     "relevance": 6,
     "image": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/3491/live/9bea24b0-584f-11f1-9a33-c313bd26e03f.jpg",
     "gradient": 4
-  },
-  {
-    "title": "Injured Alphonso Davies to miss Canada's World Cup camp, but coach Marsch optimistic he will play tournament",
-    "url": "https://www.cbc.ca/sports/soccer/canada-soccer-camp-roster-chris-jones-may-25-9.7210920?cmp=rss",
-    "time": 1779717632,
-    "category": "Sports",
-    "summary": "Alphonso Davies to miss Canada's World Cup camp",
-    "relevance": 6,
-    "image": "https://i.cbc.ca/ais/39d2cba3-e98d-4b41-a693-29537436f219,1779714484264/full/max/0/default.jpg?im=Crop%2Crect%3D%28956%2C358%2C1568%2C882%29%3BResize%3D620",
-    "gradient": 4
-  },
-  {
-    "title": "Victor Wembanyama’s half-court buzzer beater showcased a master in complete control",
-    "url": "https://www.theguardian.com/sport/2026/may/25/victor-wembanyama-spurs-thunder-nba-playoffs",
-    "time": 1779713378,
-    "category": "Sports",
-    "summary": "Victor Wembanyama scores with half-court buzzer beater",
-    "relevance": 6,
-    "image": "https://i.guim.co.uk/img/media/8938c9324b1ae3912885f1a7f0a3eafcf77b3c2e/509_0_5087_4070/master/5087.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=9955c62dc4517ab176acfe164fbeb4e7",
-    "gradient": 4
-  },
-  {
-    "title": "A Louisiana state senator helped secure Meta’s largest datacenter. Then he sold the land beside it",
-    "url": "https://www.theguardian.com/environment/2026/may/25/louisiana-state-senator-jay-morris-meta-datacenter",
-    "time": 1779710425,
-    "category": "Tech",
-    "summary": "Louisiana state senator helped secure Meta's largest datacenter deal",
-    "relevance": 6,
-    "image": "https://i.guim.co.uk/img/media/b3ca920dbb7a7c1f530f30e32e931c11f1c39f10/238_159_1268_1015/master/1268.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=cdac6ea4b2d26153ffafb1a2b1d2f3d8",
-    "gradient": 1
-  },
-  {
-    "title": "Performance of Rust Language [pdf]",
-    "url": "https://github.com/yugr/rust-slides/",
-    "time": 1779752251,
-    "category": "Tech",
-    "summary": "Rust language performance evaluated in detailed technical report and analysis",
-    "relevance": 5,
-    "image": "https://opengraph.githubassets.com/c8a0c3dae2f8096ffb6084558c77159a128957d7e4464d5baa592e66e6f1031d/yugr/rust-slides",
-    "gradient": 1
-  },
-  {
-    "title": "Delivery robots are spreading across LA. Residents ‘both pity and hate them’",
-    "url": "https://www.theguardian.com/us-news/2026/may/25/los-angeles-delivery-robots",
-    "time": 1779717627,
-    "category": "Tech",
-    "summary": "Delivery robots spread across LA, sparking mixed resident reactions",
-    "relevance": 5,
-    "image": "https://i.guim.co.uk/img/media/98ae348752a21d7121a8efa3737915fb57abe5b9/500_0_5000_4000/master/5000.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=c33b3b7f9a11b290de7a1ac2e63a349e",
-    "gradient": 1
   }
 ]
