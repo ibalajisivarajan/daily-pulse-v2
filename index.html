@@ -126,7 +126,7 @@
       z-index: 1;
       background: linear-gradient(
         to bottom,
-        rgba(0,0,0,0.06) 0%,
+        rgba(0,0,0,0.45) 0%,
         rgba(0,0,0,0.18) 28%,
         rgba(0,0,0,0.45) 55%,
         rgba(0,0,0,0.84) 78%,
@@ -164,10 +164,10 @@
     }
     .topbar-pills { display: flex; flex-direction: column; gap: 5px; align-items: flex-end; }
     .pill {
-      background: rgba(255,255,255,0.13);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(0,0,0,0.50);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.15);
       border-radius: 20px;
       padding: 5px 13px;
       font-size: 11px;
@@ -245,8 +245,7 @@
     /* ── Bottom ─────────────────────────────────────── */
     .bottom {
       position: absolute;
-      bottom: 0; left: 0;
-      right: 80px; /* clear the rail */
+      bottom: 0; left: 0; right: 0;
       z-index: 10;
       padding: 0 18px 38px;
     }
@@ -331,6 +330,22 @@
       -webkit-tap-highlight-color: transparent;
     }
     .read-btn:hover { background: #fff; }
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: transparent;
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.7);
+      border-radius: 20px;
+      padding: 9px 18px;
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
 
     /* ── Counter ────────────────────────────────────── */
     .counter {
@@ -408,10 +423,10 @@
 
     /* ── Refresh Feed button ────────────────────────── */
     .refresh-btn {
-      background: rgba(255,255,255,0.13);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.50);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.15);
       border-radius: 100px;
       color: rgba(255,255,255,0.9);
       font-family: 'Nunito Sans', sans-serif;
@@ -783,21 +798,6 @@
 
   <div class="dots">${dotsHTML(activeDotsIdx)}</div>
 
-  <div class="rail">
-    <div class="rail-btn" data-action="save" data-url="${storyHref}">
-      <div class="rail-icon">${ICO_BOOKMARK}</div>
-      <span class="rail-label">Save</span>
-    </div>
-    <div class="rail-btn" data-action="share" data-url="${storyHref}" data-title="${esc(story.title)}">
-      <div class="rail-icon">${ICO_SHARE}</div>
-      <span class="rail-label">Share</span>
-    </div>
-    <a class="rail-btn" href="${esc(hnHref)}" target="_blank" rel="noopener noreferrer">
-      <div class="rail-icon">${ICO_COMMENT}</div>
-      <span class="rail-label">${commentsStr}</span>
-    </a>
-  </div>
-
   <div class="bottom">
     <div class="meta-row">
       <span class="cat-badge" style="background:${catColor}">${cat}</span>
@@ -809,6 +809,7 @@
     <div class="summary">${esc(story.summary || '')}</div>
     <div class="action-row">
       <a class="read-btn" href="${storyHref}" target="_blank" rel="noopener noreferrer">Read →</a>
+      <button class="share-btn" data-action="share" data-url="${storyHref}" data-title="${esc(story.title)}">↑ Share</button>
     </div>
   </div>
 
@@ -856,19 +857,15 @@
       document.querySelectorAll('.card').forEach(c => observer.observe(c));
     }
 
-    /* ── Rail button handlers ───────────────────────────── */
+    /* ── Share button handlers ──────────────────────────── */
     function setupRailHandlers() {
-      document.querySelectorAll('.rail-btn[data-action]').forEach(btn => {
+      document.querySelectorAll('[data-action="share"]').forEach(btn => {
         btn.addEventListener('click', () => {
-          const { action, url, title } = btn.dataset;
-          if (action === 'save') {
-            copyToClipboard(url, 'Link saved!');
-          } else if (action === 'share') {
-            if (navigator.share) {
-              navigator.share({ title, url }).catch(() => {});
-            } else {
-              copyToClipboard(url, 'Link copied!');
-            }
+          const { url, title } = btn.dataset;
+          if (navigator.share) {
+            navigator.share({ title, url }).catch(() => {});
+          } else {
+            copyToClipboard(url, 'Link copied!');
           }
         });
       });
