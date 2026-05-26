@@ -6,7 +6,7 @@
   <title>Daily Pulse</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;700;800;900&family=Nunito+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     /* ── Reset ─────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -101,6 +101,20 @@
       overflow: hidden;
     }
 
+    /* Top scrim — protects pill/logo zone on bright images */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 150px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%);
+      z-index: 2;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
     /* Photo */
     .photo {
       position: absolute;
@@ -112,14 +126,14 @@
     }
     .card.visible .photo { transform: scale(1.0); }
 
-    /* Gradient fallbacks — background-image only so background-size/position from .photo are not reset */
+    /* Gradient fallbacks */
     .grad-1 { background-image: linear-gradient(160deg, #0d1b3e 0%, #071028 100%); }
     .grad-2 { background-image: linear-gradient(160deg, #1a0808 0%, #0d0404 100%); }
     .grad-3 { background-image: linear-gradient(160deg, #071a0e 0%, #040d07 100%); }
     .grad-4 { background-image: linear-gradient(160deg, #1a1005 0%, #0d0803 100%); }
     .grad-5 { background-image: linear-gradient(160deg, #0e0520 0%, #070312 100%); }
 
-    /* Scrim — heavy bottom, light top */
+    /* Scrim — heavy bottom, heavier top */
     .scrim {
       position: absolute;
       inset: 0;
@@ -145,34 +159,53 @@
       justify-content: space-between;
       align-items: flex-start;
     }
-    .brand { display: flex; flex-direction: column; line-height: 1; }
-    .brand-daily {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 3.5px;
-      text-transform: uppercase;
-      opacity: 0.7;
-    }
-    .brand-pulse {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 30px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
+
+    /* ── Logo (DP2-022 DP2-024) ─────────────────────── */
+    .logo {
+      display: flex;
+      flex-direction: column;
       line-height: 1;
     }
+    .logo-daily {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 300;
+      font-size: 17px;
+      letter-spacing: 0.16em;
+      text-transform: lowercase;
+      color: #ffffff;
+      line-height: 1.1;
+      text-shadow:
+        0 2px 20px rgba(0,0,0,0.95),
+        0 1px 6px rgba(0,0,0,1),
+        0 4px 40px rgba(0,0,0,0.6);
+    }
+    .logo-pulse {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 34px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #ffffff;
+      line-height: 0.92;
+      text-shadow:
+        0 2px 20px rgba(0,0,0,0.95),
+        0 1px 6px rgba(0,0,0,1),
+        0 4px 40px rgba(0,0,0,0.6);
+    }
+
     .topbar-pills { display: flex; flex-direction: column; gap: 5px; align-items: flex-end; }
+
+    /* ── Pills (DP2-021) ────────────────────────────── */
     .pill {
-      background: rgba(0,0,0,0.50);
+      background: rgba(0,0,0,0.50) !important;
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.15) !important;
       border-radius: 20px;
       padding: 5px 13px;
       font-size: 11px;
       font-weight: 700;
-      color: #fff;
+      color: #ffffff !important;
       white-space: nowrap;
       letter-spacing: 0.2px;
     }
@@ -199,47 +232,6 @@
     .dot.active {
       height: 22px;
       background: rgba(255,255,255,0.9);
-    }
-
-    /* ── Rail ───────────────────────────────────────── */
-    .rail {
-      position: absolute;
-      right: 16px;
-      bottom: 150px;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      align-items: center;
-    }
-    .rail-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      cursor: pointer;
-      user-select: none;
-      text-decoration: none;
-      color: #fff;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .rail-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.13);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255,255,255,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .rail-label {
-      font-size: 10px;
-      font-weight: 700;
-      opacity: 0.72;
-      letter-spacing: 0.2px;
     }
 
     /* ── Bottom ─────────────────────────────────────── */
@@ -301,51 +293,54 @@
       overflow: hidden;
       margin-bottom: 14px;
     }
-    .action-row {
+
+    /* ── Card actions (DP2-020) ─────────────────────── */
+    .card-actions {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      gap: 10px;
     }
-    .stats {
-      display: flex;
-      gap: 14px;
-      font-size: 13px;
-      font-weight: 700;
-      opacity: 0.82;
-    }
-    .read-btn {
+    .btn-read {
       display: inline-block;
-      background: rgba(255,255,255,0.95);
-      color: #000;
+      background: #ffffff;
+      color: #111111;
       border: none;
-      border-radius: 20px;
-      padding: 9px 20px;
+      border-radius: 30px;
+      padding: 9px 22px;
       font-family: 'Nunito Sans', sans-serif;
       font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 0.3px;
+      font-weight: 700;
       cursor: pointer;
       text-decoration: none;
-      transition: background 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
-    .read-btn:hover { background: #fff; }
-    .share-btn {
+    .btn-share {
       display: inline-flex;
       align-items: center;
       gap: 5px;
       background: transparent;
-      color: #fff;
-      border: 1.5px solid rgba(255,255,255,0.7);
-      border-radius: 20px;
-      padding: 9px 18px;
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 30px;
+      padding: 8px 16px;
       font-family: 'Nunito Sans', sans-serif;
       font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 0.3px;
+      font-weight: 500;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
     }
+
+    /* ── Summary ────────────────────────────────────── */
+    .summary {
+      font-family: 'Nunito Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.45;
+      margin-top: 8px;
+      margin-bottom: 14px;
+    }
+    .summary:empty { display: none; }
 
     /* ── Counter ────────────────────────────────────── */
     .counter {
@@ -359,35 +354,77 @@
       opacity: 0.32;
     }
 
-    /* ── Swipe hint (first card only) ───────────────── */
-    .swipe-hint {
+    /* ── Swipe nudge (DP2-023 DP2-025) ─────────────── */
+    .swipe-nudge {
       position: absolute;
-      bottom: 130px;
+      bottom: 90px;
       left: 50%;
-      z-index: 20;
+      transform: translateX(-50%) translateY(12px);
+      opacity: 0;
+      transition: opacity 0.45s ease, transform 0.45s ease;
+      pointer-events: none;
+      z-index: 10;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 3px;
-      pointer-events: none;
-      animation: swipeHintAnim 2.5s ease-in-out 3s both;
+      gap: 5px;
     }
-    @keyframes swipeHintAnim {
-      0%   { opacity: 0;   transform: translateX(-50%) translateY(6px);  }
-      18%  { opacity: 0.9; transform: translateX(-50%) translateY(0);    }
-      75%  { opacity: 0.8; transform: translateX(-50%) translateY(-22px);}
-      100% { opacity: 0;   transform: translateX(-50%) translateY(-30px);}
+    .swipe-nudge.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
     }
-    .swipe-icon {
-      font-size: 22px;
-      line-height: 1;
+    .nudge-chevrons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
     }
-    .swipe-text {
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 2.5px;
+    .chevron {
+      width: 18px;
+      height: 9px;
+      position: relative;
+    }
+    .chevron::before,
+    .chevron::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 10px;
+      height: 2px;
+      background: rgba(255,255,255,0.88);
+      border-radius: 1px;
+    }
+    .chevron::before {
+      left: 0;
+      transform: rotate(-45deg);
+      transform-origin: left center;
+    }
+    .chevron::after {
+      right: 0;
+      transform: rotate(45deg);
+      transform-origin: right center;
+    }
+    .chevron-1 { animation: chevUp 1.4s ease-in-out 0s infinite; }
+    .chevron-2 { animation: chevUp 1.4s ease-in-out 0.2s infinite; }
+    .chevron-3 { animation: chevUp 1.4s ease-in-out 0.4s infinite; }
+    @keyframes chevUp {
+      0%   { opacity: 0.15; transform: translateY(4px); }
+      50%  { opacity: 1;    transform: translateY(-3px); }
+      100% { opacity: 0.15; transform: translateY(4px); }
+    }
+    .nudge-pill {
+      background: rgba(255,255,255,0.14);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 20px;
+      padding: 5px 14px;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      opacity: 0.75;
+      white-space: nowrap;
     }
 
     /* ── Toast ──────────────────────────────────────── */
@@ -421,14 +458,14 @@
       gap: 10px;
     }
 
-    /* ── Refresh Feed button ────────────────────────── */
+    /* ── Refresh Feed button (DP2-021) ──────────────── */
     .refresh-btn {
-      background: rgba(0,0,0,0.50);
+      background: rgba(0,0,0,0.50) !important;
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
-      border: 1px solid rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.15) !important;
       border-radius: 100px;
-      color: rgba(255,255,255,0.9);
+      color: rgba(255,255,255,0.9) !important;
       font-family: 'Nunito Sans', sans-serif;
       font-size: 11px;
       font-weight: 700;
@@ -447,10 +484,10 @@
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.13);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.50);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.15);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -458,18 +495,6 @@
       flex-shrink: 0;
       -webkit-tap-highlight-color: transparent;
     }
-
-    /* ── Story summary ──────────────────────────────── */
-    .summary {
-      font-family: 'Nunito Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.65);
-      line-height: 1.45;
-      margin-top: 8px;
-      margin-bottom: 14px;
-    }
-    .summary:empty { display: none; }
 
     /* ── Settings panel ─────────────────────────────── */
     #settings {
@@ -720,10 +745,7 @@
     }
 
     /* ── Inline SVG icons ───────────────────────────────── */
-    const ICO_BOOKMARK = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>`;
-    const ICO_SHARE    = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>`;
-    const ICO_COMMENT  = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`;
-    const ICO_GEAR     = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`;
+    const ICO_GEAR = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`;
 
     /* ── Helpers ────────────────────────────────────────── */
     function esc(str) {
@@ -741,10 +763,6 @@
         const { protocol } = new URL(url);
         return (protocol === 'http:' || protocol === 'https:') ? url : fallback;
       } catch { return fallback; }
-    }
-
-    function fmtCount(n) {
-      return n > 999 ? `${(n / 1000).toFixed(1)}k` : String(n);
     }
 
     function datePillText() {
@@ -770,11 +788,8 @@
 
       const activeDotsIdx = Math.round((idx / Math.max(total - 1, 1)) * 5);
       const ago           = timeAgo(story.time);
-      const domain        = esc(story.domain || 'news.ycombinator.com');
-      const scoreStr      = fmtCount(story.score);
-      const commentsStr   = fmtCount(story.comments || 0);
-      const storyHref     = esc(safeUrl(story.url, `https://news.ycombinator.com/item?id=${story.id}`));
-      const hnHref        = `https://news.ycombinator.com/item?id=${story.id}`;
+      const domain        = esc(story.domain || 'news');
+      const storyHref     = esc(safeUrl(story.url, '#'));
 
       return `
 <div class="card" data-index="${idx}">
@@ -784,9 +799,9 @@
   <div class="topbar">
     <div class="topbar-left">
       <button class="gear-btn" aria-label="Settings" onclick="openSettings()">${ICO_GEAR}</button>
-      <div class="brand">
-        <span class="brand-daily">daily</span>
-        <span class="brand-pulse">PULSE</span>
+      <div class="logo">
+        <span class="logo-daily">daily</span>
+        <span class="logo-pulse">PULSE</span>
       </div>
     </div>
     <div class="topbar-pills">
@@ -807,19 +822,22 @@
     </div>
     <div class="headline">${esc(story.title)}</div>
     <div class="summary">${esc(story.summary || '')}</div>
-    <div class="action-row">
-      <a class="read-btn" href="${storyHref}" target="_blank" rel="noopener noreferrer">Read →</a>
-      <button class="share-btn" data-action="share" data-url="${storyHref}" data-title="${esc(story.title)}">↑ Share</button>
+    <div class="card-actions">
+      <a class="btn-read" href="${storyHref}" target="_blank" rel="noopener noreferrer">Read →</a>
+      <button class="btn-share" data-action="share" data-url="${storyHref}" data-title="${esc(story.title)}">↑ Share</button>
     </div>
   </div>
 
   <div class="counter">${idx + 1} / ${total}</div>
 
-  ${idx === 0 ? `
-  <div class="swipe-hint">
-    <div class="swipe-icon">↑</div>
-    <div class="swipe-text">Swipe Up</div>
-  </div>` : ''}
+  <div class="swipe-nudge" id="nudge-${idx}">
+    <div class="nudge-chevrons">
+      <div class="chevron chevron-3"></div>
+      <div class="chevron chevron-2"></div>
+      <div class="chevron chevron-1"></div>
+    </div>
+    <div class="nudge-pill">Swipe up</div>
+  </div>
 </div>`;
     }
 
@@ -840,11 +858,9 @@
           el.style.backgroundPosition = 'center';
         }
       });
-      document.querySelectorAll('.photo').forEach((el, i) => {
-        console.log(`Card ${i} background:`, el.style.backgroundImage);
-      });
       setupObserver();
-      setupRailHandlers();
+      setupShareHandlers();
+      resetNudgeTimer(0);
     }
 
     /* ── IntersectionObserver ───────────────────────────── */
@@ -852,13 +868,51 @@
     function setupObserver() {
       if (observer) observer.disconnect();
       observer = new IntersectionObserver(entries => {
-        entries.forEach(e => e.target.classList.toggle('visible', e.isIntersecting));
+        entries.forEach(e => {
+          e.target.classList.toggle('visible', e.isIntersecting);
+          if (e.isIntersecting) {
+            onCardChange(Number(e.target.dataset.index));
+          }
+        });
       }, { threshold: 0.6 });
       document.querySelectorAll('.card').forEach(c => observer.observe(c));
     }
 
+    /* ── Swipe nudge (DP2-023 DP2-025) ─────────────────── */
+    let nudgeTimer = null;
+    let nudgeHideTimer = null;
+    let currentCardIndex = 0;
+
+    function showNudge(index) {
+      const el = document.getElementById(`nudge-${index}`);
+      if (el) el.classList.add('visible');
+    }
+
+    function hideNudge(index) {
+      const el = document.getElementById(`nudge-${index}`);
+      if (el) el.classList.remove('visible');
+    }
+
+    function resetNudgeTimer(index) {
+      clearTimeout(nudgeTimer);
+      clearTimeout(nudgeHideTimer);
+      hideNudge(index);
+      nudgeTimer = setTimeout(() => {
+        showNudge(index);
+        nudgeHideTimer = setTimeout(() => hideNudge(index), 3000);
+      }, 4000);
+    }
+
+    function onCardChange(newIndex) {
+      clearTimeout(nudgeTimer);
+      clearTimeout(nudgeHideTimer);
+      hideNudge(currentCardIndex);
+      currentCardIndex = newIndex;
+      resetNudgeTimer(newIndex);
+    }
+
     /* ── Share button handlers ──────────────────────────── */
-    function setupRailHandlers() {
+    function setupShareHandlers() {
       document.querySelectorAll('[data-action="share"]').forEach(btn => {
         btn.addEventListener('click', () => {
           const { url, title } = btn.dataset;
@@ -944,6 +998,7 @@
       let tracking = false;
 
       feed.addEventListener('touchstart', e => {
+        resetNudgeTimer(currentCardIndex);
         if (feed.scrollTop === 0) {
           startY = e.touches[0].clientY;
           tracking = true;
@@ -1091,8 +1146,6 @@
       initPreferences();
 
       const stories = await loadStories(true);
-      console.log('Loaded stories:', stories.length);
-      console.log('First story image:', stories[0]?.image);
 
       const loading = document.getElementById('loading');
       loading.classList.add('gone');

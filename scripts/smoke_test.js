@@ -54,10 +54,13 @@ check('First story has required fields and gradient 1–5 (skip if empty)', () =
   const data = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/stories.json'), 'utf8'));
   if (data.length === 0) return true;
   const s = data[0];
-  const required = ['id', 'title', 'url', 'domain', 'score', 'comments', 'time', 'image', 'gradient'];
+  const required = ['title', 'url', 'time', 'category', 'summary', 'relevance', 'image', 'gradient'];
   const missing = required.filter(k => !(k in s));
   if (missing.length) throw new Error(`Missing fields: ${missing.join(', ')}`);
   if (s.gradient < 1 || s.gradient > 5) throw new Error(`Invalid gradient: ${s.gradient}`);
+  const forbidden = ['id', 'domain', 'score', 'comments', 'num_comments', 'points', 'author', 'objectID'];
+  const present = forbidden.filter(k => k in s);
+  if (present.length) throw new Error(`Forbidden Phase 1 fields present: ${present.join(', ')}`);
   return true;
 });
 

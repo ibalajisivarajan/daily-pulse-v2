@@ -264,10 +264,19 @@ async function main() {
   const output = withImages
     .sort((a, b) => (b.relevance || 0) - (a.relevance || 0))
     .slice(0, 30)
-    .map(({ filtered: _f, imageQuery: _iq, imageSource: _is, _sourceCategory: _sc, ...keep }) => ({
-      ...keep,
-      gradient: CATEGORY_GRADIENT[keep.category] || 1,
-    }));
+    .map(({
+      filtered:        _f,
+      imageQuery:      _iq,
+      imageSource:     _is,
+      _sourceCategory: _sc,
+      comments:        _c,
+      num_comments:    _nc,
+      comment_count:   _cc,
+      points:          _p,
+      author:          _a,
+      objectID:        _oid,
+      ...keep
+    }) => ({ ...keep, gradient: CATEGORY_GRADIENT[keep.category] || 1 }));
 
   // Write output
   const outPath = path.join(ROOT, 'data/stories.json');
