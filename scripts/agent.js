@@ -112,7 +112,8 @@ async function enrichBatch(groq, stories) {
     return Array.isArray(parsed) ? parsed : [];
   } catch (err) {
     console.error('Groq batch failed:', err.message);
-    return stories.map(() => ({ category: 'Tech', summary: 'Story content unavailable for this item.', relevance: 3, imageQuery: 'news headline', filtered: false }));
+    const catMap = { ai:'AI', tech:'Tech', finance:'Finance', geo:'Geo', sports:'Sports', science:'Science', health:'Health', climate:'Climate' };
+    return stories.map(s => ({ category: catMap[s._sourceCategory] || 'Tech', summary: 'Story content unavailable for this item.', relevance: 3, imageQuery: 'news headline', filtered: false }));
   }
 }
 
@@ -232,8 +233,13 @@ async function main() {
   });
   console.log(`After dedup: ${deduped.length}`);
 
+  // Drop stories older than 14 days
+  const cutoff = Math.floor((Date.now() - 14 * 24 * 3600 * 1000) / 1000);
+  const fresh = deduped.filter(s => Number(s.time) > cutoff);
+  console.log(`After age filter (14d): ${fresh.length} (dropped ${deduped.length - fresh.length})`);
+
   // Enrich with Groq in batches
-  const enriched = await enrichAll(groq, deduped);
+  const enriched = await enrichAll(groq, fresh);
 
   // Filter non-news
   const valid = enriched.filter(s => !s.filtered);

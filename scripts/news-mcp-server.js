@@ -40,7 +40,8 @@
 
   async function fetchHN(query, count) {
     const q = query ? `&query=${encodeURIComponent(query)}` : '';
-    const url = `https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=${count}${q}`;
+    const since = Math.floor((Date.now() - 14 * 24 * 3600 * 1000) / 1000);
+    const url = `https://hn.algolia.com/api/v1/search_by_date?tags=story&hitsPerPage=${count * 3}${q}&numericFilters=created_at_i>${since}`;
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 8000);
     try {
