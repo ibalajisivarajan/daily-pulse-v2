@@ -20,6 +20,16 @@
     "gradient": 1
   },
   {
+    "title": "Show HN: AI/ML Weekly Digest – Curated by LLM, Summarized and Sentiment-Analyzed",
+    "url": "https://hn-ai-newsletter.beehiiv.com/p/last-weeks-ai-highlights-hn-9",
+    "time": 1689934322,
+    "category": "Tech",
+    "summary": "Story content unavailable for this item.",
+    "relevance": 3,
+    "image": "https://beehiiv-images-production.s3.amazonaws.com/uploads/publication/thumbnail/cb46a082-e043-482b-bfb3-15a959ff3be7/landscape_svg_width_396_height_248.36230320492334_viewBox_0_0_349.99999999999994_219.51213667101806_class_css-1j8o68fdefs_id_SvgjsDefs3540defsg_id_SvgjsG3541_featurekey_Wg4LIr-0.png",
+    "gradient": 1
+  },
+  {
     "title": "Could AI really 'kill all humans'? Breaking down the dire warnings about the technology's existential risk",
     "url": "https://www.cbc.ca/news/science/ai-risks-humanity-warnings-9.7341913?cmp=rss",
     "time": 1789286400,
@@ -40,9 +50,39 @@
     "gradient": 1
   },
   {
-    "title": "The UX Research Methodology subway map trap",
-    "url": "https://www.reddit.com/r/UXDesign/comments/1wercj5/the_ux_research_methodology_subway_map_trap/",
-    "time": 1789435935,
+    "title": "A million-dollar math problem may just be the beginning for OpenAI",
+    "url": "https://www.cbc.ca/news/science/open-ai-navier-stokes-millenium-prize-mathematics-9.7341293?cmp=rss",
+    "time": 1789200000,
+    "category": "Tech",
+    "summary": "Story content unavailable for this item.",
+    "relevance": 3,
+    "image": "https://i.cbc.ca/ais/715ec9b9-8605-4f58-acbf-0b6730c158de,1789163513511/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C291%2C5579%2C3138%29%3BResize%3D620",
+    "gradient": 1
+  },
+  {
+    "title": "Raid on Bungeling Bay",
+    "url": "https://en.wikipedia.org/wiki/Raid_on_Bungeling_Bay",
+    "time": 1789436315,
+    "category": "Tech",
+    "summary": "Story content unavailable for this item.",
+    "relevance": 3,
+    "image": "https://upload.wikimedia.org/wikipedia/en/0/04/Raid_on_Bungeling_Bay_Cover.jpg?utm_source=en.wikipedia.org&amp;utm_campaign=index&amp;utm_content=thumbnail_unscaled",
+    "gradient": 1
+  },
+  {
+    "title": "Show HN: Sunk Cost – How long until a local LLM rig pays for itself?",
+    "url": "https://sunkcost.ai/",
+    "time": 1789436263,
+    "category": "Tech",
+    "summary": "Story content unavailable for this item.",
+    "relevance": 3,
+    "image": "https://sunkcost.ai/og/default.png?v=aa76b29d84",
+    "gradient": 1
+  },
+  {
+    "title": "Building an Application Security Program That Works",
+    "url": "https://collinsthoughts.substack.com/p/building-an-application-security",
+    "time": 1789436195,
     "category": "Tech",
     "summary": "Story content unavailable for this item.",
     "relevance": 3,
@@ -50,33 +90,23 @@
     "gradient": 1
   },
   {
-    "title": "Open the Frontier",
-    "url": "https://twitter.com/jack/status/2099649359017046048",
-    "time": 1789435651,
+    "title": "How Modern Technology Helped a Man Find a Cure to Save His Life",
+    "url": "https://medium.com/swlh/doug-lindsay-the-man-who-cure-himself-12d40d3f643e",
+    "time": 1789436192,
     "category": "Tech",
     "summary": "Story content unavailable for this item.",
     "relevance": 3,
-    "image": "https://pbs.twimg.com/profile_images/1661201415899951105/azNjKOSH_400x400.jpg",
+    "image": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w5NTk0Njl8MHwxfHNlYXJjaHwxfHxuZXdzJTIwaGVhZGxpbmV8ZW58MHwwfHx8MTc4OTQzNjIwOXww&ixlib=rb-4.1.0&q=80&w=1080",
     "gradient": 1
   },
   {
-    "title": "VoiceStudio – local open-source ElevenLabs alternative",
-    "url": "https://github.com/debpalash/VoiceStudio",
-    "time": 1789435570,
+    "title": "StackBlitz is joining the Open Source Pledge",
+    "url": "https://blog.stackblitz.com/posts/stackblitz-joins-osspledge/",
+    "time": 1789436164,
     "category": "Tech",
     "summary": "Story content unavailable for this item.",
     "relevance": 3,
-    "image": "https://repository-images.githubusercontent.com/1206390571/fd6851a0-4e36-4541-a76c-2ad84935d0bc",
-    "gradient": 1
-  },
-  {
-    "title": "OpenDisplay – open-source Sidecar for Mac to iPhone/iPad",
-    "url": "https://github.com/peetzweg/opendisplay",
-    "time": 1789435531,
-    "category": "Tech",
-    "summary": "Story content unavailable for this item.",
-    "relevance": 3,
-    "image": "https://opengraph.githubassets.com/44b8c13cdd3b5521a43bb14830a03b166bcaa481db3e7430bcc14eab1787a7d6/peetzweg/opendisplay",
+    "image": "https://blog.stackblitz.com/posts/stackblitz-joins-osspledge/social.png",
     "gradient": 1
   },
   {
@@ -107,6 +137,26 @@
     "summary": "Story content unavailable for this item.",
     "relevance": 3,
     "image": "https://i.guim.co.uk/img/media/465c638d2a524d24640b81b56960b158ce2eba32/811_172_5328_4263/master/5328.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctcmV2aWV3LTQucG5n&enable=upscale&s=e98426985bcf5d828b457c75177bb309",
+    "gradient": 1
+  },
+  {
+    "title": "Democracy v the machine: the birth of the digital age and the warnings that were ignored – podcast",
+    "url": "https://www.theguardian.com/news/audio/2026/sep/14/democracy-v-machine-birth-digital-age-warnings-ignored-podcast",
+    "time": 1789358422,
+    "category": "Tech",
+    "summary": "Story content unavailable for this item.",
+    "relevance": 3,
+    "image": "https://i.guim.co.uk/img/media/649a756435dbd3c93e403544046ef977e9ac9ca4/714_0_3672_2939/master/3672.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=fbfb7bee8af87bfb2c800d0a71a23161",
+    "gradient": 1
+  },
+  {
+    "title": "I turned off my algorithm for 24 hours. Is this how social media used to be?",
+    "url": "https://www.theguardian.com/media/2026/sep/11/i-turned-off-my-instagram-algorithm-opt-out-social-media-reforms-australia",
+    "time": 1789052443,
+    "category": "Tech",
+    "summary": "Story content unavailable for this item.",
+    "relevance": 3,
+    "image": "https://i.guim.co.uk/img/media/4c2b563e667cc8974ed5cc26b221538708d28d3d/600_0_6827_5464/master/6827.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&precrop=40:21,offset-x50,offset-y0&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=5cae9a665b96b92af81aea967ecc21b9",
     "gradient": 1
   },
   {
@@ -230,16 +280,6 @@
     "gradient": 1
   },
   {
-    "title": "Iran war live: CENTCOM disputes IRGC claim supertanker struck by Hormuz nav",
-    "url": "https://www.aljazeera.com/news/liveblog/2026/9/15/iran-war-live-centcom-refutes-iran-claim-supertanker-hit-hormuz-mines?traffic_source=rss",
-    "time": 1789430400,
-    "category": "Tech",
-    "summary": "Story content unavailable for this item.",
-    "relevance": 3,
-    "image": "https://www.aljazeera.com/wp-content/uploads/2026/09/2026-09-14T195216Z_1552501015_RC2DINAP1RPE_RTRMADP_3_IRAN-CRISIS-USS-GEORGE-WASHINGTON-1789424303.jpg?resize=1920%2C1440",
-    "gradient": 1
-  },
-  {
     "title": "This Afghan says Canada is abandoning her in a country where it feels like it's a 'mistake' to be a woman",
     "url": "https://www.cbc.ca/news/world/afghan-woman-immigration-plea-to-canada-9.7338709?cmp=rss",
     "time": 1789372800,
@@ -257,46 +297,6 @@
     "summary": "Story content unavailable for this item.",
     "relevance": 3,
     "image": "https://i.cbc.ca/ais/fa0094a9-d1cc-4ff2-bcb9-ea1fbb1b2d44,1789424313898/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C323%2C5597%2C3148%29%3BResize%3D620",
-    "gradient": 1
-  },
-  {
-    "title": "U.S. Supreme Court rejects Trump's bid to restrict mail-in ballots ahead of November midterms",
-    "url": "https://www.cbc.ca/news/world/mail-in-voting-us-supreme-court-rejection-trump-9.7343984?cmp=rss",
-    "time": 1789432200,
-    "category": "Tech",
-    "summary": "Story content unavailable for this item.",
-    "relevance": 3,
-    "image": "https://i.cbc.ca/ais/d190afc6-8aed-4447-8896-69cc6cb09fa2,1789430938679/full/max/0/default.jpg?im=Crop%2Crect%3D%280%2C187%2C3600%2C2025%29%3BResize%3D620",
-    "gradient": 1
-  },
-  {
-    "title": "'Unplayable' & 'almost perfect' - Calvert-Lewin set for England recall?",
-    "url": "https://www.bbc.co.uk/sport/football/articles/cv1j49220j93o?at_medium=RSS&at_campaign=rss",
-    "time": 1789426588,
-    "category": "Tech",
-    "summary": "Story content unavailable for this item.",
-    "relevance": 3,
-    "image": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/48b2/live/74c52a90-b08a-11f1-8f9f-33e0914f3492.jpg",
-    "gradient": 1
-  },
-  {
-    "title": "Leeds inflict heavy defeat on Newcastle to climb to third",
-    "url": "https://www.bbc.co.uk/sport/football/videos/c8d3el7mvypo?at_medium=RSS&at_campaign=rss",
-    "time": 1789421519,
-    "category": "Tech",
-    "summary": "Story content unavailable for this item.",
-    "relevance": 3,
-    "image": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/e7d1/live/15610440-b083-11f1-a540-61c3f7fc4e6c.jpg",
-    "gradient": 1
-  },
-  {
-    "title": "'This is what women in sport look like' - Hunt leads response to Sweeney advert",
-    "url": "https://www.bbc.co.uk/sport/athletics/articles/c9dw905jw5no?at_medium=RSS&at_campaign=rss",
-    "time": 1789391867,
-    "category": "Tech",
-    "summary": "Story content unavailable for this item.",
-    "relevance": 3,
-    "image": "https://ichef.bbci.co.uk/ace/branded_sport/1200/cpsprodpb/6b42/live/9dfbd460-b038-11f1-b1d1-571ed4d7ff2c.jpg",
     "gradient": 1
   }
 ]
